@@ -1,7 +1,7 @@
 {
   "name": "Estimatif Avant-Projet Premium",
   "short_name": "Estimatif travaux",
-  "start_url": "./ESTIMATION_V33_PWA.html",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#020617",
