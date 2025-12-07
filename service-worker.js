@@ -2,7 +2,7 @@ const CACHE_NAME = "estimatif-v1";
 
 const ASSETS = [
   "./",
-  "./ESTIMATION_V33_PWA.html",
+  "./index.html",
   "./estimatif-app-manifest.json",
   "./icon-192.png",
   "./icon-512.png",
@@ -46,7 +46,7 @@ self.addEventListener("fetch", (event) => {
           caches.open(CACHE_NAME).then((cache) => cache.put(request, responseClone));
           return response;
         })
-        .catch(() => caches.match("./ESTIMATION_V33_PWA.html"));
+        .catch(() => caches.match("./index.html"));
     })
   );
 });
