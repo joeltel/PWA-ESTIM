@@ -1,0 +1,3690 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estimatif Avant-Projet Premium · V33</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f172a;
+      --primary-light: #111827;
+      --accent-cyan: #06b6d4;
+      --accent-purple: #a855f7;
+      --accent-pink: #ec4899;
+      --accent-green: #10b981;
+      --accent-yellow: #fbbf24;
+      --accent-orange: #f97316;
+      --bg: #020617;
+      --surface: #0b1020;
+      --surface-light: #151a2c;
+      --text: #e5e7eb;
+      --text-sec: #9ca3af;
+      --border: rgba(148, 163, 184, 0.18);
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.55);
+      --radius-card: 14px;
+      --sidebar-width: 240px;
+      --field-bg: rgba(15, 23, 42, 0.9);
+      --field-border: rgba(148, 163, 184, 0.35);
+      --field-active-bg: rgba(15, 23, 42, 1);
+      --field-text: var(--text);
+      --text-strong: #e5e7eb;
+      --text-subtle: #cbd5e1;
+      --text-muted-2: #94a3b8;
+      --chip-bg: rgba(255,255,255,0.03);
+      --chip-hover: rgba(14,165,233,0.18);
+    }
+
+    body.theme-light {
+      --primary: #0f172a;
+      --primary-light: #e2e8f0;
+      --accent-cyan: #0ea5e9;
+      --accent-purple: #7c3aed;
+      --accent-pink: #db2777;
+      --accent-green: #059669;
+      --accent-yellow: #eab308;
+      --accent-orange: #f97316;
+      --bg: #e8edf5;
+      --surface: #ffffff;
+      --surface-light: #f8fafc;
+      --text: #0f172a;
+      --text-sec: #475569;
+      --border: rgba(15, 23, 42, 0.12);
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --field-bg: #ffffff;
+      --field-border: rgba(15, 23, 42, 0.18);
+      --field-active-bg: #f8fafc;
+      --field-text: #0f172a;
+      --text-strong: #0f172a;
+      --text-subtle: #1f2937;
+      --text-muted-2: #475569;
+      --chip-bg: rgba(15,23,42,0.04);
+      --chip-hover: rgba(14,165,233,0.12);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top left, #1d2650 0, #020617 40%, #000 100%);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background 0.35s ease, color 0.35s ease;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 12% 20%, rgba(168, 85, 247, 0.16) 0, transparent 55%),
+        radial-gradient(circle at 85% 80%, rgba(6, 182, 212, 0.14) 0, transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    body.theme-light {
+      background: radial-gradient(circle at 20% 10%, rgba(14, 165, 233, 0.14) 0, #f1f5f9 35%, #e8edf5 100%);
+    }
+
+    body.theme-light::before {
+      background:
+        radial-gradient(circle at 16% 18%, rgba(14, 165, 233, 0.14) 0, transparent 45%),
+        radial-gradient(circle at 82% 80%, rgba(124, 58, 237, 0.12) 0, transparent 45%);
+      opacity: 0.7;
+    }
+
+    .app {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      width: 100%;
+      padding-left: var(--sidebar-width);
+      transition: padding-left 0.25s ease;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      background: linear-gradient(180deg, #020617 0%, #020617 45%, #050816 100%);
+      border-right: 1px solid var(--border);
+      padding: 20px 16px;
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      width: var(--sidebar-width);
+      overflow-y: auto;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    body.theme-light .sidebar {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 45%, #e8edf5 100%);
+      box-shadow: 8px 0 30px rgba(15,23,42,0.06);
+    }
+
+    .sidebar-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(148, 163, 184, 0.08);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    body.theme-light .sidebar-toggle {
+      background: linear-gradient(135deg, #ffffff, #e2e8f0);
+      border-color: rgba(15, 23, 42, 0.22);
+      color: #0b1224;
+      box-shadow: 0 8px 18px rgba(15,23,42,0.08);
+    }
+
+    body.theme-light .sidebar-toggle:hover {
+      background: #e0f2fe;
+      color: #0b1224;
+      border-color: rgba(14, 165, 233, 0.45);
+    }
+
+    .sidebar-toggle:hover {
+      background: rgba(6, 182, 212, 0.12);
+      border-color: rgba(6, 182, 212, 0.55);
+      color: var(--text-strong);
+    }
+
+    .sidebar-toggle:focus-visible {
+      outline: 2px solid rgba(14, 165, 233, 0.65);
+      outline-offset: 2px;
+    }
+
+    .sidebar-toggle.full {
+      width: 100%;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.9);
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 20% 0%, #f9fafb 0%, #e5e7eb 30%, #a855f7 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.6);
+    }
+
+    body.theme-light .logo-icon { box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.2); }
+
+    .logo-text {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--text-strong), var(--text-muted-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo-sub {
+      font-size: 10px;
+      color: var(--text-sec);
+    }
+
+    .nav-section {
+      margin-bottom: 24px;
+    }
+
+    .nav-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted-2);
+      margin-bottom: 10px;
+    }
+
+    .nav-item {
+      padding: 9px 12px;
+      margin-bottom: 6px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 12px;
+      color: var(--text-sec);
+      transition: all 0.18s ease-out;
+      border: 1px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-item span.icon {
+      font-size: 13px;
+      opacity: 0.85;
+    }
+
+    .nav-item:hover {
+      color: var(--accent-cyan);
+      background: rgba(6, 182, 212, 0.08);
+      border-color: rgba(6, 182, 212, 0.45);
+    }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(168, 85, 247, 0.24));
+      color: var(--text-strong);
+      border-color: rgba(168, 85, 247, 0.7);
+      box-shadow: 0 0 0 1px rgba(15,23,42,0.8);
+    }
+
+    /* MAIN */
+    .main {
+      flex: 1;
+      min-width: 0;
+      padding: 24px 32px 32px;
+    }
+
+    body.sidebar-collapsed .app {
+      padding-left: 0;
+    }
+
+    body.sidebar-collapsed .sidebar {
+      transform: translateX(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    body.sidebar-collapsed .main {
+      margin-left: 0;
+    }
+
+    /* conteneur centré pour grands écrans */
+    .main-inner {
+      max-width: 1400px;
+      width: min(1400px, 100%);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    @media (min-width: 1600px) {
+      .main-inner {
+        max-width: 1480px;
+      }
+    }
+
+    @media (max-width: 1180px) {
+      .main {
+        padding: 20px 22px 26px;
+      }
+      .main-inner {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .app {
+        flex-direction: column;
+        padding-left: 0;
+      }
+      .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      body.sidebar-collapsed .sidebar {
+        display: none;
+      }
+      .nav-section:last-of-type {
+        display: none;
+      }
+      .main {
+        margin-left: 0;
+        padding: 18px 14px 24px;
+        width: 100%;
+      }
+    }
+
+    /* HEADER */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      margin-bottom: 6px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.8);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .print-controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 10px 12px;
+      margin-top: 8px;
+      background: linear-gradient(120deg, rgba(14,165,233,0.08), rgba(15,23,42,0.08));
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: var(--text-sec);
+    }
+
+    .print-controls .control-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .print-actions { display: flex; align-items: center; gap: 8px; }
+
+    .print-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      background: linear-gradient(135deg, #0ea5e9, #6366f1);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 10px 24px rgba(14,165,233,0.35);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .print-btn:focus-visible { outline: 2px solid rgba(14,165,233,0.65); outline-offset: 2px; }
+
+    .print-control-row { display: flex; flex-direction: column; gap: 6px; }
+    .print-control-inputs { display: flex; align-items: center; gap: 8px; }
+
+    .print-number-input {
+      width: 66px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .print-label-input {
+      width: 100%;
+      padding: 8px 9px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 12px;
+    }
+
+    .print-label-input:focus,
+    .print-number-input:focus {
+      outline: 2px solid rgba(14,165,233,0.4);
+      border-color: rgba(14,165,233,0.5);
+    }
+
+    .print-hint {
+      font-size: 11px;
+      color: var(--text-sec);
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      line-height: 1.4;
+    }
+
+    .print-page-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(14,165,233,0.12);
+      border: 1px solid rgba(14,165,233,0.4);
+      color: var(--text);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      margin-bottom: 10px;
+      width: fit-content;
+      font-weight: 700;
+    }
+
+    .header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .header-title {
+      font-size: 26px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--text-strong), #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header-subtitle {
+      font-size: 12px;
+      color: var(--text-sec);
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      background: rgba(22, 163, 74, 0.1);
+      border: 1px solid rgba(22, 163, 74, 0.55);
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--text-strong);
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.35);
+      animation: pulse 2s infinite;
+    }
+
+    .version-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      background: rgba(79, 70, 229, 0.12);
+      border: 1px solid rgba(129, 140, 248, 0.55);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-strong);
+      width: fit-content;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.5; }
+    }
+
+    /* GRID LAYOUT */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+      align-items: start;
+    }
+
+    .grid.col-2 {
+      grid-template-columns: 1fr;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    /* CARD */
+    .card {
+      background: radial-gradient(circle at top left, rgba(156, 163, 175, 0.12) 0, transparent 55%),
+                  linear-gradient(145deg, var(--surface) 0%, var(--surface-light) 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 18px 18px 16px;
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      transition: border-color 0.22s ease, transform 0.18s ease, box-shadow 0.22s ease;
+      width: 100%;
+    }
+
+    .card + .card {
+      margin-top: 6px;
+    }
+
+    .card:hover {
+      border-color: rgba(168, 85, 247, 0.5);
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
+      transform: translateY(-1px);
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 2px;
+      color: var(--text-strong);
+    }
+
+    .card-icon {
+      font-size: 18px;
+    }
+
+    .card-desc {
+      font-size: 11px;
+      color: var(--text-sec);
+      margin-bottom: 14px;
+    }
+
+    .card-header-line {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    /* SECTION */
+    section {
+      margin-bottom: 22px;
+    }
+
+    .section {
+      margin-bottom: 16px;
+    }
+
+    .section:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-cyan);
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(6, 182, 212, 0.35);
+    }
+
+    /* INPUTS */
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-sec);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px 10px;
+      background: var(--field-bg);
+      border: 1px solid var(--field-border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 12px;
+      color: var(--field-text);
+      margin-bottom: 10px;
+      transition: all 0.16s ease-out;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--accent-cyan);
+      background: var(--field-active-bg);
+      box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.8);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 640px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* TOGGLE */
+    .toggle-group {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+
+    .toggle-btn {
+      flex: 1;
+      padding: 8px 10px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(15, 23, 42, 0.75);
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-sec);
+      transition: all 0.16s ease-out;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    body.theme-light .toggle-btn {
+      background: #f8fafc;
+      color: #0f172a;
+      border-color: rgba(15, 23, 42, 0.22);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+
+    .toggle-btn:hover {
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+      background: rgba(6, 182, 212, 0.06);
+    }
+
+    body.theme-light .toggle-btn:hover {
+      background: rgba(14, 165, 233, 0.12);
+      color: #0f172a;
+      border-color: rgba(14, 165, 233, 0.45);
+    }
+
+    .toggle-btn.active {
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      border-color: transparent;
+      color: white;
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9);
+    }
+
+    /* TABLE */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.9));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    }
+
+    body.theme-light .table-wrapper {
+      background: linear-gradient(135deg, #ffffff, #f8fafc);
+      border-color: var(--border);
+      box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.04);
+    }
+
+    tr.muted td {
+      color: var(--text-muted-2) !important;
+    }
+
+    tr.muted {
+      opacity: 0.55;
+    }
+
+    .architect-panel {
+      margin-top: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      padding: 14px 16px;
+      display: none;
+      box-shadow: var(--shadow);
+    }
+
+    .architect-panel.open {
+      display: block;
+    }
+
+    .architect-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .architect-panel-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-strong);
+    }
+
+    .architect-panel-body {
+      color: var(--text-sec);
+      font-size: 13px;
+      line-height: 1.5;
+      max-height: 320px;
+      overflow: auto;
+    }
+
+    .architect-panel-actions {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    thead {
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid var(--border);
+    }
+
+    body.theme-light thead {
+      background: linear-gradient(90deg, #e2e8f0, #f8fafc);
+    }
+
+    th {
+      padding: 7px 8px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-sec);
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 0.05em;
+    }
+
+    body.theme-light th { color: #0f172a; }
+
+    td {
+      padding: 7px 8px;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.85);
+      color: var(--text);
+    }
+
+    tbody tr:hover {
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .total-row {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.85));
+      font-weight: 700;
+      color: #e5e7eb;
+    }
+
+    .total-row td {
+      color: inherit;
+      border-bottom-color: rgba(14, 165, 233, 0.4);
+    }
+
+    table input {
+      width: 100%;
+      padding: 5px 7px;
+      font-size: 11px;
+      margin: 0;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+      border-radius: 6px;
+    }
+
+    body.theme-light td {
+      border-bottom-color: var(--border);
+    }
+
+    body.theme-light tbody tr:hover {
+      background: rgba(14, 165, 233, 0.08);
+    }
+
+    body.theme-light .total-row {
+      background: linear-gradient(90deg, #e2e8f0, #f8fafc);
+      color: #0b1224;
+      box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.06);
+    }
+
+    body.theme-light .total-row td {
+      color: #0b1224;
+      border-bottom-color: rgba(15, 23, 42, 0.18);
+    }
+
+    body.theme-light table input {
+      background: #ffffff;
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    table input:focus {
+      box-shadow: none;
+    }
+
+    @media (max-width: 600px) {
+      table { min-width: 520px; }
+    }
+
+    @media (min-width: 1440px) {
+      table {
+        font-size: 12px;
+      }
+      th, td {
+        padding: 8px 10px;
+      }
+    }
+
+    /* STAT BOX */
+    .stat-box {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    body.theme-light .stat-box { background: #f8fafc; border-color: rgba(15,23,42,0.12); box-shadow: 0 12px 24px rgba(15,23,42,0.08); }
+
+    .stat-label {
+      font-size: 10px;
+      color: var(--text-sec);
+      text-transform: uppercase;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 17px;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--text-strong), #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* RESULT BOX */
+    .result-box {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.18) 0%, rgba(236, 72, 153, 0.1) 100%);
+      border: 1px solid rgba(168, 85, 247, 0.55);
+      border-left: 4px solid #a855f7;
+      border-radius: 10px;
+      padding: 11px 12px;
+      margin-bottom: 9px;
+    }
+
+    .result-label {
+      font-size: 10px;
+      color: var(--text-strong);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      margin-bottom: 2px;
+    }
+
+    .result-value {
+      font-size: 22px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fbbf24, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .result-sub {
+      font-size: 11px;
+      color: var(--text-sec);
+      margin-top: 4px;
+    }
+
+    /* ALERT */
+    .alert {
+      padding: 9px 11px;
+      border-radius: 9px;
+      font-size: 11px;
+      margin-bottom: 10px;
+      border-left: 3px solid;
+    }
+
+    .alert-info {
+      background: rgba(15, 23, 42, 0.9);
+      border-left-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+    }
+
+    body.theme-light .alert-info {
+      background: #e0f2fe;
+      color: #075985;
+      border-left-color: #0ea5e9;
+    }
+
+    /* KPI GRID */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .kpi-card {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .kpi-title {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-strong);
+    }
+
+    /* KPI PRICE M² */
+    .kpi-meter {
+      margin-top: 6px;
+      padding: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(30, 41, 59, 0.9));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .meter-track {
+      position: relative;
+      width: 100%;
+      height: 16px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.12);
+      overflow: hidden;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+
+    .meter-range {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      background: linear-gradient(90deg, #22c55e, #f59e0b, #ef4444);
+      border-radius: 999px;
+      opacity: 0.8;
+    }
+
+    .meter-pointer {
+      position: absolute;
+      top: -6px;
+      width: 2px;
+      height: 28px;
+      background: var(--text-strong);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+    }
+
+    .meter-pointer::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--text-strong);
+      border: 2px solid #0f172a;
+    }
+
+    .meter-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: var(--text-muted-2);
+      margin-top: 6px;
+    }
+
+    .meter-values {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+      font-size: 11px;
+    }
+
+    .meter-pill {
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: rgba(148, 163, 184, 0.12);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .meter-pill strong { color: var(--text-strong); font-size: 12px; }
+
+    body.theme-light .kpi-card {
+      background: #ffffff;
+      border-color: var(--border);
+    }
+
+    body.theme-light .kpi-meter {
+      background: linear-gradient(135deg, #ffffff, #f8fafc);
+      border-color: var(--border);
+      box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.05);
+    }
+
+    body.theme-light .meter-track {
+      background: rgba(15, 23, 42, 0.08);
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.08);
+    }
+
+    body.theme-light .meter-labels {
+      color: var(--text-sec);
+    }
+
+    body.theme-light .meter-pill {
+      background: #f8fafc;
+      border-color: var(--border);
+    }
+
+    .meter-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: rgba(6, 182, 212, 0.12);
+      color: var(--accent-cyan);
+      font-weight: 600;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    canvas {
+      max-height: 180px;
+    }
+
+    /* PROGRESS */
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(148, 163, 184, 0.14);
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 5px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #a855f7, #ec4899);
+      border-radius: 3px;
+      transition: width 0.3s;
+    }
+
+    /* TEXTAREA */
+    textarea {
+      width: 100%;
+      min-height: 190px;
+      padding: 10px 11px;
+      background: var(--field-bg);
+      border: 1px solid var(--field-border);
+      border-radius: 9px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--field-text);
+      resize: vertical;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent-cyan);
+      background: var(--field-active-bg);
+      box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.7);
+    }
+
+    /* BUTTONS */
+    .btn-group {
+      display: flex;
+      gap: 8px;
+      margin: 12px 0;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 8px 13px;
+      border: none;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease-out;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      color: white;
+      box-shadow: 0 10px 25px rgba(236, 72, 153, 0.35);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 14px 35px rgba(236, 72, 153, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+    }
+
+    body.theme-light .btn-secondary {
+      background: linear-gradient(145deg, #ffffff, #f1f5f9 55%, #e9edf5);
+      border-color: rgba(15, 23, 42, 0.32);
+      color: #0f172a;
+      box-shadow: 0 12px 22px rgba(15, 23, 42, 0.1);
+      text-shadow: none;
+    }
+
+    body.theme-light .btn-secondary:hover {
+      background: linear-gradient(145deg, #e2ecff, #e0f2fe);
+      color: #0f172a;
+      border-color: rgba(14, 165, 233, 0.6);
+      box-shadow: 0 14px 26px rgba(15, 23, 42, 0.14);
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: radial-gradient(circle at top, rgba(30, 64, 175, 0.35) 0, transparent 55%),
+                  linear-gradient(145deg, #020617 0%, #020617 100%);
+      border: 1px solid rgba(55, 65, 81, 0.95);
+      border-radius: 13px;
+      padding: 18px 18px 16px;
+      max-width: 520px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow);
+    }
+
+    .modal-title {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--text-strong);
+    }
+
+    body.theme-light .modal-content {
+      background: #ffffff;
+      border-color: var(--border);
+    }
+
+    .modal-footer {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(55, 65, 81, 0.9);
+    }
+
+    #importFileInputModal {
+      margin-top: 10px;
+    }
+
+    #importFileInput {
+      display: none;
+    }
+
+    .lot-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+
+    .switch input { opacity: 0; width: 0; height: 0; }
+
+    .switch-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #111827;
+      transition: .25s;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+    }
+
+    .switch-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 2px;
+      background-color: var(--text-muted-2);
+      transition: .25s;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    }
+
+    .switch input:checked + .switch-slider {
+      background: linear-gradient(135deg, #22c55e, #06b6d4);
+      border-color: rgba(6, 182, 212, 0.6);
+    }
+
+    .switch input:checked + .switch-slider:before {
+      transform: translateX(18px);
+      background: #fff;
+    }
+
+    .lot-tooltip {
+      position: relative;
+      cursor: help;
+    }
+
+    .lot-tooltip:hover::after {
+      content: attr(data-tip);
+      position: absolute;
+      left: 0;
+      top: 125%;
+      background: #111827;
+      color: var(--text-strong);
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      border-radius: 8px;
+      width: 240px;
+      box-shadow: var(--shadow);
+      z-index: 3;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .budget-kpi {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      align-items: center;
+      background: var(--surface-light);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 12px;
+      margin-top: 12px;
+    }
+
+    .budget-meter { display: flex; flex-direction: column; gap: 6px; }
+    .budget-track { position: relative; height: 16px; background: linear-gradient(90deg, #22c55e 0%, #22c55e 45%, #fbbf24 80%, #ef4444 100%); border-radius: 999px; overflow: hidden; border: 1px solid var(--border); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06); }
+    .budget-fill { position: absolute; inset: 0; width: 0%; background: linear-gradient(90deg, rgba(255,255,255,0.22), rgba(255,255,255,0.05)); transition: width 0.35s ease; }
+    .budget-pointer { position: absolute; top: 50%; width: 12px; height: 28px; background: #0ea5e9; transform: translate(-50%, -50%); box-shadow: 0 6px 16px rgba(14,165,233,0.35), 0 0 0 2px rgba(2,6,23,0.65); border-radius: 6px; transition: left 0.35s ease, background 0.35s ease; display: grid; place-items: center; color: #f8fafc; font-size: 10px; font-weight: 800; }
+    .budget-pointer::after { content: attr(data-value); position: absolute; bottom: 110%; background: var(--surface); color: var(--text); padding: 4px 6px; border-radius: 6px; border: 1px solid var(--border); box-shadow: var(--shadow); white-space: nowrap; font-size: 10px; font-weight: 700; }
+    .budget-scale { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-sec); }
+
+    .budget-status {
+      font-weight: 700;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .budget-status.bad { color: #ef4444; }
+    .budget-status.warn { color: #f59e0b; }
+    .budget-status.ok { color: #22c55e; }
+
+    .attachments {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .attachment-card {
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 10px;
+      background: rgba(15, 23, 42, 0.3);
+      color: var(--text);
+      font-size: 12px;
+    }
+
+    .attachment-card img {
+      border-radius: 8px;
+      max-height: 140px;
+      object-fit: cover;
+      width: 100%;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .attachment-card img:hover { transform: scale(1.02); }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .lightbox.active { opacity: 1; pointer-events: auto; }
+
+    .lightbox-content {
+      position: relative;
+      background: #0b1020;
+      padding: 14px;
+      border-radius: 14px;
+      max-width: 90vw;
+      max-height: 85vh;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.65);
+    }
+
+    body.theme-light .lightbox-content {
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 18px 40px rgba(15,23,42,0.12);
+    }
+
+    .lightbox-content img {
+      max-width: 76vw;
+      max-height: 72vh;
+      border-radius: 10px;
+      display: block;
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      pointer-events: none;
+    }
+
+    .lightbox-btn {
+      pointer-events: auto;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 8px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid var(--border);
+      color: #fff;
+      border-radius: 10px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    body.theme-light .lightbox-content { background: #ffffff; color: var(--text); box-shadow: 0 18px 38px rgba(15,23,42,0.25); }
+    body.theme-light .lightbox-btn,
+    body.theme-light .lightbox-close {
+      background: #f8fafc;
+      border-color: rgba(15,23,42,0.18);
+      color: var(--primary);
+    }
+
+    .habitat-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+    .habitat-badge { padding: 6px 10px; border-radius: 10px; border: 1px solid var(--border); cursor: pointer; color: var(--text-sec); background: rgba(15,23,42,0.6); font-weight: 600; font-size: 12px; }
+    .habitat-badge.active { color: #0ea5e9; border-color: rgba(6,182,212,0.6); background: rgba(6,182,212,0.12); box-shadow: 0 0 0 1px rgba(14,165,233,0.35); }
+
+    body.theme-light .habitat-badge {
+      background: #f8fafc;
+      color: var(--text);
+    }
+
+    body.theme-light .habitat-badge.active {
+      color: var(--accent-cyan);
+      border-color: rgba(14, 165, 233, 0.55);
+      background: rgba(14,165,233,0.12);
+    }
+
+    .kpi-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 10px; }
+    .kpi-pill { padding: 10px; border-radius: 12px; border: 1px solid var(--border); background: rgba(15,23,42,0.6); display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+    .kpi-pill strong { color: var(--text-strong); font-size: 16px; }
+
+    body.theme-light .kpi-pill { background: #f8fafc; }
+    body.theme-light .kpi-pill strong { color: var(--primary); }
+
+    .lot-focus {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .lot-focus-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px;
+      background: rgba(6, 182, 212, 0.05);
+      font-size: 12px;
+    }
+
+    .lot-focus-card .title { display: flex; align-items: center; gap: 6px; font-weight: 700; color: var(--accent-cyan); }
+    .lot-focus-card .price { color: var(--accent-green); font-weight: 700; }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface-light);
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-1px);
+    }
+
+    .info-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: var(--surface-light);
+      border: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .info-chip:hover { background: rgba(14,165,233,0.12); color: var(--primary); }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+
+    .option-card {
+      padding: 12px;
+      background: var(--surface-light);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: grid;
+      gap: 6px;
+      position: relative;
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .option-card.active { border-color: rgba(14,165,233,0.6); box-shadow: 0 10px 30px rgba(14,165,233,0.18); }
+    .option-card:hover { border-color: rgba(14,165,233,0.35); }
+    .option-card:focus-visible { outline: 2px solid rgba(14,165,233,0.8); outline-offset: 2px; }
+    .option-title { font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .option-desc { font-size: 12px; color: var(--text-sec); }
+    .option-price { font-size: 12px; font-weight: 700; color: var(--accent-cyan); }
+
+    .hint-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .hint-pill {
+      position: relative;
+      padding: 6px 10px;
+      border-radius: 10px;
+      border: 1px dashed var(--border);
+      font-size: 11px;
+      color: var(--text-sec);
+      cursor: help;
+      background: var(--chip-bg);
+    }
+
+    .hint-pill:hover::after {
+      content: attr(data-hint);
+      position: absolute;
+      left: 0;
+      top: 120%;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      width: 240px;
+      z-index: 4;
+    }
+
+    .print-menu { display: none; }
+
+    @page {
+      size: A4 portrait;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { background: #ffffff !important; color: #0f172a !important; }
+      body::before { display: none; }
+      .sidebar, .sidebar-toggle, .theme-toggle, .print-controls, .print-menu { display: none !important; }
+      .main { padding: 0; }
+      .main-inner { margin-top: 0; }
+      [data-print-index] { page-break-after: always; page-break-inside: avoid; position: relative; }
+      [data-print-index]:not([data-print-index="1"]) { page-break-before: always; }
+      [data-print-index]:last-of-type { page-break-after: auto; }
+      .print-page-label, .no-print { display: none !important; }
+    }
+
+  </style>
+
+<link rel="manifest" href="estimatif-app-manifest.json">
+<meta name="theme-color" content="#020617">
+
+<!-- iOS / Apple -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Estimatif travaux">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+</head>
+<body>
+  <div class="print-menu">
+    <div class="print-menu-title">Menus impression <span class="current-label" id="printMenuActive">Menu 1 · Saisie & configuration (Page 1)</span></div>
+    <div class="print-menu-links" id="printMenuLinks">
+      <a data-target="section-saisie" href="#section-saisie">Menu 1 · Saisie & configuration</a>
+      <a data-target="section-resultats" href="#section-resultats">Menu 2 · Résultats</a>
+      <a data-target="section-kpi" href="#section-kpi">Menu 3 · KPI</a>
+      <a data-target="section-export" href="#section-export">Menu 4 · Export texte</a>
+    </div>
+  </div>
+  <div class="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">€</div>
+        <div>
+          <div class="logo-text">Estimatif</div>
+          <div class="logo-sub">Avant-projet · IDF</div>
+        </div>
+      </div>
+
+      <button id="sidebarToggleSide" class="sidebar-toggle full" type="button" aria-pressed="false" data-sidebar-toggle>
+        📑 Masquer le menu
+      </button>
+
+      <div class="nav-section">
+        <div class="nav-title">Navigation</div>
+        <div class="nav-item active" data-section="section-saisie">
+          <span class="icon">📋</span><span>Saisie</span>
+        </div>
+        <div class="nav-item" data-section="section-resultats">
+          <span class="icon">📊</span><span>Résultats</span>
+        </div>
+        <div class="nav-item" data-section="section-kpi">
+          <span class="icon">📈</span><span>KPI</span>
+        </div>
+        <div class="nav-item" data-section="section-export">
+          <span class="icon">📝</span><span>Export texte</span>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-title">Actions</div>
+        <div class="nav-item" onclick="exportProject()">
+          <span class="icon">💾</span><span>Exporter JSON</span>
+        </div>
+        <div class="nav-item" onclick="saveHtmlSnapshot()">
+          <span class="icon">🖼️</span><span>Copie HTML</span>
+        </div>
+        <div class="nav-item" onclick="openImportModal()">
+          <span class="icon">📂</span><span>Importer JSON</span>
+        </div>
+        <div class="nav-item" onclick="resetProject()">
+          <span class="icon">🔄</span><span>Réinitialiser</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <div class="main-inner">
+        <header class="header">
+          <div class="header-left">
+            <h1 class="header-title">Estimatif avant-projet</h1>
+            <div class="header-subtitle">
+              Fourchette travaux réaliste pour visite conseil · IDF 2025+
+            </div>
+            <div class="version-badge">Version V33</div>
+          </div>
+          <div class="header-actions">
+            <button id="sidebarToggleHeader" class="sidebar-toggle" type="button" aria-pressed="false" data-sidebar-toggle>
+              📑 Masquer le menu
+            </button>
+            <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false">
+              🌙 Mode clair
+            </button>
+            <div class="status">
+              <div class="dot"></div>
+              <span>Prêt pour une nouvelle estimation</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="print-controls">
+          <div class="control-title">
+            Menus impression (A4 portrait)
+            <div class="print-actions">
+              <button class="print-btn" type="button" id="printNow">🖨️ Imprimer</button>
+            </div>
+          </div>
+
+          <div class="print-control-row">
+            <label for="printLabelSaisie">Menu 1 · Page 1</label>
+            <div class="print-control-inputs">
+              <input id="printNumberSaisie" class="print-number-input" data-target="section-saisie" type="number" min="1" max="20" value="1" aria-label="Numéro du menu Saisie">
+              <input id="printLabelSaisie" class="print-label-input" data-target="section-saisie" value="Saisie & configuration" placeholder="Libellé du menu" />
+            </div>
+          </div>
+
+          <div class="print-control-row">
+            <label for="printLabelResultats">Menu 2 · Page 2</label>
+            <div class="print-control-inputs">
+              <input id="printNumberResultats" class="print-number-input" data-target="section-resultats" type="number" min="1" max="20" value="2" aria-label="Numéro du menu Résultats">
+              <input id="printLabelResultats" class="print-label-input" data-target="section-resultats" value="Résultats & synthèse" placeholder="Libellé du menu" />
+            </div>
+          </div>
+
+          <div class="print-control-row">
+            <label for="printLabelKpi">Menu 3 · Page 3</label>
+            <div class="print-control-inputs">
+              <input id="printNumberKpi" class="print-number-input" data-target="section-kpi" type="number" min="1" max="20" value="3" aria-label="Numéro du menu KPI">
+              <input id="printLabelKpi" class="print-label-input" data-target="section-kpi" value="Indicateurs clés" placeholder="Libellé du menu" />
+            </div>
+          </div>
+
+          <div class="print-control-row">
+            <label for="printLabelExport">Menu 4 · Page 4</label>
+            <div class="print-control-inputs">
+              <input id="printNumberExport" class="print-number-input" data-target="section-export" type="number" min="1" max="20" value="4" aria-label="Numéro du menu Export">
+              <input id="printLabelExport" class="print-label-input" data-target="section-export" value="Export & texte" placeholder="Libellé du menu" />
+            </div>
+          </div>
+
+          <div class="print-hint">🖨️ Une page A4 = un menu numéroté. Les numéros sont repris dans les badges des pages et dans la barre de menu impression.</div>
+        </div>
+
+        <!-- CLIENT & CONFIG -->
+        <section id="section-saisie" data-print-label="Saisie & configuration" data-print-index="1">
+          <div class="print-page-label" data-print-label-display>Menu 1 · Saisie & configuration — Page 1</div>
+          <div class="card-header-line">
+            <div class="section-title" style="border: none; padding: 0; margin: 0;">Configuration & Saisie</div>
+            <div class="card-desc" style="margin: 0;">Renseignez les informations essentielles, le résumé se met à jour en direct.</div>
+          </div>
+
+          <div class="content-grid">
+            <div class="card">
+              <div class="card-title"><span class="card-icon">👤</span> Client & Projet</div>
+              <div class="card-desc">Informations de base reprises dans le texte et les exports.</div>
+
+              <div class="section">
+                <label>Nom du client</label>
+                <input type="text" id="clientName" placeholder="M. et Mme Dupont" onchange="updateSummary()">
+
+                <label>Projet / Adresse</label>
+                <input type="text" id="clientProject" placeholder="Maison – Rosny-sous-Bois" onchange="updateSummary()">
+
+                <div class="grid-2">
+                  <div>
+                    <label>Type RDV</label>
+                    <select id="clientType" onchange="updateSummary()">
+                      <option value="VISITE">Visite sur site</option>
+                      <option value="VISIO">Visio</option>
+                      <option value="TEL">Téléphone</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Date</label>
+                    <input type="date" id="clientDate" onchange="updateSummary()">
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">Nature du projet</div>
+                <select id="nature" onchange="updateAll()">
+                  <option value="REN_L">🔨 Rénovation légère (rafraîchissement)</option>
+                  <option value="REN_M" selected>🔨 Rénovation standard (tous corps d'état)</option>
+                  <option value="REN_H">🔨 Rénovation lourde / restructuration</option>
+                  <option value="EXT">🏗️ Extension de maison</option>
+                  <option value="SUREL">🏗️ Surélévation</option>
+                </select>
+                <div class="hint-row">
+                  <div class="hint-pill" data-hint="Interventions ponctuelles ou pièce par pièce. Peu d'impact structurel.">Rafraîchissement</div>
+                  <div class="hint-pill" data-hint="Réorganisation des volumes, reprises réseaux et finitions complètes.">Standard</div>
+                  <div class="hint-pill" data-hint="Ouvertures structurelles, reprises de planchers, redistribution forte.">Lourde</div>
+                  <div class="hint-pill" data-hint="Création de surface neuve attenante, liaison existant/neuf.">Extension</div>
+                  <div class="hint-pill" data-hint="Nouveau niveau en toiture avec renforts structurels.">Surélévation</div>
+                  <button class="info-chip" type="button" onclick="openGuideModal()">ℹ️ Détails & exemples</button>
+                </div>
+                <div class="alert alert-info" id="natureExplain"></div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">Type d'habitat</div>
+                <div class="habitat-badges">
+                  <button class="habitat-badge active" id="habitatMaison" onclick="setHabitat('MAISON')">🏡 Maison</button>
+                  <button class="habitat-badge" id="habitatAppart" onclick="setHabitat('APPART')">🏢 Appartement</button>
+                  <button class="habitat-badge" id="habitatBureau" onclick="setHabitat('BUREAU')">🏢 Bureau</button>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">Finition</div>
+                <div class="toggle-group">
+                  <button class="toggle-btn active" onclick="setFinition('NORMAL', this)">⚪ Standard</button>
+                  <button class="toggle-btn" onclick="setFinition('HAUT', this)">🟣 Haut de gamme</button>
+                </div>
+                <div class="hint-row">
+                  <div class="hint-pill" data-hint="Revêtements classiques, sanitaires qualitatifs, éclairage efficace.">Standard = confort durable</div>
+                  <div class="hint-pill" data-hint="Matériaux nobles, éclairage design, sanitaire premium, menuiseries sur-mesure.">Haut de gamme = signature</div>
+                  <button class="info-chip" type="button" onclick="openGuideModal()">🤝 Aide au discours client</button>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">Menuiseries</div>
+                <div class="toggle-group">
+                  <button class="toggle-btn active" onclick="setMenu('STD', this)">📦 Public</button>
+                  <button class="toggle-btn" onclick="setMenu('SEMI', this)">⚙️ Semi-mesure</button>
+                  <button class="toggle-btn" onclick="setMenu('SUR', this)">⭐ Sur-mesure</button>
+                </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">Options spécifiques rénovation</div>
+                <div class="card-desc" style="margin:4px 0 10px;">Affinez le chiffrage en activant les lots fréquents en rénovation lourde (fenêtres, confort, réseaux).
+                  <button class="info-chip" type="button" onclick="openGuideModal()">ℹ️ Comprendre les lots</button>
+                </div>
+                <div class="option-grid" id="specialOptionsGrid">
+                  <button class="option-card" type="button" data-option="fenetres" onclick="toggleSpecialOption('fenetres')">
+                    <div class="option-title">🪟 Menuiseries extérieures complètes</div>
+                    <div class="option-desc">Remplacement fenêtres/baies + occultations, ajustements tableaux.</div>
+                    <div class="option-price">+140 à 240 €/m²</div>
+                  </button>
+                  <button class="option-card" type="button" data-option="thermique" onclick="toggleSpecialOption('thermique')">
+                    <div class="option-title">🌡️ Performance thermique renforcée</div>
+                    <div class="option-desc">ITE/ITI optimisées, traitement ponts thermiques, contrôle fuites d'air.</div>
+                    <div class="option-price">+180 à 260 €/m²</div>
+                  </button>
+                  <button class="option-card" type="button" data-option="reseaux" onclick="toggleSpecialOption('reseaux')">
+                    <div class="option-title">🚿 Pièces humides & réseaux premium</div>
+                    <div class="option-desc">Reprises plomberie, élec, ventilation + salles d'eau hautement équipées.</div>
+                    <div class="option-price">+110 à 180 €/m²</div>
+                  </button>
+                  <button class="option-card" type="button" data-option="acoustique" onclick="toggleSpecialOption('acoustique')">
+                    <div class="option-title">🎧 Confort acoustique</div>
+                    <div class="option-desc">Cloisons phoniques, sous-couches, traitements plafond/murs ciblés.</div>
+                    <div class="option-price">+70 à 120 €/m²</div>
+                  </button>
+                </div>
+                <div id="specialOptionsSummary" class="alert alert-info" style="margin-top:10px;">Activez une option pour voir son impact chiffré.</div>
+              </div>
+
+              <div class="section">
+                <label>Niveaux traités</label>
+                <input type="number" id="levels" value="1" min="1" onchange="updateAll()">
+
+                <label>Surface globale (m²)</label>
+                <input type="number" id="globalArea" value="0" min="0" onchange="updateAll()">
+              </div>
+            </div>
+
+            <!-- STATS SUMMARY -->
+            <div class="card">
+              <div class="card-title"><span class="card-icon">📊</span> Résumé projet</div>
+              <div class="card-desc">Vue synthétique pour vérifier rapidement les données saisies.</div>
+
+              <div id="clientSummary" class="alert alert-info" style="margin-bottom: 12px; display:none;"></div>
+
+              <div class="grid-2">
+                <div class="stat-box">
+                  <div class="stat-label">Nature</div>
+                  <div class="stat-value" id="natureName">—</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Finition</div>
+                  <div class="stat-value" id="finitionName">—</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Habitat</div>
+                  <div class="stat-value" id="habitatName">—</div>
+                </div>
+              </div>
+
+              <div style="margin-top: 12px;">
+                <div class="stat-box">
+                  <div class="stat-label">Pièces / Surface saisies</div>
+                  <div class="stat-value">
+                    <span id="totalRooms">0</span> · <span id="totalArea">0</span> m²
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 12px;">
+                <div class="stat-box">
+                  <div class="stat-label">Gamme de prix au m²</div>
+                  <div class="stat-value" id="priceRange">—</div>
+                </div>
+              </div>
+
+              <div class="kpi-strip" id="kpiStrip"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-title"><span class="card-icon">💼</span> Budget & pièces jointes</div>
+              <div class="card-desc">Comparez immédiatement avec le budget client et collectez ses visuels.</div>
+
+              <div class="section">
+                <label>Budget client (TTC)</label>
+                <input type="number" id="clientBudget" min="0" value="0" placeholder="Ex. 250000" onchange="updateBudgetKpi()" oninput="updateBudgetKpi()">
+
+                <div class="budget-kpi">
+                  <div>
+                    <div style="font-size:12px; color: var(--text-sec);">Alignement budget / estimation</div>
+                    <div id="budgetStatus" class="budget-status warn">—</div>
+                  </div>
+                  <div class="budget-meter">
+                    <div class="budget-scale"><span>0%</span><span>50%</span><span>100%</span><span>150%</span><span>200%</span></div>
+                    <div class="budget-track">
+                      <div id="budgetMeterFill" class="budget-fill"></div>
+                      <div id="budgetPointer" class="budget-pointer" style="left:0%;"></div>
+                    </div>
+                    <div style="font-size:11px; color:var(--text-sec); margin-top:6px;">Plage recommandée : 80% à 120% de l'estimation médiane</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
+                <label>Photos / plans du client</label>
+                <input type="file" id="attachmentInput" accept="image/*" capture="environment" multiple>
+                <div class="attachments" id="attachmentsList"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PIÈCES TABLE -->
+          <div class="card">
+            <div class="card-title"><span class="card-icon">🏠</span> Pièces principales</div>
+            <div class="card-desc">Saisir le nombre et la surface des pièces pour affiner le calcul.</div>
+
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Pièce</th>
+                    <th style="width: 60px;">Nb</th>
+                    <th style="width: 70px;">m²</th>
+                    <th style="width: 70px; text-align:center;">Moy.</th>
+                  </tr>
+                </thead>
+                <tbody id="roomsTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- RESULTATS + KPI -->
+        <section id="section-resultats" data-print-label="Résultats & synthèse" data-print-index="2">
+          <div class="print-page-label" data-print-label-display>Menu 2 · Résultats & synthèse — Page 2</div>
+          <div class="card-header-line">
+            <div class="section-title" style="border: none; padding: 0; margin: 0;">Résultats & Visualisations</div>
+            <div class="card-desc" style="margin: 0;">Lecture directe du budget et des graphes sans faire défiler toute la page.</div>
+          </div>
+
+          <div class="grid col-2">
+            <div class="card">
+              <div class="card-title"><span class="card-icon">💰</span> Budget estimé</div>
+              <div class="card-desc">Enveloppe globale pour ce projet, à expliquer au client comme un ordre de grandeur.</div>
+
+              <div id="mainResults"></div>
+              <div id="warningsBlock"></div>
+            </div>
+
+            <!-- KPI -->
+            <section id="section-kpi" style="width: 100%;" data-print-label="Indicateurs clés" data-print-index="3">
+              <div class="print-page-label" data-print-label-display>Menu 3 · Indicateurs clés — Page 3</div>
+              <div class="card">
+                <div class="card-title"><span class="card-icon">📈</span> Indicateurs graphiques</div>
+                <div class="card-desc">Lecture visuelle pour situer le projet (prix au m², poids des lots, pièces nobles/techniques).</div>
+
+                <div class="section">
+                  <div class="section-title">Prix moyen au m²</div>
+                  <div class="kpi-meter">
+                    <div class="meter-track">
+                      <div id="meterRange" class="meter-range" style="left:0%; width:0%;"></div>
+                      <div id="meterPointer" class="meter-pointer" style="left:0%"></div>
+                    </div>
+                    <div class="meter-labels">
+                      <span id="gaugeMin">Min</span>
+                      <span id="gaugeMax">Max</span>
+                    </div>
+                    <div class="meter-values">
+                      <div class="meter-pill">
+                        <span>Plancher</span>
+                        <strong id="meterMinVal">—</strong>
+                      </div>
+                      <div class="meter-pill">
+                        <span>Médiane</span>
+                        <strong id="gaugeValue">—</strong>
+                      </div>
+                      <div class="meter-pill">
+                        <span>Plafond</span>
+                        <strong id="meterMaxVal">—</strong>
+                      </div>
+                    </div>
+                    <div id="meterStatus" class="meter-status" aria-live="polite">Renseignez des surfaces</div>
+                  </div>
+                </div>
+
+                <div class="kpi-grid">
+                  <div class="kpi-card">
+                    <div class="kpi-title">📊 Ventilation des lots</div>
+                    <canvas id="lotsChart"></canvas>
+                  </div>
+
+                  <div class="kpi-card">
+                    <div class="kpi-title">🎯 Nobles vs techniques</div>
+                    <div id="noblesTech"></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <!-- LOTS DETAIL -->
+        <section id="section-special-lots">
+          <div class="card" id="specialLotsCard" style="display:none;">
+            <div class="card-title"><span class="card-icon">🏗️</span> Lots critiques par nature</div>
+            <div class="card-desc">Pour les extensions et surélévations, focus sur toiture, exploitation et enveloppe.</div>
+            <div class="lot-focus" id="specialLots"></div>
+          </div>
+        </section>
+
+        <section>
+          <div class="card">
+            <div class="card-title"><span class="card-icon">🧱</span> Ventilation par lots</div>
+            <div class="card-desc">Répartition indicative par grands postes sur l’enveloppe globale.</div>
+
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Lot</th>
+                    <th>%</th>
+                    <th style="text-align: right;">Min.</th>
+                    <th style="text-align: right;">Max.</th>
+                    <th style="text-align:center;">€/m²</th>
+                    <th style="text-align:center;">Présent</th>
+                  </tr>
+                </thead>
+                <tbody id="lotsTable"></tbody>
+              </table>
+            </div>
+            <div id="lotsEmpty" class="alert alert-info">Remplissez les surfaces pour afficher une ventilation par lots.</div>
+          </div>
+        </section>
+
+        <section class="no-print">
+          <div class="card">
+            <div class="card-title"><span class="card-icon">🧭</span> Menu architecte</div>
+            <div class="card-desc">Roadmap interne basée sur les lots actifs. Non transmise au client.</div>
+
+            <div class="btn-group">
+              <button id="architectToggleBtn" class="btn-primary">🧾 Afficher la feuille de route</button>
+              <button class="btn-secondary" onclick="saveStateToFile()">💾 Sauvegarder où je veux</button>
+            </div>
+
+            <div id="architectPanel" class="architect-panel" aria-hidden="true">
+              <div class="architect-panel-header">
+                <div class="architect-panel-title">Feuille de route architecte</div>
+                <button id="architectCloseBtn" class="btn-secondary" type="button">Fermer</button>
+              </div>
+              <div id="architectContent" class="architect-panel-body">Ajoutez au moins une surface pour générer la feuille de route.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- EXPORT TEXT -->
+        <section id="section-export" data-print-label="Export & texte" data-print-index="4">
+          <div class="print-page-label" data-print-label-display>Menu 4 · Export & texte — Page 4</div>
+          <div class="card no-print">
+            <div class="card-title"><span class="card-icon">📝</span> Texte client</div>
+            <div class="card-desc">Texte prêt à coller dans un mail d’estimation sommaire.</div>
+
+            <div class="btn-group">
+              <button class="btn-primary" onclick="generateText()">📝 Générer</button>
+              <button class="btn-secondary" onclick="copyText(this)">📋 Copier</button>
+            </div>
+
+            <textarea id="exportText" placeholder="Clique sur « Générer » pour remplir le texte d’estimation..."></textarea>
+
+            <div class="alert alert-info">
+              💡 Pour partager le texte, copiez-le ou utilisez le raccourci Ctrl+P du navigateur après avoir masqué le menu latéral.
+            </div>
+          </div>
+
+          <div class="card no-print">
+            <div class="card-title"><span class="card-icon">📷</span> Capture rapide</div>
+            <div class="card-desc">Préparez un aperçu centré à partager sans afficher le menu gauche.</div>
+
+            <div class="btn-group">
+              <button class="sidebar-toggle" type="button" aria-pressed="false" data-sidebar-toggle>📑 Masquer le menu</button>
+              <button class="btn-secondary" type="button" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">🔝 Remonter en haut</button>
+            </div>
+
+            <div class="alert alert-info">
+              Une fois le menu masqué, utilisez le raccourci Ctrl+P de votre navigateur pour imprimer ou enregistrer ce qui est affiché à l'écran.
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <input type="file" id="importFileInput" accept=".json" style="display:none;">
+            <button class="btn-secondary" onclick="exportProject()">💾 Exporter JSON (choisir dossier)</button>
+            <button class="btn-secondary" onclick="saveHtmlSnapshot()">💾 Copie HTML (choisir dossier)</button>
+            <button class="btn-secondary" onclick="triggerImport()">📂 Importer JSON</button>
+            <button class="btn-secondary" onclick="resetProject()">🔄 Réinitialiser</button>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- IMPORT MODAL -->
+  <div id="importModal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <div class="modal-title">Importer un projet</div>
+      <p style="color: var(--text-sec); margin-bottom: 10px; font-size:12px;">Sélectionnez un fichier JSON précédemment exporté depuis l'outil.</p>
+      <input type="file" id="importFileInputModal" accept=".json">
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('importModal')">Annuler</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUIDE MODAL -->
+  <div id="guideModal" class="modal" aria-hidden="true">
+    <div class="modal-content" style="max-width: 760px;">
+      <div class="modal-title">Comprendre les gammes, natures et budgets</div>
+      <div class="card-desc" style="margin-bottom: 12px;">Support rapide pour expliquer au client les niveaux de prestation et les impacts sur le budget.</div>
+
+      <div style="display:grid; gap:10px; margin-bottom:12px;">
+        <div class="alert alert-info">"Haut de gamme" = matériaux nobles, confort accru et finitions design. Il ne s'agit pas d'un choix élitiste mais d'une enveloppe permettant de tenir les ambitions (luminaires design, sanitaires premium, menuiseries sur mesure).</div>
+        <div class="alert alert-success">L'alignement budget/estimation est lisible sur le curseur : 100% = budget au niveau médian. 80-120% = zone idéale, <80% = arbitrages à prévoir, >140% = budget confortable.</div>
+      </div>
+
+      <div style="display:grid; gap:12px;">
+        <div>
+          <div style="font-weight:700; margin-bottom:6px;">Natures de travaux</div>
+          <ul style="color:var(--text-sec); font-size:13px; line-height:1.5; padding-left:18px;">
+            <li><strong>Rafraîchissement :</strong> finitions et corrections locales, sans impact structurel.</li>
+            <li><strong>Standard :</strong> redistribution cohérente, réseaux refaits, finitions complètes.</li>
+            <li><strong>Lourde :</strong> ouvertures structurelles, planchers repris, réfection totale des réseaux.</li>
+            <li><strong>Extension / Surélévation :</strong> création de surface neuve avec enveloppe, structure et liaisons.</li>
+          </ul>
+        </div>
+
+        <div>
+          <div style="font-weight:700; margin-bottom:6px;">Finitions</div>
+          <ul style="color:var(--text-sec); font-size:13px; line-height:1.5; padding-left:18px;">
+            <li><strong>Standard :</strong> carrelage/finitions soignées, menuiseries catalogue, luminaires efficaces, sanitaires qualitatifs.</li>
+            <li><strong>Haut de gamme :</strong> matériaux nobles (bois massif, pierre), éclairage décoratif, rangements et menuiseries sur mesure, robinetterie premium.</li>
+          </ul>
+        </div>
+
+        <div>
+          <div style="font-weight:700; margin-bottom:6px;">Options ciblées</div>
+          <ul style="color:var(--text-sec); font-size:13px; line-height:1.5; padding-left:18px;">
+            <li><strong>Menuiseries extérieures :</strong> fenêtres/baies + occultations pour confort thermique et visuel.</li>
+            <li><strong>Performance thermique :</strong> isolation renforcée, traitement des ponts thermiques pour viser des gains d'énergie.</li>
+            <li><strong>Réseaux & pièces humides :</strong> lots techniques et salles d'eau équipées, utiles en rénovation lourde.</li>
+            <li><strong>Confort acoustique :</strong> protections phoniques pour voisinage, bureaux ou chambres.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-primary" onclick="closeModal('guideModal')">Compris</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <div class="lightbox-content">
+      <button class="lightbox-close" onclick="closeLightbox()">Fermer ✕</button>
+      <div class="lightbox-nav">
+        <button class="lightbox-btn" onclick="prevLightbox()">◀</button>
+        <button class="lightbox-btn" onclick="nextLightbox()">▶</button>
+      </div>
+      <img id="lightboxImage" src="" alt="Prévisualisation" />
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script>
+    // ===== CONFIG =====
+    const CONFIG = {
+      BASE_PRICE: {
+        REN_L: { NORMAL: 1000, HAUT: 1300 },
+        REN_M: { NORMAL: 1600, HAUT: 2100 },
+        REN_H: { NORMAL: 2600, HAUT: 3200 },
+        EXT: { NORMAL: 2300, HAUT: 2850 },
+        SUREL: { NORMAL: 2700, HAUT: 3400 }
+      },
+      PRICE_SPREAD: 0.15,
+      SPECIAL_OPTIONS: [
+        { id: "fenetres", label: "Menuiseries extérieures complètes", impact: { min: 140, avg: 190, max: 240 } },
+        { id: "thermique", label: "Performance thermique renforcée", impact: { min: 180, avg: 220, max: 260 } },
+        { id: "reseaux", label: "Pièces humides & réseaux premium", impact: { min: 110, avg: 145, max: 180 } },
+        { id: "acoustique", label: "Confort acoustique", impact: { min: 70, avg: 95, max: 120 } }
+      ],
+      MENUISERIE_FACTORS: { STD: 1.00, SEMI: 1.06, SUR: 1.12 },
+      COMMISSION_RATE: 0.08,
+      NATURE_DESC: {
+        REN_L: "Rénovation légère : travaux ciblés sur les finitions (peintures, sols, quelques remplacements ponctuels).",
+        REN_M: "Rénovation standard tous corps d'état : ensemble cohérent incluant second œuvre, techniques, finitions.",
+        REN_H: "Rénovation lourde / restructuration : interventions structurelles, redistribution importante du logement.",
+        EXT: "Extension de maison : création de surface supplémentaire, liaisons avec l'existant.",
+        SUREL: "Surélévation : création d'un niveau supplémentaire avec forte composante structurelle."
+      },
+      HABITATS: {
+        MAISON: {
+          label: "Maison individuelle",
+          rooms: ["ENTREE", "SAM", "SALON", "CUISINE", "WC", "CELLIER", "SDB", "CHAMBRE", "COMBLES", "SOUS_SOL"],
+          focus: "Structure + enveloppe + toiture"
+        },
+        APPART: {
+          label: "Appartement",
+          rooms: ["ENTREE", "SALON", "CUISINE", "WC", "SDB", "CHAMBRE", "COMBLES"],
+          focus: "Second œuvre + réseaux + menuiseries extérieures"
+        },
+        BUREAU: {
+          label: "Bureau / Tertiaire",
+          rooms: ["ACCUEIL", "OPEN_SPACE", "SALLE_REUNION", "BUREAU_PRIVE", "SANITAIRES", "CUISINE", "STOCK"],
+          focus: "Aménagements, cloisonnement, CVC, courant fort/faible"
+        }
+      },
+      SPECIAL_LOTS: {
+        EXT: [
+          { title: "Toiture / étanchéité", price: "180 – 320 €/m²", emoji: "🛖", desc: "Isolation, étanchéité bitume/EPDM, raccords avec l'existant." },
+          { title: "Exploitation toiture-terrasse", price: "220 – 380 €/m²", emoji: "🌿", desc: "Dalles sur plots, garde-corps, accès sécurisé." },
+          { title: "Structure & fondations renforcées", price: "650 – 900 €/m²", emoji: "🏗️", desc: "Sondes géotechniques, longrines, ancrages parasismiques." }
+        ],
+        SUREL: [
+          { title: "Rehausse charpente / ossature", price: "280 – 420 €/m²", emoji: "🪜", desc: "Charpente bois/métal, renforts porteurs, contreventement." },
+          { title: "Étanchéité et isolation toiture", price: "220 – 360 €/m²", emoji: "🧱", desc: "Sarking, pare-vapeur, traitement ponts thermiques." },
+          { title: "Accès & sécurités", price: "120 – 240 €/m²", emoji: "🛗", desc: "Escalier, trémies, garde-corps, protections incendie." }
+        ]
+      },
+      REPART_LOTS: {
+        REN_L: [
+          { lot: "Gros œuvre / structure", pct: 0.05, emoji: "🧱", desc: "Démolitions légères, reprises locales, petites ouvertures." },
+          { lot: "Second œuvre (cloisons, doublages)", pct: 0.20, emoji: "🧱", desc: "Cloisons, isolation, corrections d'aplomb, reprises supports." },
+          { lot: "Techniques (élec/plomberie/chauffage)", pct: 0.20, emoji: "⚡", desc: "Remises à niveau des réseaux, sécurité élec, plomberie standard." },
+          { lot: "Menuiseries intérieures", pct: 0.10, emoji: "🚪", desc: "Portes, rangements simples, reprises d'ajustement." },
+          { lot: "Menuiseries extérieures", pct: 0.05, emoji: "🪟", desc: "Remplacement ponctuel de fenêtres/volets, calfeutrements." },
+          { lot: "Finitions (sols, peintures)", pct: 0.30, emoji: "🎨", desc: "Sols, peintures, faïences, petites réparations décoratives." },
+          { lot: "Honoraires & divers", pct: 0.10, emoji: "📁", desc: "Honoraires, protections, nettoyages, aléas courants." }
+        ],
+        REN_M: [
+          { lot: "Gros œuvre / structure", pct: 0.10, emoji: "🧱", desc: "Ouvertures, reprises structurelles modérées, planchers locaux." },
+          { lot: "Second œuvre (cloisons, doublages)", pct: 0.25, emoji: "🧱", desc: "Recomposition des volumes, doublages acoustiques/thermiques." },
+          { lot: "Techniques (élec/plomberie/chauffage)", pct: 0.25, emoji: "⚡", desc: "Refonte réseaux, tableaux, réseaux sanitaires/chauffage." },
+          { lot: "Menuiseries intérieures", pct: 0.10, emoji: "🚪", desc: "Portes, agencements sur mesure légers, dressings simples." },
+          { lot: "Menuiseries extérieures", pct: 0.05, emoji: "🪟", desc: "Fenêtres, baies, protections solaires, occultations." },
+          { lot: "Finitions (sols, peintures)", pct: 0.15, emoji: "🎨", desc: "Revêtements, peinture de reprise, carrelages et faïences." },
+          { lot: "Honoraires & divers", pct: 0.10, emoji: "📁", desc: "Pilotage, études ponctuelles, protections, aléas." }
+        ],
+        REN_H: [
+          { lot: "Gros œuvre / structure", pct: 0.20, emoji: "🧱", desc: "Restructuration lourde, reprises en sous-œuvre, renforts porteurs." },
+          { lot: "Second œuvre (cloisons, doublages)", pct: 0.25, emoji: "🧱", desc: "Refonte complète des espaces, iso performante, phoniques." },
+          { lot: "Techniques (élec/plomberie/chauffage)", pct: 0.25, emoji: "⚡", desc: "Création/reprise complète des réseaux, CTA/PAC, sécurité." },
+          { lot: "Menuiseries intérieures", pct: 0.05, emoji: "🚪", desc: "Agencements sur mesure, menuiseries spéciales." },
+          { lot: "Menuiseries extérieures", pct: 0.05, emoji: "🪟", desc: "Menuiseries performantes, reprises d'étanchéité, garde-corps." },
+          { lot: "Finitions (sols, peintures)", pct: 0.10, emoji: "🎨", desc: "Finitions soignées, parements, matériaux nobles." },
+          { lot: "Honoraires & divers", pct: 0.10, emoji: "📁", desc: "MOE, BET, SPS, marges aléas lourds." }
+        ],
+        EXT: [
+          { lot: "Gros œuvre / structure", pct: 0.24, emoji: "🧱", desc: "Fondations, dallage, murs porteurs, étanchéité liaisons." },
+          { lot: "Second œuvre (cloisons, doublages)", pct: 0.18, emoji: "🧱", desc: "Enveloppe intérieure neuve, isolations RT/RE, cloisons." },
+          { lot: "Techniques (élec/plomberie/chauffage)", pct: 0.20, emoji: "⚡", desc: "Extensions réseaux, gestion PAC/émetteurs, ventilation." },
+          { lot: "Menuiseries intérieures", pct: 0.05, emoji: "🚪", desc: "Agencements neufs, portes, escaliers éventuels." },
+          { lot: "Menuiseries extérieures", pct: 0.08, emoji: "🪟", desc: "Façades vitrées, baies, protections solaires, VR motorisés." },
+          { lot: "Toiture / étanchéité", pct: 0.09, emoji: "🛖", desc: "Étanchéité liaison existant, isolants, couvertures spécifiques." },
+          { lot: "Exploitation toiture / terrasse", pct: 0.04, emoji: "🌿", desc: "Dalles sur plots, garde-corps, accès et protections." },
+          { lot: "Finitions (sols, peintures)", pct: 0.08, emoji: "🎨", desc: "Revêtements, peintures, habillages intérieurs." },
+          { lot: "Honoraires & divers", pct: 0.04, emoji: "📁", desc: "Honoraires, études sols/structure, sécurité chantier." }
+        ],
+        SUREL: [
+          { lot: "Gros œuvre / structure", pct: 0.30, emoji: "🧱", desc: "Renforts structurels, surélévation, étanchéité toiture/terrasse." },
+          { lot: "Second œuvre (cloisons, doublages)", pct: 0.18, emoji: "🧱", desc: "Création du nouveau niveau, isolations complexes." },
+          { lot: "Techniques (élec/plomberie/chauffage)", pct: 0.18, emoji: "⚡", desc: "Report réseaux en toiture, VMC, chauffage adapté, évac pluviales." },
+          { lot: "Menuiseries intérieures", pct: 0.05, emoji: "🚪", desc: "Accès (escaliers), garde-corps intérieurs, aménagements." },
+          { lot: "Menuiseries extérieures", pct: 0.05, emoji: "🪟", desc: "Châssis de toit, façades vitrées en attique, occultations." },
+          { lot: "Toiture / étanchéité", pct: 0.10, emoji: "🛖", desc: "Étanchéité, isolation performante, reprise complexes." },
+          { lot: "Exploitation toiture / terrasse", pct: 0.04, emoji: "🌿", desc: "Accès, terrasses techniques, garde-corps, végétalisation légère." },
+          { lot: "Finitions (sols, peintures)", pct: 0.08, emoji: "🎨", desc: "Finitions complètes du nouveau plateau." },
+          { lot: "Honoraires & divers", pct: 0.02, emoji: "📁", desc: "BET structure/toiture, études, assurances, aléas." }
+        ]
+      },
+      REPART_LOTS_BUREAU: {
+        REN_L: [
+          { lot: "Cloisonnement / aménagement", pct: 0.22, emoji: "🧱", desc: "Cloisons légères, petites adaptations de plateaux." },
+          { lot: "Courant fort / faible & IT", pct: 0.22, emoji: "💻", desc: "Réseaux data, prises, baie de brassage, wifi." },
+          { lot: "CVC / ventilation", pct: 0.16, emoji: "🌡️", desc: "Réglages, bouches, reprises légères de gaines." },
+          { lot: "Menuiseries & agencements", pct: 0.12, emoji: "🪑", desc: "Banques accueil, rangements, menuiseries intérieures." },
+          { lot: "Finitions sols / peintures", pct: 0.12, emoji: "🎨", desc: "Dalles moquette, peintures, signalétique." },
+          { lot: "Sécurité incendie / SSI", pct: 0.10, emoji: "🚨", desc: "Déclencheurs, blocs secours, alarme." },
+          { lot: "Honoraires & divers", pct: 0.06, emoji: "📁", desc: "Coordination, levées de réserves, aléas." }
+        ],
+        REN_M: [
+          { lot: "Cloisonnement / space planning", pct: 0.24, emoji: "🧱", desc: "Recomposition des plateaux, salles de réunion." },
+          { lot: "Courant fort / faible & IT", pct: 0.22, emoji: "💻", desc: "Réseaux CFO/CFA, baie serveur, wifi, contrôle accès." },
+          { lot: "CVC / ventilation", pct: 0.18, emoji: "🌡️", desc: "Recalage CTA, réseaux, reprise calorifuge." },
+          { lot: "Faux planchers / plafonds techniques", pct: 0.10, emoji: "🪜", desc: "Dalles, luminaires, correction acoustique." },
+          { lot: "Menuiseries extérieures", pct: 0.06, emoji: "🪟", desc: "Occultations, protection solaire, confort thermique." },
+          { lot: "Finitions sols / peintures", pct: 0.10, emoji: "🎨", desc: "Revêtements, peintures, habillages acoustiques." },
+          { lot: "Sécurité incendie / SSI", pct: 0.05, emoji: "🚨", desc: "SSI, sprinklage léger, signalétique sécurité." },
+          { lot: "Honoraires & divers", pct: 0.05, emoji: "📁", desc: "AMO, MOE, contrôles techniques." }
+        ],
+        REN_H: [
+          { lot: "Structure / renforts", pct: 0.20, emoji: "🏗️", desc: "Reprises structurelles, trémies, renforts planchers." },
+          { lot: "Cloisonnement / space planning", pct: 0.18, emoji: "🧱", desc: "Réorganisation lourde des plateaux, salles cloisonnées." },
+          { lot: "Courant fort / faible & IT", pct: 0.20, emoji: "💻", desc: "Réseaux complets, baie serveur, câblages neufs." },
+          { lot: "CVC / ventilation", pct: 0.18, emoji: "🌡️", desc: "Production chaud/froid, CTA, distribution air." },
+          { lot: "Faux planchers / plafonds", pct: 0.08, emoji: "🪜", desc: "Dalles techniques, plafonds rayonnants, éclairage." },
+          { lot: "Finitions sols / peintures", pct: 0.08, emoji: "🎨", desc: "Finitions premium, panneaux acoustiques." },
+          { lot: "Sécurité incendie / SSI", pct: 0.05, emoji: "🚨", desc: "SSI complet, compartimentage, sprinklage." },
+          { lot: "Honoraires & divers", pct: 0.03, emoji: "📁", desc: "AMO, BET, contrôles réglementaires." }
+        ]
+      },
+      ROOM_LIBRARY: {
+        ENTREE: { label: "Entrée", icon: "🚪" },
+        SAM: { label: "Salle à manger", icon: "🍽" },
+        SALON: { label: "Salon / Séjour", icon: "🛋" },
+        CUISINE: { label: "Cuisine", icon: "👨‍🍳" },
+        WC: { label: "WC", icon: "🚽" },
+        CELLIER: { label: "Cellier", icon: "🧺" },
+        SDB: { label: "Salle de bain", icon: "🛁" },
+        CHAMBRE: { label: "Chambre", icon: "🛏" },
+        COMBLES: { label: "Combles", icon: "🏚️" },
+        SOUS_SOL: { label: "Sous-sol", icon: "🏗️" },
+        ACCUEIL: { label: "Accueil / Hall", icon: "🪑" },
+        OPEN_SPACE: { label: "Open-space", icon: "👥" },
+        SALLE_REUNION: { label: "Salle de réunion", icon: "🗣️" },
+        BUREAU_PRIVE: { label: "Bureau fermé", icon: "💼" },
+        SANITAIRES: { label: "Sanitaires", icon: "🚻" },
+        STOCK: { label: "Local technique / Stock", icon: "📦" }
+      },
+      NOBLE_CODES: ["ENTREE", "SAM", "SALON", "CHAMBRE", "OPEN_SPACE", "SALLE_REUNION", "BUREAU_PRIVE", "ACCUEIL"],
+      TECH_CODES: ["CUISINE", "SDB", "WC", "CELLIER", "COMBLES", "SOUS_SOL", "SANITAIRES", "STOCK"]
+    };
+
+    const ROOM_CODES = Object.keys(CONFIG.ROOM_LIBRARY);
+    // ===== STATE =====
+    let state = {
+      nature: "REN_M",
+      habitat: "MAISON",
+      finition: "NORMAL",
+      menuiserieType: "STD",
+      levels: 1,
+      globalArea: 0,
+      rooms: {},
+      lotToggles: {},
+      specialOptions: { fenetres: false, thermique: false, reseaux: false, acoustique: false },
+      attachments: [],
+      clientBudget: 0,
+      client: {
+        name: "",
+        project: "",
+        type: "VISITE",
+        date: ""
+      }
+    };
+
+    ROOM_CODES.forEach(code => {
+      state.rooms[code] = { count: 0, area: 0 };
+    });
+
+    let lotsChart = null;
+    let lastEstimate = null;
+    let lightboxIndex = 0;
+
+    // ===== FORMATTERS =====
+    const fmt = {
+      currency: (v) => {
+        if (!isFinite(v) || v <= 0) return "0 €";
+        return v.toLocaleString("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+      },
+      area: (v) => {
+        if (!isFinite(v) || v <= 0) return "0 m²";
+        return v.toLocaleString("fr-FR", { maximumFractionDigits: 1 }) + " m²";
+      },
+      pct: (v) => (v * 100).toLocaleString("fr-FR", { maximumFractionDigits: 1 }) + "%"
+    };
+
+    function ensureLotToggles(lotsDef) {
+      lotsDef.forEach(l => {
+        if (state.lotToggles[l.lot] === undefined) {
+          state.lotToggles[l.lot] = true;
+        }
+      });
+    }
+
+    function filterLotsForHabitat(lotsDef) {
+      return (lotsDef || []).filter(l => !l.habitats || l.habitats.includes(state.habitat));
+    }
+
+    function getPriceRange() {
+      const base = CONFIG.BASE_PRICE[state.nature]?.[state.finition];
+      if (!base) return { minPerM2: 0, maxPerM2: 0, avg: 0 };
+
+      const coeff = (1 + CONFIG.COMMISSION_RATE) * CONFIG.MENUISERIE_FACTORS[state.menuiserieType];
+      const adjusted = base * coeff;
+
+      return {
+        minPerM2: Math.round(adjusted * (1 - CONFIG.PRICE_SPREAD)),
+        maxPerM2: Math.round(adjusted * (1 + CONFIG.PRICE_SPREAD)),
+        avg: Math.round(adjusted)
+      };
+    }
+
+    function getActiveSpecialOptions() {
+      return CONFIG.SPECIAL_OPTIONS.filter(opt => state.specialOptions?.[opt.id]);
+    }
+
+    function computeExtras(refArea) {
+      const active = getActiveSpecialOptions();
+      const perM2 = active.reduce((acc, opt) => {
+        acc.min += opt.impact.min;
+        acc.avg += opt.impact.avg;
+        acc.max += opt.impact.max;
+        return acc;
+      }, { min: 0, avg: 0, max: 0 });
+
+      return {
+        active,
+        perM2,
+        amountMin: refArea * perM2.min,
+        amountAvg: refArea * perM2.avg,
+        amountMax: refArea * perM2.max
+      };
+    }
+
+    function getActiveRoomCodes() {
+      return CONFIG.HABITATS[state.habitat]?.rooms || ROOM_CODES;
+    }
+
+    function getRoomMeta(code) {
+      return CONFIG.ROOM_LIBRARY[code] || { label: code, icon: "" };
+    }
+
+    function getTotalArea() {
+      return getActiveRoomCodes().reduce((sum, code) => sum + (state.rooms[code]?.area || 0), 0);
+    }
+
+    function getTotalCount() {
+      return getActiveRoomCodes().reduce((sum, code) => sum + (state.rooms[code]?.count || 0), 0);
+    }
+
+    // ===== TOGGLES =====
+    function setFinition(val, el) {
+      state.finition = val;
+      document.querySelectorAll("[onclick*='setFinition']").forEach(b => b.classList.remove("active"));
+      el.classList.add("active");
+      updateAll();
+    }
+
+    function setMenu(val, el) {
+      state.menuiserieType = val;
+      document.querySelectorAll("[onclick*='setMenu']").forEach(b => b.classList.remove("active"));
+      el.classList.add("active");
+      updateAll();
+    }
+
+    function setHabitat(val) {
+      state.habitat = val;
+      syncHabitatBadges();
+      updateAll();
+    }
+
+    function syncHabitatBadges() {
+      document.querySelectorAll('.habitat-badge').forEach(b => b.classList.remove('active'));
+      const map = { MAISON: '#habitatMaison', APPART: '#habitatAppart', BUREAU: '#habitatBureau' };
+      const el = document.querySelector(map[state.habitat]);
+      if (el) el.classList.add('active');
+    }
+
+    // ===== ROOMS =====
+    function renderRoomsTable() {
+      const tbody = document.getElementById("roomsTable");
+      tbody.innerHTML = "";
+
+      getActiveRoomCodes().forEach(code => {
+        const room = getRoomMeta(code);
+        const r = state.rooms[code] || {};
+        const count = r.count || 0;
+        const area = r.area || 0;
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${room.icon || ""} ${room.label}</td>
+          <td><input type="number" value="${count}" oninput="updateRoom('${code}', 'count', this.value)"></td>
+          <td><input type="number" step="0.5" value="${area}" oninput="updateRoom('${code}', 'area', this.value)"></td>
+          <td style="text-align: center; color: #a855f7; font-weight: 600;">${count > 0 && area > 0 ? (area / count).toFixed(1) : "—"}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      const totalArea = getTotalArea();
+      const totalCount = getTotalCount();
+      const { minPerM2, maxPerM2 } = getPriceRange();
+
+      document.getElementById("totalRooms").textContent = totalCount;
+      document.getElementById("totalArea").textContent = totalArea > 0 ? totalArea.toFixed(0) : "0";
+      document.getElementById("priceRange").textContent = minPerM2 > 0 ? `${minPerM2}–${maxPerM2} €/m²` : "—";
+    }
+
+    function updateRoom(code, field, value) {
+      state.rooms[code][field] = field === "count" ? parseInt(value) || 0 : parseFloat(value) || 0;
+      updateAll();
+    }
+
+    // ===== ESTIMATION =====
+    function computeEstimate() {
+      const totalArea = getTotalArea();
+      const { minPerM2, maxPerM2, avg } = getPriceRange();
+
+      const refArea = totalArea > 0 ? totalArea : (state.globalArea || 0);
+      const extras = computeExtras(refArea);
+      const amountMin = refArea * minPerM2 + extras.amountMin;
+      const amountAvg = refArea * avg + extras.amountAvg;
+      const amountMax = refArea * maxPerM2 + extras.amountMax;
+
+      const sourceLots = (state.habitat === "BUREAU" && CONFIG.REPART_LOTS_BUREAU[state.nature]) ? CONFIG.REPART_LOTS_BUREAU[state.nature] : CONFIG.REPART_LOTS[state.nature];
+      const lotsDef = filterLotsForHabitat(sourceLots) || [];
+      ensureLotToggles(lotsDef);
+      const activeLots = lotsDef.filter(l => state.lotToggles[l.lot] !== false);
+      const totalPct = activeLots.reduce((sum, l) => sum + l.pct, 0) || 1;
+
+      const scaledMin = amountMin * (activeLots.length ? totalPct : 1);
+      const scaledAvg = amountAvg * (activeLots.length ? totalPct : 1);
+      const scaledMax = amountMax * (activeLots.length ? totalPct : 1);
+
+      const lots = lotsDef.map(l => {
+        const enabled = state.lotToggles[l.lot] !== false;
+        const basePct = enabled && totalPct ? l.pct / totalPct : 0;
+        return {
+          lot: l.lot,
+          emoji: l.emoji,
+          pct: enabled ? l.pct : 0,
+          desc: l.desc,
+          enabled,
+          min: enabled ? scaledMin * basePct : 0,
+          max: enabled ? scaledMax * basePct : 0
+        };
+      });
+
+      return {
+        refArea,
+        amountMin: scaledMin,
+        amountAvg: scaledAvg,
+        amountMax: scaledMax,
+        avgPerM2: avg,
+        lots,
+        minPerM2,
+        maxPerM2,
+        areaPieces: totalArea,
+        extras
+      };
+    }
+
+    // ===== SUMMARY CLIENT =====
+    function updateSummary() {
+      const el = document.getElementById("clientSummary");
+      state.client.name   = document.getElementById("clientName").value || "";
+      state.client.project= document.getElementById("clientProject").value || "";
+      state.client.type   = document.getElementById("clientType").value || "VISITE";
+      state.client.date   = document.getElementById("clientDate").value || "";
+
+      const { name, project, type, date } = state.client;
+
+      if (!name && !project && !date) {
+        el.style.display = "none";
+        return;
+      }
+
+      const parts = [];
+      if (name) parts.push(`<strong>Client :</strong> ${name}`);
+      if (project) parts.push(`<strong>Projet :</strong> ${project}`);
+      if (date) {
+        const typeLabel = type === "VISIO" ? "Visio" : type === "TEL" ? "Tél." : "Visite";
+        parts.push(`<strong>${typeLabel} :</strong> ${date}`);
+      }
+
+      el.innerHTML = parts.join(" • ");
+      el.style.display = "block";
+    }
+
+    // ===== RÉSULTATS =====
+    function renderResults() {
+      const est = computeEstimate();
+      lastEstimate = est;
+
+      const { refArea, amountMin, amountAvg, amountMax, avgPerM2, lots, minPerM2, maxPerM2 } = est;
+
+      const mainBlock = document.getElementById("mainResults");
+      const warnBlock = document.getElementById("warningsBlock");
+      const lotsTable = document.getElementById("lotsTable");
+      const lotsEmpty = document.getElementById("lotsEmpty");
+
+      mainBlock.innerHTML = "";
+      warnBlock.innerHTML = "";
+      lotsTable.innerHTML = "";
+
+      const natureNames = { REN_L: "Rénovation légère", REN_M: "Rénovation standard", REN_H: "Rénovation lourde", EXT: "Extension", SUREL: "Surélévation" };
+      document.getElementById("natureName").textContent = natureNames[state.nature] || "—";
+      document.getElementById("finitionName").textContent = state.finition === "NORMAL" ? "Standard" : "Haut de gamme";
+      document.getElementById("habitatName").textContent = CONFIG.HABITATS[state.habitat]?.label || "—";
+
+      const explainEl = document.getElementById("natureExplain");
+      explainEl.textContent = CONFIG.NATURE_DESC[state.nature];
+
+      if (refArea <= 0) {
+        mainBlock.innerHTML = `<div class="alert alert-info">Remplissez les surfaces (par pièce ou globale) pour générer une estimation.</div>`;
+        lotsEmpty.style.display = "block";
+        renderGauge(0, 0, 0);
+        renderLotsChart([]);
+        renderNoblesTech({ refArea: 0 });
+        return;
+      }
+
+      const r1 = document.createElement("div");
+      r1.className = "result-box";
+      r1.innerHTML = `
+        <div class="result-label">Enveloppe budget moyen</div>
+        <div class="result-value">${fmt.currency(amountAvg)}</div>
+        <div class="result-sub">Fourchette : ${fmt.currency(amountMin)} à ${fmt.currency(amountMax)} TTC</div>
+      `;
+
+      const r2 = document.createElement("div");
+      r2.className = "result-box";
+      r2.style.borderLeftColor = "#10b981";
+      r2.innerHTML = `
+        <div class="result-label" style="color:#bbf7d0;">Surface de référence</div>
+        <div class="result-value" style="background:linear-gradient(135deg,#bbf7d0,#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">${fmt.area(refArea)}</div>
+      `;
+
+      const r3 = document.createElement("div");
+      r3.className = "result-box";
+      r3.style.borderLeftColor = "#06b6d4";
+      r3.innerHTML = `
+        <div class="result-label" style="color:#7dd3fc;">Prix moyen au m²</div>
+        <div class="result-value" style="background:linear-gradient(135deg,#7dd3fc,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">${fmt.currency(avgPerM2)}</div>
+      `;
+
+      mainBlock.appendChild(r1);
+      mainBlock.appendChild(r2);
+      mainBlock.appendChild(r3);
+
+      if (est.extras?.active?.length) {
+        const { perM2, amountAvg } = est.extras;
+        const labels = est.extras.active.map(o => o.label).join(" • ");
+        const r4 = document.createElement("div");
+        r4.className = "result-box";
+        r4.style.borderLeftColor = "#0ea5e9";
+        r4.innerHTML = `
+          <div class="result-label" style="color:#0ea5e9;">Options ciblées</div>
+          <div class="result-value" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">+${fmt.currency(amountAvg)}</div>
+          <div class="result-sub">Impact moyen : +${perM2.avg.toFixed(0)} €/m² · ${labels}</div>
+        `;
+        mainBlock.appendChild(r4);
+      }
+
+      if (state.globalArea > 0 && est.areaPieces > 0) {
+        const diff = Math.abs(state.globalArea - est.areaPieces);
+        if (diff > Math.max(5, state.globalArea * 0.1)) {
+          const w = document.createElement("div");
+          w.className = "alert alert-info";
+          w.innerHTML = "⚠️ Écart notable entre surface globale et somme des pièces – à vérifier avant envoi au client.";
+          warnBlock.appendChild(w);
+        }
+      }
+
+      if (lots && lots.length > 0) {
+        lotsEmpty.style.display = "none";
+        let html = `<thead><tr><th>Lot</th><th>%</th><th style="text-align:right;">Min.</th><th style="text-align:right;">Max.</th><th style="text-align:center;">€/m²</th><th style="text-align:center;">Toggle</th></tr></thead><tbody>`;
+        let hasLot = false;
+          lots.forEach(l => {
+          const safeLot = l.lot.replace(/"/g, '&quot;').replace(/'/g, "\\'");
+          const perM2 = refArea ? ((l.min + l.max) / 2 / refArea) : 0;
+          html += `<tr class="${l.enabled ? '' : 'muted'}">
+            <td><span class="lot-tooltip" data-tip="${l.desc || ''}" title="${l.desc || ''}">${l.emoji} ${l.lot}</span></td>
+            <td>${fmt.pct(l.pct || 0)}</td>
+            <td style="text-align:right; color:#06b6d4;">${fmt.currency(l.min)}</td>
+            <td style="text-align:right; color:#f97316;">${fmt.currency(l.max)}</td>
+            <td style="text-align:center; color:#c7d2fe;">${perM2 ? Math.round(perM2) + ' €/m²' : '—'}</td>
+            <td class="lot-toggle"><label class="switch"><input type="checkbox" ${l.enabled ? "checked" : ""} onchange="toggleLot('${safeLot}', this.checked)"><span class="switch-slider"></span></label></td>
+          </tr>`;
+          hasLot = true;
+        });
+        if (hasLot) {
+          html += `<tr class="total-row">
+            <td>TOTAL ENVELOPPE</td>
+            <td></td>
+            <td style="text-align:right;">${fmt.currency(amountMin)}</td>
+            <td style="text-align:right;">${fmt.currency(amountMax)}</td>
+            <td></td><td></td>
+          </tr></tbody>`;
+          lotsTable.innerHTML = html;
+        } else {
+          lotsEmpty.style.display = "block";
+        }
+      } else {
+        lotsEmpty.style.display = "block";
+      }
+
+      renderGauge(avgPerM2, minPerM2, maxPerM2);
+      renderLotsChart(lots);
+      renderNoblesTech(est);
+      updateSummary();
+      renderSpecialLots(est);
+    }
+
+    function renderSpecialLots(est) {
+      const card = document.getElementById("specialLotsCard");
+      const container = document.getElementById("specialLots");
+      if (!card || !container) return;
+
+      const items = CONFIG.SPECIAL_LOTS[state.nature] || [];
+      if (!items.length) {
+        card.style.display = "none";
+        return;
+      }
+
+      card.style.display = "block";
+      container.innerHTML = items.map(item => `
+        <div class="lot-focus-card">
+          <div class="title">${item.emoji} ${item.title}</div>
+          <div class="price">${item.price}</div>
+          <div style="color:var(--text-sec); margin-top:4px;">${item.desc}</div>
+        </div>
+      `).join("");
+
+      const desc = card.querySelector('.card-desc');
+      if (desc) {
+        const focus = CONFIG.HABITATS[state.habitat]?.focus || "";
+        desc.textContent = `Focus ${state.nature === 'EXT' ? 'extension' : 'surélévation'} · ${focus}`;
+      }
+    }
+
+    function renderGauge(current, min, max) {
+      const pointer = document.getElementById("meterPointer");
+      const range = document.getElementById("meterRange");
+      const label = document.getElementById("gaugeValue");
+      const minLabel = document.getElementById("gaugeMin");
+      const maxLabel = document.getElementById("gaugeMax");
+      const minVal = document.getElementById("meterMinVal");
+      const maxVal = document.getElementById("meterMaxVal");
+      const status = document.getElementById("meterStatus");
+      if (!pointer || !range || !label || !minLabel || !maxLabel || !minVal || !maxVal || !status) return;
+
+      const hasValues = current > 0 && min > 0 && max > 0;
+      if (!hasValues) {
+        pointer.style.left = "0%";
+        range.style.width = "0%";
+        label.textContent = "—";
+        minLabel.textContent = "Min";
+        maxLabel.textContent = "Max";
+        minVal.textContent = "—";
+        maxVal.textContent = "—";
+        status.textContent = "Renseignez des surfaces";
+        status.style.background = "rgba(6, 182, 212, 0.12)";
+        status.style.color = "#22d3ee";
+        return;
+      }
+
+      const floor = Math.min(min, max, current);
+      const ceiling = Math.max(min, max, current);
+      const span = ceiling - floor || 1;
+      const normMin = Math.max(0, ((min - floor) / span) * 100);
+      const normMax = Math.min(100, ((max - floor) / span) * 100);
+      const normCur = Math.min(100, Math.max(0, ((current - floor) / span) * 100));
+
+      range.style.left = `${normMin}%`;
+      range.style.width = `${Math.max(4, normMax - normMin)}%`;
+      pointer.style.left = `${normCur}%`;
+
+      label.textContent = `${fmt.currency(current)} /m²`;
+      minLabel.textContent = `${fmt.currency(min)} m² plancher`;
+      maxLabel.textContent = `${fmt.currency(max)} m² plafond`;
+      minVal.textContent = `${fmt.currency(min)} /m²`;
+      maxVal.textContent = `${fmt.currency(max)} /m²`;
+
+      let tone = "rgba(6, 182, 212, 0.12)";
+      let txt = "#22d3ee";
+      let msg = "Cohérent avec le marché";
+      if (current < min * 0.9) { tone = "rgba(34,197,94,0.12)"; txt = "#4ade80"; msg = "Tarif serré : surveiller les options"; }
+      else if (current > max * 1.1) { tone = "rgba(248,113,113,0.14)"; txt = "#f87171"; msg = "Niveau très haut : prévenir le client"; }
+      status.style.background = tone;
+      status.style.color = txt;
+      status.textContent = msg;
+    }
+
+    function renderKpiStrip(est = lastEstimate) {
+      const strip = document.getElementById("kpiStrip");
+      if (!strip) return;
+
+      const estimate = est || lastEstimate || computeEstimate();
+      if (!estimate || !estimate.refArea) {
+        strip.innerHTML = `<div class="kpi-pill">Renseignez des surfaces pour activer les KPI m².</div>`;
+        return;
+      }
+
+      const pills = [];
+      pills.push(`<div class="kpi-pill"><span>Prix moyen m²</span><strong>${fmt.currency(estimate.avgPerM2)}</strong></div>`);
+
+      if (estimate.extras?.active?.length) {
+        pills.push(`<div class="kpi-pill"><span>Lots spécifiques</span><strong>+${estimate.extras.perM2.avg.toFixed(0)} €/m²</strong></div>`);
+      }
+
+      const budgetInput = parseFloat(document.getElementById("clientBudget")?.value || "0");
+      if (budgetInput > 0 && estimate.amountAvg) {
+        const ratio = Math.round((budgetInput / estimate.amountAvg) * 100);
+        pills.push(`<div class="kpi-pill"><span>Position budget</span><strong>${ratio}%</strong></div>`);
+      }
+
+      const habitatLabel = CONFIG.HABITATS[state.habitat]?.label || "—";
+      pills.push(`<div class="kpi-pill"><span>Habitat</span><strong>${habitatLabel}</strong></div>`);
+
+      strip.innerHTML = pills.join("");
+    }
+
+    function renderLotsChart(lots) {
+      const enabledLots = (lots || []).filter(l => l.enabled !== false && l.min > 0);
+
+      if (!enabledLots || enabledLots.length === 0) {
+        if (lotsChart) { lotsChart.destroy(); lotsChart = null; }
+        return;
+      }
+
+      const canvas = document.getElementById("lotsChart");
+      const labels = enabledLots.map(l => l.lot.split("(")[0].trim());
+      const data = enabledLots.map(l => (l.min + l.max) / 2);
+
+      if (lotsChart) lotsChart.destroy();
+
+      lotsChart = new Chart(canvas, {
+        type: "doughnut",
+        data: {
+          labels,
+          datasets: [{
+            data,
+            backgroundColor: ["#a855f7", "#ec4899", "#f97316", "#fbbf24", "#10b981", "#06b6d4", "#3b82f6"],
+            borderColor: "#020617",
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: "bottom",
+              labels: { font: { size: 10 }, color: "#9ca3af", padding: 6 }
+            },
+            tooltip: {
+              backgroundColor: "rgba(15,23,42,0.95)",
+              titleColor: "#e2e8f0",
+              bodyColor: "#cbd5f5",
+              callbacks: { label: (ctx) => fmt.currency(ctx.parsed) }
+            }
+          }
+        }
+      });
+    }
+
+    function renderNoblesTech(est) {
+      const { refArea, amountMin, amountMax } = est;
+      const container = document.getElementById("noblesTech");
+
+      if (!refArea) {
+        container.innerHTML = `<div style="font-size: 11px; color: #9ca3af;">Renseignez des surfaces pour voir la répartition.</div>`;
+        return;
+      }
+
+      const avg = (amountMin + amountMax) / 2;
+      let areaNoble = 0, areaTech = 0;
+
+      CONFIG.NOBLE_CODES.forEach(c => areaNoble += state.rooms[c]?.area || 0);
+      CONFIG.TECH_CODES.forEach(c => areaTech += state.rooms[c]?.area || 0);
+
+      const totalArea = areaNoble + areaTech || 1;
+      const ratioNoble = areaNoble / totalArea;
+      const ratioTech = areaTech / totalArea;
+
+      const budgetNoble = avg * ratioNoble;
+      const budgetTech = avg * ratioTech;
+
+      container.innerHTML = `
+        <div style="margin-bottom: 8px;">
+          <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:3px;">
+            <span>Pièces nobles</span>
+            <strong style="color:#a855f7;">${fmt.currency(budgetNoble)}</strong>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width:${ratioNoble * 100}%"></div>
+          </div>
+          <div style="font-size:10px; color:#9ca3af;">${fmt.pct(ratioNoble)} de l'enveloppe</div>
+        </div>
+        <div>
+          <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:3px;">
+            <span>Pièces techniques</span>
+            <strong style="color:#22c55e;">${fmt.currency(budgetTech)}</strong>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width:${ratioTech * 100}%; background:linear-gradient(90deg,#f97316,#fbbf24);"></div>
+          </div>
+          <div style="font-size:10px; color:#9ca3af;">${fmt.pct(ratioTech)} de l'enveloppe</div>
+        </div>
+      `;
+    }
+
+    function renderSpecialOptionsSummary(est = lastEstimate) {
+      const summary = document.getElementById("specialOptionsSummary");
+      const grid = document.getElementById("specialOptionsGrid");
+      if (!summary || !grid) return;
+
+      const estimate = est || lastEstimate || computeEstimate();
+      const active = getActiveSpecialOptions();
+
+      grid.querySelectorAll(".option-card").forEach(card => {
+        const id = card.getAttribute("data-option");
+        const isOn = !!state.specialOptions?.[id];
+        card.classList.toggle("active", isOn);
+      });
+
+      if (!estimate || !estimate.refArea) {
+        summary.textContent = "Activez une option pour voir son impact chiffré.";
+        return;
+      }
+
+      if (!active.length) {
+        summary.innerHTML = "Aucun lot spécifique sélectionné. Ajoutez fenêtres, thermique ou réseaux si besoin client.";
+        return;
+      }
+
+      const extras = estimate.extras || computeExtras(estimate.refArea);
+      summary.innerHTML = `<strong>${active.length} option(s)</strong> actives · +${extras.perM2.avg.toFixed(0)} €/m² (≈ ${fmt.currency(extras.amountAvg)})`;
+    }
+
+    function toggleSpecialOption(key, enabled) {
+      state.specialOptions = Object.assign({ fenetres: false, thermique: false, reseaux: false, acoustique: false }, state.specialOptions || {});
+      const current = !!state.specialOptions[key];
+      const next = typeof enabled === "boolean" ? enabled : !current;
+      state.specialOptions[key] = next;
+      updateAll();
+    }
+
+    function toggleLot(lotName, enabled) {
+      state.lotToggles[lotName] = enabled;
+      updateAll();
+    }
+
+    function updateBudgetKpi() {
+      const budgetInput = parseFloat(document.getElementById("clientBudget")?.value || "0") || 0;
+      state.clientBudget = budgetInput;
+
+      const statusEl = document.getElementById("budgetStatus");
+      const meterFill = document.getElementById("budgetMeterFill");
+      const meterPointer = document.getElementById("budgetPointer");
+      if (!statusEl || !meterFill || !meterPointer) return;
+
+      const est = lastEstimate || computeEstimate();
+      const target = est?.amountAvg || 0;
+
+      if (!budgetInput || !target) {
+        statusEl.className = "budget-status warn";
+        statusEl.textContent = "Saisir un budget et des surfaces";
+        meterFill.style.width = "0%";
+        meterPointer.style.left = "0%";
+        meterPointer.setAttribute("data-value", "—");
+        return;
+      }
+
+      const ratio = budgetInput / target;
+      const pct = Math.round(ratio * 100);
+      const clamped = Math.min(200, Math.max(0, pct));
+      const relative = clamped / 2; // track représente 0 → 200%
+      meterFill.style.width = `${relative}%`;
+      meterPointer.style.left = `${relative}%`;
+      meterPointer.setAttribute("data-value", `${pct}%`);
+
+      let cls = "warn";
+      let msg = `Budget client = ${pct}% de l'estimation`;
+
+      if (ratio < 0.7) { cls = "bad"; msg = "🚨 Budget très insuffisant : revoir programme"; }
+      else if (ratio < 0.85) { cls = "warn"; msg = "⚠️ Budget juste : arbitrer certains lots"; }
+      else if (ratio <= 1.15) { cls = "ok"; msg = "✅ Budget cohérent : marge de 15%"; }
+      else if (ratio <= 1.4) { cls = "warn"; msg = "⚠️ Budget supérieur : options possibles"; }
+      else { cls = "bad"; msg = "🚨 Budget très au-dessus : recadrer les attentes"; }
+
+      statusEl.className = `budget-status ${cls}`;
+      statusEl.textContent = msg;
+      meterPointer.style.background = cls === "bad" ? "#ef4444" : cls === "ok" ? "#22c55e" : "#0ea5e9";
+    }
+
+    function renderAttachments() {
+      const list = document.getElementById("attachmentsList");
+      if (!list) return;
+
+      list.innerHTML = "";
+      if (!state.attachments.length) {
+        list.innerHTML = `<div class="attachment-card">Ajoutez des photos, plans ou croquis pour garder la trace du rendez-vous.</div>`;
+        return;
+      }
+
+      state.attachments.forEach((file, idx) => {
+        const card = document.createElement("div");
+        card.className = "attachment-card";
+        const img = file.preview ? `<img src="${file.preview}" alt="${file.name}" onclick="openLightbox(${idx})">` : "";
+        card.innerHTML = `${img}<div style="font-weight:600;">${file.name}</div><div style="font-size:11px; color:var(--text-sec);">${(file.size/1024).toFixed(1)} Ko</div><button class="btn-secondary" style="margin-top:6px;" onclick="removeAttachment(${idx})">Retirer</button>`;
+        list.appendChild(card);
+      });
+    }
+
+    function handleAttachments(files) {
+      const arr = Array.from(files || []);
+      if (!arr.length) return;
+      arr.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          state.attachments.push({ name: file.name, size: file.size, type: file.type, preview: reader.result });
+          renderAttachments();
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function removeAttachment(index) {
+      state.attachments.splice(index, 1);
+      renderAttachments();
+    }
+
+    function showLightboxImage() {
+      const img = document.getElementById("lightboxImage");
+      const lb = document.getElementById("lightbox");
+      if (!img || !lb) return;
+      const file = state.attachments[lightboxIndex];
+      if (!file) return closeLightbox();
+      img.src = file.preview;
+      lb.classList.add("active");
+      lb.setAttribute("aria-hidden", "false");
+    }
+
+    function openLightbox(index) {
+      lightboxIndex = index;
+      showLightboxImage();
+    }
+
+    function closeLightbox() {
+      const lb = document.getElementById("lightbox");
+      if (!lb) return;
+      lb.classList.remove("active");
+      lb.setAttribute("aria-hidden", "true");
+    }
+
+    function nextLightbox() {
+      if (!state.attachments.length) return;
+      lightboxIndex = (lightboxIndex + 1) % state.attachments.length;
+      showLightboxImage();
+    }
+
+    function prevLightbox() {
+      if (!state.attachments.length) return;
+      lightboxIndex = (lightboxIndex - 1 + state.attachments.length) % state.attachments.length;
+      showLightboxImage();
+    }
+
+    function closeAllModals() {
+      document.querySelectorAll('.modal').forEach(m => {
+        m.classList.remove('active');
+        m.setAttribute('aria-hidden', 'true');
+      });
+    }
+
+    function renderArchitectRoadmap() {
+      const est = lastEstimate || computeEstimate();
+      const container = document.getElementById("architectContent");
+      if (!container) return;
+
+      if (!est || !est.refArea) {
+        container.innerHTML = `<div style="color:var(--text-sec);">Ajoutez au moins une surface pour générer la feuille de route.</div>`;
+        return;
+      }
+
+      const activeLots = (est.lots || []).filter(l => l.enabled !== false && l.min > 0).sort((a, b) => b.min - a.min);
+      const focus = activeLots.slice(0, 5).map(l => `<li><strong>${l.emoji} ${l.lot}</strong> : ${fmt.currency((l.min + l.max) / 2)} – ${l.desc || ""}</li>`).join("");
+      container.innerHTML = `
+        <p style="margin-bottom:8px;">Projet de ${fmt.area(est.refArea)} · enveloppe médiane ${fmt.currency(est.amountAvg)}.</p>
+        <p style="font-weight:600;">Priorités par lots :</p>
+        <ol style="margin-left:16px;">${focus || '<li>Activer des lots pour générer des priorités.</li>'}</ol>
+        <p style="margin-top:10px;">Actions rapides :</p>
+        <ul style="margin-left:16px;">
+          <li>Valider le périmètre avec le client (lots désactivés / inclus).</li>
+          <li>Calibrer le budget client vs estimation (voir KPI budget).</li>
+          <li>Préparer la collecte de photos/plans pour le dossier de faisabilité.</li>
+        </ul>
+      `;
+    }
+
+    function openArchitectPanel() {
+      const panel = document.getElementById("architectPanel");
+      if (!panel) return;
+      renderArchitectRoadmap();
+      panel.classList.add("open");
+      panel.setAttribute("aria-hidden", "false");
+      const toggle = document.getElementById("architectToggleBtn");
+      if (toggle) {
+        toggle.textContent = "🧾 Masquer la feuille de route";
+        toggle.setAttribute("aria-expanded", "true");
+        toggle.setAttribute("aria-pressed", "true");
+      }
+    }
+
+    function closeArchitectPanel() {
+      const panel = document.getElementById("architectPanel");
+      if (!panel) return;
+      panel.classList.remove("open");
+      panel.setAttribute("aria-hidden", "true");
+      const toggle = document.getElementById("architectToggleBtn");
+      if (toggle) {
+        toggle.textContent = "🧾 Afficher la feuille de route";
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.setAttribute("aria-pressed", "false");
+      }
+    }
+
+    function toggleArchitectPanel() {
+      const panel = document.getElementById("architectPanel");
+      if (!panel) return;
+      if (panel.classList.contains("open")) {
+        closeArchitectPanel();
+      } else {
+        openArchitectPanel();
+      }
+    }
+
+    function updateAll() {
+      const natureSelect = document.getElementById("nature");
+      if (natureSelect) state.nature = natureSelect.value;
+      syncHabitatBadges();
+      renderRoomsTable();
+      renderResults();
+      renderSpecialOptionsSummary();
+      updateBudgetKpi();
+      renderAttachments();
+      renderKpiStrip();
+      const panel = document.getElementById("architectPanel");
+      if (panel?.classList.contains("open")) renderArchitectRoadmap();
+    }
+
+    // ===== EXPORT TEXTE =====
+    function generateText() {
+      if (!lastEstimate) return;
+      const { refArea, amountMin, amountMax, lots } = lastEstimate;
+      if (!refArea) return;
+
+      const { name, project, date, type } = state.client;
+      const rdv = date ? ` suite à notre ${type === "VISITE" ? "visite" : type === "VISIO" ? "entretien en visio" : "entretien téléphonique"} du ${date}` : "";
+      const proj = project ? ` concernant votre projet « ${project} »` : "";
+      const civ = name ? `Bonjour ${name},` : "Bonjour,";
+
+      const nature = {
+        REN_L: "rénovation légère",
+        REN_M: "rénovation standard (tous corps d'état)",
+        REN_H: "rénovation lourde / restructuration",
+        EXT: "extension de maison",
+        SUREL: "surélévation"
+      }[state.nature];
+
+      const finition = state.finition === "NORMAL" ? "finition standard" : "finition haut de gamme";
+      const habitat = (CONFIG.HABITATS[state.habitat]?.label || "logement").toLowerCase();
+
+      let lotsPart = "";
+      if (lots && lots.length > 0) {
+        const top = [...lots].sort((a, b) => b.min - a.min).slice(0, 3);
+        lotsPart = "\nRépartition par grands lots (indicative) :\n" + top.map(l => `• ${l.lot} : ~${fmt.pct(l.pct)} du budget`).join("\n");
+      }
+
+      let extrasPart = "";
+      if (lastEstimate?.extras?.active?.length) {
+        const perOption = lastEstimate.extras.active.map(opt => `• ${opt.label} (+${opt.impact.avg} €/m² env.)`);
+        extrasPart = "\nOptions spécifiques intégrées :\n" + perOption.join("\n") + `\nImpact cumulé : +${lastEstimate.extras.perM2.avg.toFixed(0)} €/m² (~${fmt.currency(lastEstimate.extras.amountAvg)}).`;
+      }
+
+      const text = `ESTIMATION AVANT-PROJET
+
+${civ}
+
+      ${rdv}${proj}, je vous confirme une première estimation sommaire des travaux envisagés sur ${fmt.area(refArea)}, pour un projet de ${nature} sur ${habitat} avec une ${finition}.
+
+ENVELOPPE BUDGÉTAIRE
+
+À ce stade, l’enveloppe travaux à prévoir se situe entre ${fmt.currency(amountMin)} et ${fmt.currency(amountMax)} TTC.
+
+Cette estimation reste un ordre de grandeur à affiner à partir :
+- d’un relevé précis des surfaces,
+- d’un projet détaillé (plans, choix techniques et matériaux),
+- et de devis d’entreprises.
+
+${lotsPart}
+${extrasPart}
+
+INCLUS DANS CETTE ESTIMATION
+
+✓ Travaux courants de préparation et d’installation de chantier (protections, bases simples, nettoyages standards)  
+✓ Fournitures et main-d’œuvre selon un niveau de prestation cohérent avec le marché IDF 2025+
+
+NON INCLUS
+
+✗ Honoraires d’architecte ou de maîtrise d’œuvre  
+✗ Honoraires des bureaux d’études (structure, thermique, acoustique, géotechnique, etc.)  
+✗ Taxes et frais administratifs éventuels  
+✗ Raccordements extérieurs spécifiques (VRD, concessions) et aménagements paysagers  
+✗ Mobilier et éléments décoratifs non fixés  
+✗ Travaux hors périmètre défini ensemble
+
+Cette estimation a pour but de vous donner une vision réaliste du budget à mobiliser pour valider la faisabilité de votre projet (ou ajuster son périmètre si besoin).
+
+Je reste bien entendu à votre disposition pour détailler certains points, ou pour envisager les prochaines étapes (études, consultation d’entreprises, phasage…).
+
+Bien cordialement,
+
+[Votre signature]`;
+
+      document.getElementById("exportText").value = text;
+    }
+
+    function copyText(btn) {
+      const textarea = document.getElementById("exportText");
+      if (!textarea.value) generateText();
+      textarea.select();
+      document.execCommand("copy");
+      if (btn) {
+        const original = btn.textContent;
+        btn.textContent = "✅ Copié !";
+        setTimeout(() => btn.textContent = original, 1600);
+      }
+    }
+
+    async function saveWithPicker({ suggestedName, blob, description, accept }) {
+      if (window.showSaveFilePicker) {
+        try {
+          const handle = await window.showSaveFilePicker({
+            suggestedName,
+            types: [{ description: description || "Fichier", accept }]
+          });
+          const writable = await handle.createWritable();
+          await writable.write(blob);
+          await writable.close();
+          alert("Fichier sauvegardé dans le dossier choisi.");
+          return true;
+        } catch (e) {
+          console.warn("Save picker non disponible", e);
+        }
+      }
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = suggestedName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      return false;
+    }
+
+    async function saveStateToFile() {
+      const data = JSON.stringify(state, null, 2);
+      const blob = new Blob([data], { type: "application/json" });
+      await saveWithPicker({
+        suggestedName: `${state.client.name || "projet"}-estimation.json`,
+        blob,
+        description: "Fichier JSON",
+        accept: { "application/json": [".json"] }
+      });
+    }
+
+    // ===== EXPORT / IMPORT JSON =====
+    async function exportProject() {
+      const data = JSON.stringify(state, null, 2);
+      const blob = new Blob([data], { type: "application/json" });
+      const fallbackName = `${state.client.date || new Date().toISOString().split("T")[0]}-${state.client.name || "projet"}.json`;
+      await saveWithPicker({
+        suggestedName: fallbackName,
+        blob,
+        description: "Export JSON Estimation",
+        accept: { "application/json": [".json"] }
+      });
+    }
+
+    async function saveHtmlSnapshot() {
+      const html = document.documentElement.outerHTML;
+      const blob = new Blob([html], { type: "text/html" });
+      const name = `${state.client.name || "projet"}-V33.html`;
+      await saveWithPicker({
+        suggestedName: name,
+        blob,
+        description: "Copie HTML de l'estimation",
+        accept: { "text/html": [".html"] }
+      });
+    }
+
+    function applyImportedState(imported) {
+      state = Object.assign({}, state, imported || {});
+      if (!state.rooms) {
+        state.rooms = {};
+        ROOM_CODES.forEach(code => state.rooms[code] = { count: 0, area: 0 });
+      }
+      state.habitat = state.habitat || "MAISON";
+      state.lotToggles = state.lotToggles || {};
+      state.attachments = state.attachments || [];
+      state.specialOptions = Object.assign({ fenetres: false, thermique: false, reseaux: false, acoustique: false }, state.specialOptions || {});
+      state.clientBudget = state.clientBudget || 0;
+      state.client = Object.assign({ name: "", project: "", type: "VISITE", date: "" }, state.client || {});
+
+      document.getElementById("clientName").value = state.client?.name || "";
+      document.getElementById("clientProject").value = state.client?.project || "";
+      document.getElementById("clientType").value = state.client?.type || "VISITE";
+      document.getElementById("clientDate").value = state.client?.date || "";
+      document.getElementById("nature").value = state.nature;
+      syncHabitatBadges();
+      document.getElementById("levels").value = state.levels;
+      document.getElementById("globalArea").value = state.globalArea;
+      document.getElementById("clientBudget").value = state.clientBudget || 0;
+      renderAttachments();
+      updateBudgetKpi();
+      updateAll();
+    }
+
+    function handleImportFile(file, closeId) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const imported = JSON.parse(reader.result);
+          if (!imported || typeof imported !== "object") {
+            throw new Error("Format JSON inattendu");
+          }
+          applyImportedState(imported);
+          if (closeId) closeModal(closeId);
+        } catch (err) {
+          console.error("Erreur d'import JSON", err);
+          alert("Erreur : fichier invalide ou corrompu. Utilisez un export JSON généré depuis l'outil.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function triggerImport() {
+      const input = document.getElementById("importFileInput");
+      if (!input) return;
+      input.value = "";
+      input.onchange = (e) => handleImportFile(e.target.files[0]);
+      input.click();
+    }
+
+    function openImportModal() {
+      const modal = document.getElementById("importModal");
+      if (modal) {
+        modal.classList.add("active");
+        modal.setAttribute("aria-hidden", "false");
+      }
+
+      const input = document.getElementById("importFileInputModal");
+      if (input) {
+        input.value = "";
+        input.onchange = (e) => handleImportFile(e.target.files[0], "importModal");
+      }
+    }
+
+    function openGuideModal() {
+      const modal = document.getElementById("guideModal");
+      if (modal) {
+        modal.classList.add("active");
+        modal.setAttribute("aria-hidden", "false");
+      }
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.classList.remove("active");
+        modal.setAttribute("aria-hidden", "true");
+      }
+    }
+
+    function bindModalDismiss() {
+      document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+          }
+        });
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeAllModals();
+          closeArchitectPanel();
+          closeLightbox();
+        }
+      });
+    }
+
+    function setupArchitectPanelControls() {
+      closeArchitectPanel();
+      const toggleBtn = document.getElementById("architectToggleBtn");
+      const closeBtn = document.getElementById("architectCloseBtn");
+      if (toggleBtn) {
+        toggleBtn.setAttribute("aria-expanded", "false");
+        toggleBtn.setAttribute("aria-pressed", "false");
+        toggleBtn.setAttribute("type", "button");
+        toggleBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          toggleArchitectPanel();
+        });
+      }
+      closeBtn?.addEventListener("click", closeArchitectPanel);
+    }
+
+    function resetProject() {
+      if (!confirm("Réinitialiser tous les paramètres de l’estimation ?")) return;
+      state = {
+        nature: "REN_M",
+        habitat: "MAISON",
+        finition: "NORMAL",
+        menuiserieType: "STD",
+        levels: 1,
+        globalArea: 0,
+        rooms: {},
+        lotToggles: {},
+        specialOptions: { fenetres: false, thermique: false, reseaux: false, acoustique: false },
+        attachments: [],
+        clientBudget: 0,
+        client: { name: "", project: "", type: "VISITE", date: "" }
+      };
+      ROOM_CODES.forEach(code => state.rooms[code] = { count: 0, area: 0 });
+      document.getElementById("clientName").value = "";
+      document.getElementById("clientProject").value = "";
+      document.getElementById("clientType").value = "VISITE";
+      document.getElementById("clientDate").value = "";
+      document.getElementById("nature").value = "REN_M";
+      setHabitat("MAISON");
+      document.getElementById("levels").value = "1";
+      document.getElementById("globalArea").value = "0";
+      document.getElementById("clientBudget").value = "0";
+      renderAttachments();
+      updateAll();
+      closeArchitectPanel();
+    }
+
+    const getPrintIndex = (section) => section?.dataset?.printIndex || "";
+    const getPrintLabel = (section) => section?.dataset?.printLabel || "Page";
+    const formatPrintMenu = (section) => {
+      const index = getPrintIndex(section);
+      const label = getPrintLabel(section);
+      return index ? `Menu ${index} · ${label}` : `Menu : ${label}`;
+    };
+    const formatPrintBadge = (section) => {
+      const base = formatPrintMenu(section);
+      const index = getPrintIndex(section);
+      return index ? `${base} — Page ${index}` : base;
+    };
+
+    function updatePrintMenuLinks() {
+      document.querySelectorAll('.print-menu-links a[data-target]').forEach(link => {
+        const targetId = link.dataset.target;
+        const section = targetId ? document.getElementById(targetId) : null;
+        if (!section) return;
+        const label = formatPrintMenu(section);
+        link.textContent = label;
+        const page = getPrintIndex(section);
+        link.setAttribute('aria-label', page ? `${label} (Page ${page})` : label);
+      });
+    }
+
+    function updateCurrentPrintHeader() {
+      const activeId = document.querySelector('.nav-item.active')?.dataset?.section || 'section-saisie';
+      const section = document.getElementById(activeId);
+      const printMenuActive = document.getElementById('printMenuActive');
+      if (printMenuActive && section) {
+        const menuText = formatPrintMenu(section);
+        const page = getPrintIndex(section);
+        printMenuActive.textContent = page ? `${menuText} (Page ${page})` : menuText;
+      }
+    }
+
+    // ===== NAVIGATION LATÉRALE =====
+    function initSidebarNav() {
+      const items = document.querySelectorAll(".nav-item[data-section]");
+      items.forEach(item => {
+        item.addEventListener("click", () => {
+          const id = item.getAttribute("data-section");
+          const section = document.getElementById(id);
+          if (section) {
+            section.scrollIntoView({ behavior: "smooth", block: "start" });
+            items.forEach(i => i.classList.remove("active"));
+            item.classList.add("active");
+            updateCurrentPrintHeader();
+          }
+        });
+      });
+
+      const sections = Array.from(items).map(i => ({
+        id: i.getAttribute("data-section"),
+        el: document.getElementById(i.getAttribute("data-section")),
+        nav: i
+      }));
+
+      window.addEventListener("scroll", () => {
+        let current = null;
+        const offset = 110;
+        sections.forEach(s => {
+          if (!s.el) return;
+          const rect = s.el.getBoundingClientRect();
+          if (rect.top - offset <= 0) current = s;
+        });
+        if (current) {
+          items.forEach(i => i.classList.remove("active"));
+          current.nav.classList.add("active");
+          updateCurrentPrintHeader();
+        }
+      });
+    }
+
+    function setSidebarCollapsed(collapsed) {
+      document.body.classList.toggle("sidebar-collapsed", collapsed);
+      const label = collapsed ? "📑 Afficher le menu" : "📑 Masquer le menu";
+      document.querySelectorAll("[data-sidebar-toggle]").forEach(btn => {
+        btn.textContent = label;
+        btn.setAttribute("aria-pressed", collapsed ? "true" : "false");
+        btn.setAttribute("aria-label", label);
+      });
+    }
+
+    function toggleSidebar() {
+      const collapsed = !document.body.classList.contains("sidebar-collapsed");
+      setSidebarCollapsed(collapsed);
+    }
+
+    function initSidebarToggles() {
+      const buttons = document.querySelectorAll("[data-sidebar-toggle]");
+      buttons.forEach(btn => btn.addEventListener("click", toggleSidebar));
+      setSidebarCollapsed(document.body.classList.contains("sidebar-collapsed"));
+    }
+
+    function setThemePreference(theme) {
+      const isLight = theme === "light";
+      document.body.classList.toggle("theme-light", isLight);
+      localStorage.setItem("estim-theme", isLight ? "light" : "dark");
+
+      const toggle = document.getElementById("themeToggle");
+      if (toggle) {
+        toggle.textContent = isLight ? "🌙 Mode sombre" : "🌞 Mode clair";
+        toggle.setAttribute("aria-pressed", isLight ? "true" : "false");
+        toggle.setAttribute("aria-label", isLight ? "Basculer en mode sombre" : "Basculer en mode clair");
+      }
+    }
+
+    function toggleTheme() {
+      const next = document.body.classList.contains("theme-light") ? "dark" : "light";
+      setThemePreference(next);
+    }
+
+    function initTheme() {
+      const stored = localStorage.getItem("estim-theme");
+      const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+      const target = stored || (prefersLight ? "light" : "dark");
+      setThemePreference(target);
+      const toggle = document.getElementById("themeToggle");
+      toggle?.addEventListener("click", toggleTheme);
+    }
+
+    function applyPrintSettings(targetId) {
+      const targetSection = targetId ? document.getElementById(targetId) : null;
+      if (!targetSection) return;
+
+      const labelInput = document.querySelector(`.print-label-input[data-target="${targetId}"]`);
+      const numberInput = document.querySelector(`.print-number-input[data-target="${targetId}"]`);
+      const label = (labelInput?.value || labelInput?.placeholder || "").trim() || "Page";
+      const index = parseInt(numberInput?.value, 10) || 1;
+
+      targetSection.dataset.printLabel = label;
+      targetSection.dataset.printIndex = String(index);
+
+      const badge = targetSection.querySelector("[data-print-label-display]");
+      if (badge) badge.textContent = formatPrintBadge(targetSection);
+
+      updateCurrentPrintHeader();
+      updatePrintMenuLinks();
+    }
+
+    function initPrintLabels() {
+      const seen = new Set();
+      document.querySelectorAll(".print-label-input, .print-number-input").forEach(input => {
+        const targetId = input.getAttribute("data-target");
+        if (!targetId) return;
+        const update = () => applyPrintSettings(targetId);
+        input.addEventListener("input", update);
+        if (!seen.has(targetId)) {
+          update();
+          seen.add(targetId);
+        }
+      });
+    }
+
+    function initPrintButton() {
+      document.getElementById("printNow")?.addEventListener("click", () => window.print());
+    }
+
+    // ===== INIT =====
+    function init() {
+      closeAllModals();
+      initTheme();
+      initPrintLabels();
+
+      document.getElementById("clientName").addEventListener("input", updateSummary);
+      document.getElementById("clientProject").addEventListener("input", updateSummary);
+      document.getElementById("clientType").addEventListener("change", updateSummary);
+      document.getElementById("clientDate").addEventListener("input", updateSummary);
+
+      document.getElementById("levels").addEventListener("change", e => {
+        state.levels = parseInt(e.target.value) || 1;
+        updateAll();
+      });
+      document.getElementById("globalArea").addEventListener("change", e => {
+        state.globalArea = parseFloat(e.target.value) || 0;
+        updateAll();
+      });
+
+      document.getElementById("clientBudget").addEventListener("input", updateBudgetKpi);
+      document.getElementById("attachmentInput").addEventListener("change", e => handleAttachments(e.target.files));
+
+      bindModalDismiss();
+      setupArchitectPanelControls();
+      initSidebarToggles();
+      initSidebarNav();
+      syncHabitatBadges();
+      initPrintButton();
+      updateAll();
+    }
+
+    init();
+  </script>
+
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker
+        .register("./service-worker.js")
+        .catch(err => console.error("SW registration failed", err));
+    });
+  }
+</script>
+</body>
+</html>
