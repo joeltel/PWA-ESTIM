@@ -2,8 +2,11 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Estimatif Avant-Projet Premium · V33</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0f172a">
+  <title>Estimatif Avant-Projet Premium · V34</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -75,6 +78,42 @@
       line-height: 1.6;
       overflow-x: hidden;
       transition: background 0.35s ease, color 0.35s ease;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Touch-friendly defaults */
+    input,
+    select,
+    textarea,
+    button {
+      font-family: inherit;
+    }
+
+    input,
+    select,
+    textarea {
+      min-height: 46px;
+      border-radius: 14px;
+      border: 1px solid var(--field-border);
+      padding: 12px 14px;
+      background: var(--field-bg);
+      color: var(--field-text);
+      font-size: 14px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      appearance: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: rgba(14,165,233,0.6);
+      box-shadow: 0 10px 28px rgba(14,165,233,0.2);
+    }
+
+    input[type="number"] {
+      font-variant-numeric: tabular-nums;
     }
 
     body::before {
@@ -330,6 +369,50 @@
         margin-left: 0;
         padding: 18px 14px 24px;
         width: 100%;
+      }
+    }
+
+    @media (max-width: 900px) {
+      :root {
+        --sidebar-width: 0px;
+      }
+      body {
+        background: linear-gradient(180deg, #0b1224 0%, #0f172a 35%, #0b1224 100%);
+      }
+      .sidebar {
+        position: sticky;
+        top: 0;
+        border-radius: 18px;
+        margin: 10px 12px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.28);
+        z-index: 6;
+      }
+      .sidebar .nav-item,
+      .sidebar-toggle.full {
+        justify-content: center;
+      }
+      .main {
+        padding: 12px;
+      }
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .header-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .section-card,
+      .kpi-card,
+      .card,
+      .table-container {
+        border-radius: 18px;
+        box-shadow: 0 22px 40px rgba(0,0,0,0.35);
+        backdrop-filter: blur(12px);
+      }
+      table {
+        font-size: 12px;
       }
     }
 
@@ -1618,15 +1701,6 @@
     }
 
   </style>
-
-<link rel="manifest" href="estimatif-app-manifest.json">
-<meta name="theme-color" content="#020617">
-
-<!-- iOS / Apple -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Estimatif travaux">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
 </head>
 <body>
   <div class="print-menu">
@@ -1695,7 +1769,7 @@
             <div class="header-subtitle">
               Fourchette travaux réaliste pour visite conseil · IDF 2025+
             </div>
-            <div class="version-badge">Version V33</div>
+            <div class="version-badge">Version V34</div>
           </div>
           <div class="header-actions">
             <button id="sidebarToggleHeader" class="sidebar-toggle" type="button" aria-pressed="false" data-sidebar-toggle>
@@ -3324,7 +3398,7 @@ Bien cordialement,
     async function saveHtmlSnapshot() {
       const html = document.documentElement.outerHTML;
       const blob = new Blob([html], { type: "text/html" });
-      const name = `${state.client.name || "projet"}-V33.html`;
+      const name = `${state.client.name || "projet"}-V34.html`;
       await saveWithPicker({
         suggestedName: name,
         blob,
@@ -3642,6 +3716,19 @@ Bien cordialement,
       document.getElementById("printNow")?.addEventListener("click", () => window.print());
     }
 
+    function enhanceTouchInputs() {
+      document.querySelectorAll('input[type="number"]').forEach(input => {
+        input.setAttribute("inputmode", "decimal");
+        input.setAttribute("pattern", "[0-9]*");
+        input.setAttribute("enterkeyhint", "done");
+      });
+
+      document.querySelectorAll("select").forEach(select => {
+        select.style.webkitAppearance = "none";
+        select.style.appearance = "none";
+      });
+    }
+
     // ===== INIT =====
     function init() {
       closeAllModals();
@@ -3671,20 +3758,11 @@ Bien cordialement,
       initSidebarNav();
       syncHabitatBadges();
       initPrintButton();
+      enhanceTouchInputs();
       updateAll();
     }
 
     init();
   </script>
-
-<script>
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker
-        .register("./service-worker.js")
-        .catch(err => console.error("SW registration failed", err));
-    });
-  }
-</script>
 </body>
 </html>
