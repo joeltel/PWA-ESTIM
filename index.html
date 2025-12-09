@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#0f172a">
-  <title>Estimatif Avant-Projet Premium · V36</title>
+  <title>Estimatif Avant-Projet Premium · V40</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -847,6 +847,27 @@
       box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.04);
     }
 
+    .checklist {
+      list-style: none;
+      padding-left: 0;
+      color: var(--text-sec);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .checklist li {
+      position: relative;
+      padding-left: 16px;
+      margin-bottom: 6px;
+    }
+
+    .checklist li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent-cyan);
+    }
+
     tr.muted td {
       color: var(--text-muted-2) !important;
     }
@@ -994,6 +1015,23 @@
       }
     }
 
+    #lotsTable th:nth-child(2),
+    #lotsTable td:nth-child(2),
+    #lotsTable th:nth-child(6),
+    #lotsTable td:nth-child(6) {
+      text-align: center;
+    }
+
+    #lotsTable th:nth-child(3),
+    #lotsTable td:nth-child(3),
+    #lotsTable th:nth-child(4),
+    #lotsTable td:nth-child(4),
+    #lotsTable th:nth-child(5),
+    #lotsTable td:nth-child(5) {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
     /* STAT BOX */
     .stat-box {
       background: rgba(15, 23, 42, 0.95);
@@ -1021,6 +1059,37 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+    }
+
+    .stat-value.price-range {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      width: 100%;
+    }
+
+    .price-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: flex-start;
+    }
+
+    .price-ttc {
+      font-size: 18px;
+      font-weight: 700;
+      color: #7dd3fc;
+      letter-spacing: 0.01em;
+    }
+
+    .price-ht {
+      font-size: 12px;
+      color: var(--text-sec);
+    }
+
+    .price-note {
+      font-size: 11px;
+      color: var(--text-sec);
     }
 
     /* RESULT BOX */
@@ -1612,8 +1681,9 @@
     }
 
     .kpi-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 10px; }
-    .kpi-pill { padding: 10px; border-radius: 12px; border: 1px solid var(--border); background: rgba(15,23,42,0.6); display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
-    .kpi-pill strong { color: var(--text-strong); font-size: 16px; }
+    .kpi-pill { padding: 10px; border-radius: 12px; border: 1px solid var(--border); background: rgba(15,23,42,0.6); display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 12px; }
+    .kpi-pill span { color: var(--text-sec); font-size: 11px; letter-spacing: 0.01em; }
+    .kpi-pill strong { color: var(--text-strong); font-size: 15px; }
 
     body.theme-light .kpi-pill { background: #f8fafc; }
     body.theme-light .kpi-pill strong { color: var(--primary); }
@@ -1812,7 +1882,7 @@
             <div class="header-subtitle">
               Fourchette travaux réaliste pour visite conseil · IDF 2025+
             </div>
-            <div class="version-badge">Version V36</div>
+            <div class="version-badge">Version V40</div>
           </div>
           <div class="header-actions">
             <button id="sidebarToggleHeader" class="sidebar-toggle" type="button" aria-pressed="false" data-sidebar-toggle>
@@ -1939,12 +2009,14 @@
               <div class="section">
                 <div class="section-title">Finition</div>
                 <div class="toggle-group">
-                  <button class="toggle-btn active" onclick="setFinition('NORMAL', this)">⚪ Standard</button>
-                  <button class="toggle-btn" onclick="setFinition('HAUT', this)">🟣 Haut de gamme</button>
+                  <button class="toggle-btn active" onclick="setFinition('STANDARD', this)">⚪ Standard</button>
+                  <button class="toggle-btn" onclick="setFinition('CONFORT', this)">🟢 Confort</button>
+                  <button class="toggle-btn" onclick="setFinition('PREMIUM', this)">🟣 Premium</button>
                 </div>
                 <div class="hint-row">
-                  <div class="hint-pill" data-hint="Revêtements classiques, sanitaires qualitatifs, éclairage efficace.">Standard = confort durable</div>
-                  <div class="hint-pill" data-hint="Matériaux nobles, éclairage design, sanitaire premium, menuiseries sur-mesure.">Haut de gamme = signature</div>
+                  <div class="hint-pill" data-hint="Revêtements et sanitaires classiques, prestations cohérentes marché IDF 2025+.">Standard = prix maîtrisé</div>
+                  <div class="hint-pill" data-hint="Matériaux et équipements supérieurs, confort thermique/sonore renforcé.">Confort = supérieur</div>
+                  <div class="hint-pill" data-hint="Matériaux haut de gamme, sur-mesure, design, équipements premium.">Premium = signature</div>
                   <button class="info-chip" type="button" onclick="openGuideModal()">🤝 Aide au discours client</button>
                 </div>
               </div>
@@ -2031,7 +2103,7 @@
               <div style="margin-top: 12px;">
                 <div class="stat-box">
                   <div class="stat-label">Gamme de prix au m²</div>
-                  <div class="stat-value" id="priceRange">—</div>
+                  <div class="stat-value price-range" id="priceRange">—</div>
                 </div>
               </div>
 
@@ -2253,6 +2325,7 @@
             <button class="btn-secondary" onclick="triggerImport()">📂 Importer JSON</button>
             <button class="btn-secondary" onclick="resetProject()">🔄 Réinitialiser</button>
           </div>
+
         </section>
       </div>
     </main>
@@ -2277,7 +2350,7 @@
       <div class="card-desc" style="margin-bottom: 12px;">Support rapide pour expliquer au client les niveaux de prestation et les impacts sur le budget.</div>
 
       <div style="display:grid; gap:10px; margin-bottom:12px;">
-        <div class="alert alert-info">"Haut de gamme" = matériaux nobles, confort accru et finitions design. Il ne s'agit pas d'un choix élitiste mais d'une enveloppe permettant de tenir les ambitions (luminaires design, sanitaires premium, menuiseries sur mesure).</div>
+        <div class="alert alert-info">"Confort" = matériaux et équipements supérieurs ; "Premium" = matériaux nobles, sur-mesure et design. Objectif : tenir les ambitions (luminaires design, sanitaires premium, menuiseries sur mesure) sans confusion.</div>
         <div class="alert alert-success">L'alignement budget/estimation est lisible sur le curseur : 100% = budget au niveau médian. 80-120% = zone idéale, <80% = arbitrages à prévoir, >140% = budget confortable.</div>
       </div>
 
@@ -2296,7 +2369,8 @@
           <div style="font-weight:700; margin-bottom:6px;">Finitions</div>
           <ul style="color:var(--text-sec); font-size:13px; line-height:1.5; padding-left:18px;">
             <li><strong>Standard :</strong> carrelage/finitions soignées, menuiseries catalogue, luminaires efficaces, sanitaires qualitatifs.</li>
-            <li><strong>Haut de gamme :</strong> matériaux nobles (bois massif, pierre), éclairage décoratif, rangements et menuiseries sur mesure, robinetterie premium.</li>
+            <li><strong>Confort :</strong> matériaux et équipements supérieurs, confort thermique/sonore renforcé.</li>
+            <li><strong>Premium :</strong> matériaux nobles (bois massif, pierre), éclairage décoratif, rangements et menuiseries sur mesure, robinetterie premium.</li>
           </ul>
         </div>
 
@@ -2330,14 +2404,28 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script>
+    // TVA paramétrable (par défaut 10 %). Modifier TVA_RATE pour gérer les cas à 20 % ou 5,5 %.
+    const TVA_RATE_DEFAULT = 0.10;
+    let TVA_RATE = TVA_RATE_DEFAULT;
+    const TVA_OPTIONS = {
+      standard: 0.10,
+      reduite: 0.055,
+      haute: 0.20
+    };
+
     // ===== CONFIG =====
     const CONFIG = {
       BASE_PRICE: {
-        REN_L: { NORMAL: 1000, HAUT: 1300 },
-        REN_M: { NORMAL: 1600, HAUT: 2100 },
-        REN_H: { NORMAL: 2600, HAUT: 3200 },
-        EXT: { NORMAL: 2300, HAUT: 2850 },
-        SUREL: { NORMAL: 2700, HAUT: 3400 }
+        REN_L: { STANDARD: 1000, CONFORT: 1150, PREMIUM: 1300 },
+        REN_M: { STANDARD: 1600, CONFORT: 1850, PREMIUM: 2100 },
+        REN_H: { STANDARD: 2600, CONFORT: 2900, PREMIUM: 3200 },
+        EXT: { STANDARD: 2300, CONFORT: 2575, PREMIUM: 2850 },
+        SUREL: { STANDARD: 2700, CONFORT: 3050, PREMIUM: 3400 }
+      },
+      FINITIONS: {
+        STANDARD: { label: "Standard", desc: "Prix classiques marché IDF 2025+ avec prestations cohérentes." },
+        CONFORT: { label: "Confort", desc: "Matériaux et équipements supérieurs, confort accru." },
+        PREMIUM: { label: "Premium", desc: "Matériaux haut de gamme, sur-mesure et finitions signature." }
       },
       PRICE_SPREAD: 0.15,
       SPECIAL_OPTIONS: [
@@ -2493,7 +2581,7 @@
     let state = {
       nature: "REN_M",
       habitat: "MAISON",
-      finition: "NORMAL",
+      finition: "STANDARD",
       menuiserieType: "STD",
       levels: 1,
       globalArea: 0,
@@ -2531,6 +2619,11 @@
       pct: (v) => (v * 100).toLocaleString("fr-FR", { maximumFractionDigits: 1 }) + "%"
     };
 
+    const tax = {
+      toTtc: (ht) => Math.round(ht * (1 + TVA_RATE)),
+      toHt: (ttc) => Math.round(ttc / (1 + TVA_RATE))
+    };
+
     function ensureLotToggles(lotsDef) {
       lotsDef.forEach(l => {
         if (state.lotToggles[l.lot] === undefined) {
@@ -2544,16 +2637,23 @@
     }
 
     function getPriceRange() {
-      const base = CONFIG.BASE_PRICE[state.nature]?.[state.finition];
-      if (!base) return { minPerM2: 0, maxPerM2: 0, avg: 0 };
+      const baseTtc = CONFIG.BASE_PRICE[state.nature]?.[state.finition];
+      if (!baseTtc) return { minPerM2: 0, maxPerM2: 0, avg: 0, minPerM2Ht: 0, maxPerM2Ht: 0, avgHt: 0 };
 
       const coeff = (1 + CONFIG.COMMISSION_RATE) * CONFIG.MENUISERIE_FACTORS[state.menuiserieType];
-      const adjusted = base * coeff;
+      const adjustedHt = tax.toHt(baseTtc) * coeff;
+
+      const minPerM2Ht = Math.round(adjustedHt * (1 - CONFIG.PRICE_SPREAD));
+      const maxPerM2Ht = Math.round(adjustedHt * (1 + CONFIG.PRICE_SPREAD));
+      const avgHt = Math.round(adjustedHt);
 
       return {
-        minPerM2: Math.round(adjusted * (1 - CONFIG.PRICE_SPREAD)),
-        maxPerM2: Math.round(adjusted * (1 + CONFIG.PRICE_SPREAD)),
-        avg: Math.round(adjusted)
+        minPerM2Ht,
+        maxPerM2Ht,
+        avgHt,
+        minPerM2: tax.toTtc(minPerM2Ht),
+        maxPerM2: tax.toTtc(maxPerM2Ht),
+        avg: tax.toTtc(avgHt)
       };
     }
 
@@ -2564,18 +2664,32 @@
     function computeExtras(refArea) {
       const active = getActiveSpecialOptions();
       const perM2 = active.reduce((acc, opt) => {
-        acc.min += opt.impact.min;
-        acc.avg += opt.impact.avg;
-        acc.max += opt.impact.max;
+        acc.minHt += tax.toHt(opt.impact.min);
+        acc.avgHt += tax.toHt(opt.impact.avg);
+        acc.maxHt += tax.toHt(opt.impact.max);
         return acc;
-      }, { min: 0, avg: 0, max: 0 });
+      }, { minHt: 0, avgHt: 0, maxHt: 0 });
+
+      const amountMinHt = refArea * perM2.minHt;
+      const amountAvgHt = refArea * perM2.avgHt;
+      const amountMaxHt = refArea * perM2.maxHt;
 
       return {
         active,
-        perM2,
-        amountMin: refArea * perM2.min,
-        amountAvg: refArea * perM2.avg,
-        amountMax: refArea * perM2.max
+        perM2: {
+          minHt: perM2.minHt,
+          avgHt: perM2.avgHt,
+          maxHt: perM2.maxHt,
+          min: tax.toTtc(perM2.minHt),
+          avg: tax.toTtc(perM2.avgHt),
+          max: tax.toTtc(perM2.maxHt)
+        },
+        amountMinHt,
+        amountAvgHt,
+        amountMaxHt,
+        amountMin: tax.toTtc(amountMinHt),
+        amountAvg: tax.toTtc(amountAvgHt),
+        amountMax: tax.toTtc(amountMaxHt)
       };
     }
 
@@ -2597,6 +2711,8 @@
 
     // ===== TOGGLES =====
     function setFinition(val, el) {
+      if (val === "NORMAL") val = "STANDARD";
+      if (val === "HAUT") val = "PREMIUM";
       state.finition = val;
       document.querySelectorAll("[onclick*='setFinition']").forEach(b => b.classList.remove("active"));
       el.classList.add("active");
@@ -2646,11 +2762,17 @@
 
       const totalArea = getTotalArea();
       const totalCount = getTotalCount();
-      const { minPerM2, maxPerM2 } = getPriceRange();
+      const { minPerM2, maxPerM2, minPerM2Ht, maxPerM2Ht } = getPriceRange();
 
       document.getElementById("totalRooms").textContent = totalCount;
       document.getElementById("totalArea").textContent = totalArea > 0 ? totalArea.toFixed(0) : "0";
-      document.getElementById("priceRange").textContent = minPerM2 > 0 ? `${minPerM2}–${maxPerM2} €/m²` : "—";
+      const formatRange = (v) => new Intl.NumberFormat('fr-FR').format(v);
+      const priceRangeEl = document.getElementById("priceRange");
+      if (minPerM2 > 0) {
+        priceRangeEl.innerHTML = `<div class="price-stack"><div class="price-ttc">${formatRange(minPerM2)}–${formatRange(maxPerM2)} €/m² TTC</div><div class="price-ht">Base HT : ${formatRange(minPerM2Ht)}–${formatRange(maxPerM2Ht)} €/m²</div></div>`;
+      } else {
+        priceRangeEl.textContent = "—";
+      }
     }
 
     function updateRoom(code, field, value) {
@@ -2661,13 +2783,16 @@
     // ===== ESTIMATION =====
     function computeEstimate() {
       const totalArea = getTotalArea();
-      const { minPerM2, maxPerM2, avg } = getPriceRange();
+      const { minPerM2, maxPerM2, avg, minPerM2Ht, maxPerM2Ht, avgHt } = getPriceRange();
 
       const refArea = totalArea > 0 ? totalArea : (state.globalArea || 0);
       const extras = computeExtras(refArea);
-      const amountMin = refArea * minPerM2 + extras.amountMin;
-      const amountAvg = refArea * avg + extras.amountAvg;
-      const amountMax = refArea * maxPerM2 + extras.amountMax;
+      const amountMinHt = refArea * minPerM2Ht + extras.amountMinHt;
+      const amountAvgHt = refArea * avgHt + extras.amountAvgHt;
+      const amountMaxHt = refArea * maxPerM2Ht + extras.amountMaxHt;
+      const amountMin = tax.toTtc(amountMinHt);
+      const amountAvg = tax.toTtc(amountAvgHt);
+      const amountMax = tax.toTtc(amountMaxHt);
 
       const sourceLots = (state.habitat === "BUREAU" && CONFIG.REPART_LOTS_BUREAU[state.nature]) ? CONFIG.REPART_LOTS_BUREAU[state.nature] : CONFIG.REPART_LOTS[state.nature];
       const lotsDef = filterLotsForHabitat(sourceLots) || [];
@@ -2675,9 +2800,12 @@
       const activeLots = lotsDef.filter(l => state.lotToggles[l.lot] !== false);
       const totalPct = activeLots.reduce((sum, l) => sum + l.pct, 0) || 1;
 
-      const scaledMin = amountMin * (activeLots.length ? totalPct : 1);
-      const scaledAvg = amountAvg * (activeLots.length ? totalPct : 1);
-      const scaledMax = amountMax * (activeLots.length ? totalPct : 1);
+      const scaledMinHt = amountMinHt * (activeLots.length ? totalPct : 1);
+      const scaledAvgHt = amountAvgHt * (activeLots.length ? totalPct : 1);
+      const scaledMaxHt = amountMaxHt * (activeLots.length ? totalPct : 1);
+      const scaledMin = tax.toTtc(scaledMinHt);
+      const scaledAvg = tax.toTtc(scaledAvgHt);
+      const scaledMax = tax.toTtc(scaledMaxHt);
 
       const lots = lotsDef.map(l => {
         const enabled = state.lotToggles[l.lot] !== false;
@@ -2688,20 +2816,28 @@
           pct: enabled ? l.pct : 0,
           desc: l.desc,
           enabled,
-          min: enabled ? scaledMin * basePct : 0,
-          max: enabled ? scaledMax * basePct : 0
+          minHt: enabled ? scaledMinHt * basePct : 0,
+          maxHt: enabled ? scaledMaxHt * basePct : 0,
+          min: enabled ? tax.toTtc(scaledMinHt * basePct) : 0,
+          max: enabled ? tax.toTtc(scaledMaxHt * basePct) : 0
         };
       });
 
       return {
         refArea,
+        amountMinHt: scaledMinHt,
+        amountAvgHt: scaledAvgHt,
+        amountMaxHt: scaledMaxHt,
         amountMin: scaledMin,
         amountAvg: scaledAvg,
         amountMax: scaledMax,
+        avgPerM2Ht: avgHt,
         avgPerM2: avg,
         lots,
         minPerM2,
         maxPerM2,
+        minPerM2Ht,
+        maxPerM2Ht,
         areaPieces: totalArea,
         extras
       };
@@ -2739,7 +2875,7 @@
       const est = computeEstimate();
       lastEstimate = est;
 
-      const { refArea, amountMin, amountAvg, amountMax, avgPerM2, lots, minPerM2, maxPerM2 } = est;
+      const { refArea, amountMin, amountAvg, amountMax, amountMinHt, amountAvgHt, amountMaxHt, avgPerM2, avgPerM2Ht, lots, minPerM2, maxPerM2, minPerM2Ht, maxPerM2Ht } = est;
 
       const mainBlock = document.getElementById("mainResults");
       const warnBlock = document.getElementById("warningsBlock");
@@ -2752,7 +2888,7 @@
 
       const natureNames = { REN_L: "Rénovation légère", REN_M: "Rénovation standard", REN_H: "Rénovation lourde", EXT: "Extension", SUREL: "Surélévation" };
       document.getElementById("natureName").textContent = natureNames[state.nature] || "—";
-      document.getElementById("finitionName").textContent = state.finition === "NORMAL" ? "Standard" : "Haut de gamme";
+      document.getElementById("finitionName").textContent = CONFIG.FINITIONS[state.finition]?.label || "—";
       document.getElementById("habitatName").textContent = CONFIG.HABITATS[state.habitat]?.label || "—";
 
       const explainEl = document.getElementById("natureExplain");
@@ -2761,7 +2897,7 @@
       if (refArea <= 0) {
         mainBlock.innerHTML = `<div class="alert alert-info">Remplissez les surfaces (par pièce ou globale) pour générer une estimation.</div>`;
         lotsEmpty.style.display = "block";
-        renderGauge(0, 0, 0);
+        renderGauge(0, 0, 0, 0, 0, 0);
         renderLotsChart([]);
         renderNoblesTech({ refArea: 0 });
         return;
@@ -2771,8 +2907,12 @@
       r1.className = "result-box";
       r1.innerHTML = `
         <div class="result-label">Enveloppe budget moyen</div>
-        <div class="result-value">${fmt.currency(amountAvg)}</div>
-        <div class="result-sub">Fourchette : ${fmt.currency(amountMin)} à ${fmt.currency(amountMax)} TTC</div>
+        <div class="price-stack">
+          <div class="result-value price-ttc">${fmt.currency(amountAvg)} TTC</div>
+          <div class="price-ht">Base HT : ${fmt.currency(amountAvgHt)} (TVA ${(TVA_RATE * 100).toFixed(1)} %)</div>
+        </div>
+        <div class="result-sub">Fourchette TTC : ${fmt.currency(amountMin)} à ${fmt.currency(amountMax)}</div>
+        <div class="price-note">Fourchette HT : ${fmt.currency(amountMinHt)} à ${fmt.currency(amountMaxHt)}</div>
       `;
 
       const r2 = document.createElement("div");
@@ -2788,7 +2928,10 @@
       r3.style.borderLeftColor = "#06b6d4";
       r3.innerHTML = `
         <div class="result-label" style="color:#7dd3fc;">Prix moyen au m²</div>
-        <div class="result-value" style="background:linear-gradient(135deg,#7dd3fc,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">${fmt.currency(avgPerM2)}</div>
+        <div class="price-stack">
+          <div class="result-value price-ttc" style="background:linear-gradient(135deg,#7dd3fc,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">${fmt.currency(avgPerM2)} TTC</div>
+          <div class="price-ht">HT : ${fmt.currency(avgPerM2Ht)} /m²</div>
+        </div>
       `;
 
       mainBlock.appendChild(r1);
@@ -2796,18 +2939,31 @@
       mainBlock.appendChild(r3);
 
       if (est.extras?.active?.length) {
-        const { perM2, amountAvg } = est.extras;
+        const { perM2, amountAvg, amountAvgHt } = est.extras;
         const labels = est.extras.active.map(o => o.label).join(" • ");
         const r4 = document.createElement("div");
         r4.className = "result-box";
         r4.style.borderLeftColor = "#0ea5e9";
         r4.innerHTML = `
           <div class="result-label" style="color:#0ea5e9;">Options ciblées</div>
-          <div class="result-value" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">+${fmt.currency(amountAvg)}</div>
-          <div class="result-sub">Impact moyen : +${perM2.avg.toFixed(0)} €/m² · ${labels}</div>
+          <div class="price-stack">
+            <div class="result-value price-ttc" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">+${fmt.currency(amountAvg)} TTC</div>
+            <div class="price-ht">Base HT : +${fmt.currency(amountAvgHt)}</div>
+          </div>
+          <div class="result-sub">Impacts moyens : +${perM2.avg.toFixed(0)} €/m² TTC · HT ${perM2.avgHt.toFixed(0)} €/m² · ${labels}</div>
         `;
         mainBlock.appendChild(r4);
       }
+
+      const tvaInfo = document.createElement("div");
+      tvaInfo.className = "alert alert-info";
+      tvaInfo.innerHTML = `TVA par défaut 10 % (logement > 2 ans, fourniture + pose). Si le client fournit le matériel ou pour certains équipements, bascule possible à 20 %. Option 5,5 % uniquement pour amélioration énergétique (sur demande, non appliquée par défaut).`;
+      warnBlock.appendChild(tvaInfo);
+
+      const geoInfo = document.createElement("div");
+      geoInfo.className = "alert alert-info";
+      geoInfo.innerHTML = `Base prix IDF 2025+ : variations possibles selon le département et l'offre locale d'entreprises.`;
+      warnBlock.appendChild(geoInfo);
 
       if (state.globalArea > 0 && est.areaPieces > 0) {
         const diff = Math.abs(state.globalArea - est.areaPieces);
@@ -2821,17 +2977,31 @@
 
       if (lots && lots.length > 0) {
         lotsEmpty.style.display = "none";
-        let html = `<thead><tr><th>Lot</th><th>%</th><th style="text-align:right;">Min.</th><th style="text-align:right;">Max.</th><th style="text-align:center;">€/m²</th><th style="text-align:center;">Toggle</th></tr></thead><tbody>`;
+        let html = `<thead><tr><th>Lot</th><th>%</th><th style="text-align:right;">Min. TTC / HT</th><th style="text-align:right;">Max. TTC / HT</th><th style="text-align:center;">€/m² TTC</th><th style="text-align:center;">Toggle</th></tr></thead><tbody>`;
         let hasLot = false;
           lots.forEach(l => {
           const safeLot = l.lot.replace(/"/g, '&quot;').replace(/'/g, "\\'");
           const perM2 = refArea ? ((l.min + l.max) / 2 / refArea) : 0;
+          const perM2Ht = refArea ? ((l.minHt + l.maxHt) / 2 / refArea) : 0;
           html += `<tr class="${l.enabled ? '' : 'muted'}">
             <td><span class="lot-tooltip" data-tip="${l.desc || ''}" title="${l.desc || ''}">${l.emoji} ${l.lot}</span></td>
             <td>${fmt.pct(l.pct || 0)}</td>
-            <td style="text-align:right; color:#06b6d4;">${fmt.currency(l.min)}</td>
-            <td style="text-align:right; color:#f97316;">${fmt.currency(l.max)}</td>
-            <td style="text-align:center; color:#c7d2fe;">${perM2 ? Math.round(perM2) + ' €/m²' : '—'}</td>
+            <td style="text-align:right;">
+              <div class="price-stack" style="align-items:flex-end;">
+                <div class="price-ttc">${fmt.currency(l.min)} TTC</div>
+                <div class="price-ht">${fmt.currency(l.minHt)} HT</div>
+              </div>
+            </td>
+            <td style="text-align:right;">
+              <div class="price-stack" style="align-items:flex-end;">
+                <div class="price-ttc">${fmt.currency(l.max)} TTC</div>
+                <div class="price-ht">${fmt.currency(l.maxHt)} HT</div>
+              </div>
+            </td>
+            <td style="text-align:center; color:#c7d2fe;">
+              ${perM2 ? Math.round(perM2) + ' €/m² TTC' : '—'}
+              <div style="color:var(--text-sec); font-size:11px;">HT ${perM2Ht ? Math.round(perM2Ht) + ' €/m²' : '—'}</div>
+            </td>
             <td class="lot-toggle"><label class="switch"><input type="checkbox" ${l.enabled ? "checked" : ""} onchange="toggleLot('${safeLot}', this.checked)"><span class="switch-slider"></span></label></td>
           </tr>`;
           hasLot = true;
@@ -2840,8 +3010,18 @@
           html += `<tr class="total-row">
             <td>TOTAL ENVELOPPE</td>
             <td></td>
-            <td style="text-align:right;">${fmt.currency(amountMin)}</td>
-            <td style="text-align:right;">${fmt.currency(amountMax)}</td>
+            <td style="text-align:right;">
+              <div class="price-stack" style="align-items:flex-end;">
+                <div class="price-ttc">${fmt.currency(amountMin)} TTC</div>
+                <div class="price-ht">${fmt.currency(amountMinHt)} HT</div>
+              </div>
+            </td>
+            <td style="text-align:right;">
+              <div class="price-stack" style="align-items:flex-end;">
+                <div class="price-ttc">${fmt.currency(amountMax)} TTC</div>
+                <div class="price-ht">${fmt.currency(amountMaxHt)} HT</div>
+              </div>
+            </td>
             <td></td><td></td>
           </tr></tbody>`;
           lotsTable.innerHTML = html;
@@ -2852,7 +3032,7 @@
         lotsEmpty.style.display = "block";
       }
 
-      renderGauge(avgPerM2, minPerM2, maxPerM2);
+      renderGauge(avgPerM2, minPerM2, maxPerM2, avgPerM2Ht, minPerM2Ht, maxPerM2Ht);
       renderLotsChart(lots);
       renderNoblesTech(est);
       updateSummary();
@@ -2886,7 +3066,7 @@
       }
     }
 
-    function renderGauge(current, min, max) {
+    function renderGauge(currentTtc, minTtc, maxTtc, currentHt = 0, minHt = 0, maxHt = 0) {
       const pointer = document.getElementById("meterPointer");
       const range = document.getElementById("meterRange");
       const label = document.getElementById("gaugeValue");
@@ -2897,7 +3077,7 @@
       const status = document.getElementById("meterStatus");
       if (!pointer || !range || !label || !minLabel || !maxLabel || !minVal || !maxVal || !status) return;
 
-      const hasValues = current > 0 && min > 0 && max > 0;
+      const hasValues = currentTtc > 0 && minTtc > 0 && maxTtc > 0;
       if (!hasValues) {
         pointer.style.left = "0%";
         range.style.width = "0%";
@@ -2912,28 +3092,28 @@
         return;
       }
 
-      const floor = Math.min(min, max, current);
-      const ceiling = Math.max(min, max, current);
+      const floor = Math.min(minTtc, maxTtc, currentTtc);
+      const ceiling = Math.max(minTtc, maxTtc, currentTtc);
       const span = ceiling - floor || 1;
-      const normMin = Math.max(0, ((min - floor) / span) * 100);
-      const normMax = Math.min(100, ((max - floor) / span) * 100);
-      const normCur = Math.min(100, Math.max(0, ((current - floor) / span) * 100));
+      const normMin = Math.max(0, ((minTtc - floor) / span) * 100);
+      const normMax = Math.min(100, ((maxTtc - floor) / span) * 100);
+      const normCur = Math.min(100, Math.max(0, ((currentTtc - floor) / span) * 100));
 
       range.style.left = `${normMin}%`;
       range.style.width = `${Math.max(4, normMax - normMin)}%`;
       pointer.style.left = `${normCur}%`;
 
-      label.textContent = `${fmt.currency(current)} /m²`;
-      minLabel.textContent = `${fmt.currency(min)} m² plancher`;
-      maxLabel.textContent = `${fmt.currency(max)} m² plafond`;
-      minVal.textContent = `${fmt.currency(min)} /m²`;
-      maxVal.textContent = `${fmt.currency(max)} /m²`;
+      label.textContent = `${fmt.currency(currentTtc)} TTC /m²`;
+      minLabel.textContent = `${fmt.currency(minTtc)} TTC (HT ${fmt.currency(minHt)} )`;
+      maxLabel.textContent = `${fmt.currency(maxTtc)} TTC (HT ${fmt.currency(maxHt)} )`;
+      minVal.textContent = `${fmt.currency(minTtc)} TTC /m²`;
+      maxVal.textContent = `${fmt.currency(maxTtc)} TTC /m²`;
 
       let tone = "rgba(6, 182, 212, 0.12)";
       let txt = "#22d3ee";
       let msg = "Cohérent avec le marché";
-      if (current < min * 0.9) { tone = "rgba(34,197,94,0.12)"; txt = "#4ade80"; msg = "Tarif serré : surveiller les options"; }
-      else if (current > max * 1.1) { tone = "rgba(248,113,113,0.14)"; txt = "#f87171"; msg = "Niveau très haut : prévenir le client"; }
+      if (currentTtc < minTtc * 0.9) { tone = "rgba(34,197,94,0.12)"; txt = "#4ade80"; msg = "Tarif serré : surveiller les options"; }
+      else if (currentTtc > maxTtc * 1.1) { tone = "rgba(248,113,113,0.14)"; txt = "#f87171"; msg = "Niveau très haut : prévenir le client"; }
       status.style.background = tone;
       status.style.color = txt;
       status.textContent = msg;
@@ -2950,16 +3130,17 @@
       }
 
       const pills = [];
-      pills.push(`<div class="kpi-pill"><span>Prix moyen m²</span><strong>${fmt.currency(estimate.avgPerM2)}</strong></div>`);
+      pills.push(`<div class="kpi-pill"><span>Prix moyen/m²</span><strong>${fmt.currency(estimate.avgPerM2Ht)} HT · ${fmt.currency(estimate.avgPerM2)} TTC</strong></div>`);
+      pills.push(`<div class="kpi-pill"><span>TVA</span><strong>${(TVA_RATE * 100).toFixed(1)} % (modifiable globalement)</strong></div>`);
 
       if (estimate.extras?.active?.length) {
-        pills.push(`<div class="kpi-pill"><span>Lots spécifiques</span><strong>+${estimate.extras.perM2.avg.toFixed(0)} €/m²</strong></div>`);
+        pills.push(`<div class="kpi-pill"><span>Lots spé.</span><strong>+${estimate.extras.perM2.avg.toFixed(0)} €/m²</strong></div>`);
       }
 
       const budgetInput = parseFloat(document.getElementById("clientBudget")?.value || "0");
       if (budgetInput > 0 && estimate.amountAvg) {
         const ratio = Math.round((budgetInput / estimate.amountAvg) * 100);
-        pills.push(`<div class="kpi-pill"><span>Position budget</span><strong>${ratio}%</strong></div>`);
+        pills.push(`<div class="kpi-pill"><span>Budget</span><strong>${ratio}%</strong></div>`);
       }
 
       const habitatLabel = CONFIG.HABITATS[state.habitat]?.label || "—";
@@ -3300,7 +3481,7 @@
     // ===== EXPORT TEXTE =====
     function generateText() {
       if (!lastEstimate) return;
-      const { refArea, amountMin, amountMax, lots } = lastEstimate;
+      const { refArea, amountMin, amountMax, amountMinHt, amountMaxHt, amountAvg, amountAvgHt, lots } = lastEstimate;
       if (!refArea) return;
 
       const { name, project, date, type } = state.client;
@@ -3316,7 +3497,8 @@
         SUREL: "surélévation"
       }[state.nature];
 
-      const finition = state.finition === "NORMAL" ? "finition standard" : "finition haut de gamme";
+      const finitionLabel = CONFIG.FINITIONS[state.finition]?.label || "finition";
+      const finitionDesc = CONFIG.FINITIONS[state.finition]?.desc || "finition adaptée";
       const habitat = (CONFIG.HABITATS[state.habitat]?.label || "logement").toLowerCase();
 
       let lotsPart = "";
@@ -3327,45 +3509,79 @@
 
       let extrasPart = "";
       if (lastEstimate?.extras?.active?.length) {
-        const perOption = lastEstimate.extras.active.map(opt => `• ${opt.label} (+${opt.impact.avg} €/m² env.)`);
-        extrasPart = "\nOptions spécifiques intégrées :\n" + perOption.join("\n") + `\nImpact cumulé : +${lastEstimate.extras.perM2.avg.toFixed(0)} €/m² (~${fmt.currency(lastEstimate.extras.amountAvg)}).`;
+        const perOption = lastEstimate.extras.active.map(opt => `• ${opt.label} (+${tax.toHt(opt.impact.avg)} €/m² HT ≈ +${opt.impact.avg} €/m² TTC)`);
+        extrasPart = "\nOptions spécifiques intégrées :\n" + perOption.join("\n") + `\nImpact cumulé : +${lastEstimate.extras.perM2.avgHt.toFixed(0)} €/m² HT (~${fmt.currency(lastEstimate.extras.amountAvgHt)} HT / ${fmt.currency(lastEstimate.extras.amountAvg)} TTC).`;
       }
 
-      const text = `ESTIMATION AVANT-PROJET
+      const text = `ESTIMATION AVANT-PROJET · IDF 2025+
 
 ${civ}
 
-      ${rdv}${proj}, je vous confirme une première estimation sommaire des travaux envisagés sur ${fmt.area(refArea)}, pour un projet de ${nature} sur ${habitat} avec une ${finition}.
+${rdv}${proj}, je vous confirme une première estimation sommaire des travaux envisagés sur ${fmt.area(refArea)}, pour un projet de ${nature} sur ${habitat} avec une finition ${finitionLabel.toLowerCase()} (${finitionDesc}).
 
-ENVELOPPE BUDGÉTAIRE
+ENVELOPPE BUDGÉTAIRE (HT → TTC)
+- Fourchette : ${fmt.currency(amountMinHt)} à ${fmt.currency(amountMaxHt)} HT (≈ ${fmt.currency(amountMin)} à ${fmt.currency(amountMax)} TTC avec TVA ${(TVA_RATE * 100).toFixed(1)} % par défaut logement > 2 ans).
+- Enveloppe médiane : ${fmt.currency(amountAvgHt)} HT (≈ ${fmt.currency(amountAvg)} TTC).
+- Calcul HT → TTC automatique ; TVA modifiable dans la variable globale TVA_RATE (20 % si fourniture client/équipements spécifiques, 5,5 % sur travaux d’amélioration énergétique – non appliquée par défaut).
 
-À ce stade, l’enveloppe travaux à prévoir se situe entre ${fmt.currency(amountMin)} et ${fmt.currency(amountMax)} TTC.
+HYPOTHÈSES & LIMITES
+• Estimation basée sur l’existant non encore ouvert, relevés à affiner.
+• Certains postes peuvent augmenter après investigations (structure, réseaux, contraintes immeuble/copro).
+• Prix basés sur configurations standards IDF 2025+.
 
-Cette estimation reste un ordre de grandeur à affiner à partir :
-- d’un relevé précis des surfaces,
-- d’un projet détaillé (plans, choix techniques et matériaux),
-- et de devis d’entreprises.
+ÉLÉMENTS POUVANT FAIRE AUGMENTER UN BUDGET
+• Murs porteurs ou planchers fragiles.
+• Réseaux obsolètes ou inaccessibles.
+• Pièces d’eau complexes et rapproché technique.
+• Accès difficile, protections lourdes.
+• Contraintes d’immeuble / copropriété.
+• Matériaux ou équipements haut de gamme.
+• Contraintes ABF / PLU.
+
+CONDITIONS POUR BÉNÉFICIER DE LA TVA 10 %
+• Logement existant depuis +2 ans.
+• Travaux confiés à une entreprise.
+• Fournitures et pose par la même entreprise.
+• Hors construction neuve.
+• Hors surélévation complète créant un nouveau volume habitable (à confirmer selon cas).
+
+NIVEAU DE FINITION
+• Standard : prix classiques, prestations cohérentes marché IDF 2025+.
+• Confort : matériaux/équipements supérieurs, confort renforcé.
+• Premium : matériaux haut de gamme, sur-mesure, design.
+
+TOLÉRANCES & PÉDAGOGIE BUDGET
+• Estimation / fourchette indicative basée sur prix moyens : seul le devis signé engage l’entreprise.
+• Marge d’incertitude : +15 à +25 % avant plans ; 5–10 % après plans techniques ; 0–5 % après devis entreprises.
+• L’enveloppe budgétaire devra être confirmée après réalisation des plans techniques et consultations entreprises.
+
+ÉVOLUTION GÉO & TVA
+• Prix indicatifs IDF 2025+, pouvant varier selon le département et l’offre locale d’entreprises.
+• Matériel fourni par le client / équipements spécifiques : prévoir TVA 20 %.
+• Travaux d’amélioration énergétique : option TVA 5,5 % (sur demande, non appliquée par défaut).
+
+BUREAUX D’ÉTUDES UTILES (SELON PROJET)
+• BE Structure · BE Thermique · Géotechnicien · Économiste · Coordonnateur SPS · Contrôleur technique.
 
 ${lotsPart}
 ${extrasPart}
 
 INCLUS DANS CETTE ESTIMATION
-
-✓ Travaux courants de préparation et d’installation de chantier (protections, bases simples, nettoyages standards)  
+✓ Travaux courants de préparation et d’installation de chantier (protections, bases simples, nettoyages standards)
 ✓ Fournitures et main-d’œuvre selon un niveau de prestation cohérent avec le marché IDF 2025+
 
 NON INCLUS
-
-✗ Honoraires d’architecte ou de maîtrise d’œuvre  
-✗ Honoraires des bureaux d’études (structure, thermique, acoustique, géotechnique, etc.)  
-✗ Taxes et frais administratifs éventuels  
-✗ Raccordements extérieurs spécifiques (VRD, concessions) et aménagements paysagers  
-✗ Mobilier et éléments décoratifs non fixés  
+✗ Honoraires d’architecte ou de maîtrise d’œuvre
+✗ Honoraires des bureaux d’études (structure, thermique, acoustique, géotechnique, etc.)
+✗ Taxes et frais administratifs éventuels
+✗ Raccordements extérieurs spécifiques (VRD, concessions) et aménagements paysagers
+✗ Mobilier et éléments décoratifs non fixés
 ✗ Travaux hors périmètre défini ensemble
 
-Cette estimation a pour but de vous donner une vision réaliste du budget à mobiliser pour valider la faisabilité de votre projet (ou ajuster son périmètre si besoin).
+RAPPEL COHÉRENCE ENTRE MODULES
+Les tableaux, jauges et exports utilisent les mêmes bases de prix HT/TTC : les écarts éventuels proviennent des options activées.
 
-Je reste bien entendu à votre disposition pour détailler certains points, ou pour envisager les prochaines étapes (études, consultation d’entreprises, phasage…).
+Cette estimation a pour but de vous donner une vision réaliste du budget à mobiliser pour valider la faisabilité de votre projet (ou ajuster son périmètre si besoin).
 
 Bien cordialement,
 
@@ -3441,7 +3657,7 @@ Bien cordialement,
     async function saveHtmlSnapshot() {
       const html = document.documentElement.outerHTML;
       const blob = new Blob([html], { type: "text/html" });
-      const name = `${state.client.name || "projet"}-V36.html`;
+      const name = `${state.client.name || "projet"}-V40.html`;
       await saveWithPicker({
         suggestedName: name,
         blob,
@@ -3457,6 +3673,9 @@ Bien cordialement,
         ROOM_CODES.forEach(code => state.rooms[code] = { count: 0, area: 0 });
       }
       state.habitat = state.habitat || "MAISON";
+      if (state.finition === "NORMAL") state.finition = "STANDARD";
+      if (state.finition === "HAUT") state.finition = "PREMIUM";
+      state.finition = state.finition || "STANDARD";
       state.lotToggles = state.lotToggles || {};
       state.attachments = state.attachments || [];
       state.specialOptions = Object.assign({ fenetres: false, thermique: false, reseaux: false, acoustique: false }, state.specialOptions || {});
@@ -3469,6 +3688,8 @@ Bien cordialement,
       document.getElementById("clientDate").value = state.client?.date || "";
       document.getElementById("nature").value = state.nature;
       syncHabitatBadges();
+      const finBtn = document.querySelector(`button[onclick*="setFinition('${state.finition}')"]`);
+      if (finBtn) setFinition(state.finition, finBtn);
       document.getElementById("levels").value = state.levels;
       document.getElementById("globalArea").value = state.globalArea;
       document.getElementById("clientBudget").value = state.clientBudget || 0;
@@ -3574,7 +3795,7 @@ Bien cordialement,
       state = {
         nature: "REN_M",
         habitat: "MAISON",
-        finition: "NORMAL",
+        finition: "STANDARD",
         menuiserieType: "STD",
         levels: 1,
         globalArea: 0,
@@ -3592,6 +3813,10 @@ Bien cordialement,
       document.getElementById("clientDate").value = "";
       document.getElementById("nature").value = "REN_M";
       setHabitat("MAISON");
+      const finBtn = document.querySelector("button[onclick*=setFinition][onclick*='STANDARD']");
+      if (finBtn) setFinition("STANDARD", finBtn);
+      const menuBtn = document.querySelector("button[onclick*=setMenu][onclick*='STD']");
+      if (menuBtn) setMenu("STD", menuBtn);
       document.getElementById("levels").value = "1";
       document.getElementById("globalArea").value = "0";
       document.getElementById("clientBudget").value = "0";
