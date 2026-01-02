@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#0f172a">
-  <title>Estimatif Avant-Projet Premium · V40</title>
+  <title>Estimatif Avant-Projet Premium · V41</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -1794,6 +1794,118 @@
       z-index: 4;
     }
 
+    .context-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .duration-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.14), rgba(14, 165, 233, 0.14));
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      color: var(--text);
+      font-weight: 700;
+      margin: 6px 0 2px;
+    }
+
+    .duration-badge small { color: var(--text-sec); font-weight: 500; }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 6px;
+      font-size: 12px;
+    }
+
+    .compare-table th, .compare-table td {
+      border: 1px solid var(--border);
+      padding: 8px;
+      text-align: center;
+    }
+
+    .compare-table th {
+      background: var(--surface-light);
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .compare-table td strong { color: var(--accent-cyan); }
+
+    .reference-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .reference-card {
+      position: relative;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: linear-gradient(160deg, rgba(99, 102, 241, 0.16), rgba(14, 165, 233, 0.06));
+      overflow: hidden;
+    }
+
+    .reference-card h4 { margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+    .reference-card p { font-size: 12px; color: var(--text-sec); line-height: 1.45; }
+    .reference-card::after {
+      content: "";
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      right: -20px;
+      bottom: -20px;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0, transparent 60%);
+      transform: rotate(-8deg);
+    }
+
+    .micro-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: var(--chip-bg);
+      border: 1px dashed var(--border);
+      font-size: 11px;
+      color: var(--text-sec);
+      margin-top: 6px;
+    }
+
+    .architect-breakdown {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: rgba(14,165,233,0.14);
+      border: 1px solid rgba(14,165,233,0.3);
+      font-size: 12px;
+      color: var(--text);
+    }
+
+    .task-list {
+      margin: 8px 0 0;
+      padding-left: 18px;
+      color: var(--text-sec);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
     .print-menu { display: none; }
 
     @page {
@@ -1882,7 +1994,7 @@
             <div class="header-subtitle">
               Fourchette travaux réaliste pour visite conseil · IDF 2025+
             </div>
-            <div class="version-badge">Version V40</div>
+            <div class="version-badge">Version V41</div>
           </div>
           <div class="header-actions">
             <button id="sidebarToggleHeader" class="sidebar-toggle" type="button" aria-pressed="false" data-sidebar-toggle>
@@ -2007,6 +2119,31 @@
               </div>
 
               <div class="section">
+                <div class="section-title">Contexte chantier IDF 2025+</div>
+                <div class="context-grid">
+                  <div>
+                    <label>Accès / logistique</label>
+                    <select id="siteAccessibility" onchange="updateAll()">
+                      <option value="FACILE">Accès facile (cour, ascenseur, stationnement)</option>
+                      <option value="DIFFICILE">Accès difficile (étage sans ascenseur, couloirs étroits)</option>
+                      <option value="PIETON">Zone piétonne / hypercentre</option>
+                    </select>
+                    <div class="micro-chip">Majore la main-d'œuvre selon la contrainte d'accès.</div>
+                  </div>
+                  <div>
+                    <label>Index d'inflation annuel (%)</label>
+                    <input type="number" id="inflationRate" value="3" min="0" max="25" step="0.1" onchange="updateAll()" oninput="updateAll()">
+                    <div class="micro-chip">Actualise automatiquement les prix au m² (IDF 2025+).</div>
+                  </div>
+                  <div>
+                    <label>Provision imprévus chantier (%)</label>
+                    <input type="number" id="contingencyRate" value="8" min="5" max="12" step="0.5" onchange="updateAll()" oninput="updateAll()">
+                    <div class="micro-chip">Recommandé : 5–10 % (10 % en lourde / extension / surélévation).</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section">
                 <div class="section-title">Finition</div>
                 <div class="toggle-group">
                   <button class="toggle-btn active" onclick="setFinition('STANDARD', this)">⚪ Standard</button>
@@ -2028,6 +2165,13 @@
                   <button class="toggle-btn" onclick="setMenu('SEMI', this)">⚙️ Semi-mesure</button>
                   <button class="toggle-btn" onclick="setMenu('SUR', this)">⭐ Sur-mesure</button>
                 </div>
+              </div>
+
+              <div class="section">
+                <div class="section-title">Rangements / mobilier sur-mesure (Premium)</div>
+                <label>Métrage linéaire (ml) dédié</label>
+                <input type="number" id="customJoineryMl" value="0" min="0" step="0.5" onchange="updateAll()" oninput="updateAll()">
+                <div class="micro-chip">Calibre le lot « Mobilier / Rangements » en finition Premium (matériaux nobles, ajustements décoratifs).</div>
               </div>
 
               <div class="section print-isolated">
@@ -2058,6 +2202,32 @@
                   </button>
                 </div>
                 <div id="specialOptionsSummary" class="alert alert-info" style="margin-top:10px;">Activez une option pour voir son impact chiffré.</div>
+
+                <div class="section">
+                  <div class="section-title">Bibliothèque de références</div>
+                  <div class="reference-grid">
+                    <div class="reference-card">
+                      <h4>🪟 Menuiseries</h4>
+                      <p>Baies alu/bois mixtes, occultations intégrées, quincailleries premium. Visualiser le niveau de prestation attendu.</p>
+                      <div class="micro-chip">Couleurs / RAL à préciser en atelier.</div>
+                    </div>
+                    <div class="reference-card">
+                      <h4>🌡️ Performance thermique</h4>
+                      <p>Isolation renforcée, rupteurs de pont thermique, menuiseries performantes, contrôle de l’étanchéité à l’air.</p>
+                      <div class="micro-chip">Compatible aides énergétiques (TVA 5,5 % sur demande).</div>
+                    </div>
+                    <div class="reference-card">
+                      <h4>🔌 Réseaux</h4>
+                      <p>Remise aux normes électriques, plomberie haut débit, ventilation double flux possible, réseaux data.</p>
+                      <div class="micro-chip">Inclure DOE / schémas de principe.</div>
+                    </div>
+                    <div class="reference-card">
+                      <h4>🎧 Acoustique</h4>
+                      <p>Cloisons phoniques, sous-couches, plafonds absorbants, joints périphériques traités pour chambres / bureaux.</p>
+                      <div class="micro-chip">Tests d’iso possibles après travaux.</div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div class="section">
@@ -2176,6 +2346,9 @@
               <div class="card-title"><span class="card-icon">💰</span> Budget estimé</div>
               <div class="card-desc">Enveloppe globale pour ce projet, à expliquer au client comme un ordre de grandeur.</div>
 
+              <div class="duration-badge" id="durationBadge">Délai de réalisation estimé — renseignez une surface.</div>
+              <div class="pill-badge" id="accessibilityBadge">Contrainte d'accès : standard</div>
+
               <div id="mainResults"></div>
               <div id="warningsBlock"></div>
             </div>
@@ -2230,6 +2403,12 @@
               </div>
             </section>
           </div>
+
+          <div class="card print-isolated">
+            <div class="card-title"><span class="card-icon">⚖️</span> Tableau comparatif des finitions</div>
+            <div class="card-desc">Visualise Standard / Confort / Premium sur la même surface, avec accessibilité et inflation appliquées.</div>
+            <div id="finitionComparison"></div>
+          </div>
         </section>
 
         <!-- LOTS DETAIL -->
@@ -2237,6 +2416,17 @@
           <div class="card" id="specialLotsCard" style="display:none;">
             <div class="card-title"><span class="card-icon">🏗️</span> Lots critiques par nature</div>
             <div class="card-desc">Pour les extensions et surélévations, focus sur toiture, exploitation et enveloppe.</div>
+            <div class="context-grid" id="structureMaterialRow" style="display:none;">
+              <div>
+                <label>Matériaux / système porteur</label>
+                <select id="structureMaterial" onchange="setStructureMaterial(this.value)">
+                  <option value="BOIS">Bois / ossature légère</option>
+                  <option value="ACIER">Acier / mixte</option>
+                  <option value="MACONNERIE">Maçonnerie / béton</option>
+                </select>
+                <div class="micro-chip">Affinage pour les lots critiques (extension / surélévation).</div>
+              </div>
+            </div>
             <div class="lot-focus" id="specialLots"></div>
           </div>
         </section>
@@ -2270,6 +2460,25 @@
             <div class="card-title"><span class="card-icon">🧭</span> Menu architecte</div>
             <div class="card-desc">Roadmap interne basée sur les lots actifs. Non transmise au client.</div>
 
+            <div class="section">
+              <div class="section-title">Paramètres agence</div>
+              <div class="context-grid">
+                <div>
+                  <label>Taux honoraires (% sur budget médian)</label>
+                  <input type="number" id="archFeesRate" value="12" min="5" max="20" step="0.5" onchange="updateAll()" oninput="updateAll()">
+                  <div class="micro-chip">Calcul automatique dans la feuille de route (Menu 2 → budget médian).</div>
+                </div>
+                <div>
+                  <label>Provision imprévus (lecture seule)</label>
+                  <div class="alert alert-info" id="contingencyDisplay" style="margin-top:6px;">—</div>
+                </div>
+                <div>
+                  <label>Indexation</label>
+                  <div class="alert alert-info" id="inflationReminder" style="margin-top:6px;">Index inflation appliqué : 3 %.</div>
+                </div>
+              </div>
+            </div>
+
             <div class="btn-group">
               <button id="architectToggleBtn" class="btn-primary">🧾 Afficher la feuille de route</button>
               <button class="btn-secondary" onclick="saveStateToFile()">💾 Sauvegarder où je veux</button>
@@ -2301,6 +2510,9 @@
 
             <div class="alert alert-info">
               💡 Pour partager le texte, copiez-le ou utilisez le raccourci Ctrl+P du navigateur après avoir masqué le menu latéral.
+            </div>
+            <div class="alert alert-info">
+              ⏱️ Clause de non-engagement : les durées et prix indiqués sont informatifs, non contractuels, et restent soumis à la validation technique des entreprises et aux délais d'approvisionnement.
             </div>
           </div>
 
@@ -2421,6 +2633,29 @@
         REN_H: { STANDARD: 2600, CONFORT: 2900, PREMIUM: 3200 },
         EXT: { STANDARD: 2300, CONFORT: 2575, PREMIUM: 2850 },
         SUREL: { STANDARD: 2700, CONFORT: 3050, PREMIUM: 3400 }
+      },
+      ACCESSIBILITY: {
+        FACILE: { label: "Accès facile", coeff: 1.00 },
+        DIFFICILE: { label: "Accès difficile", coeff: 1.08 },
+        PIETON: { label: "Zone piétonne / hypercentre", coeff: 1.12 }
+      },
+      INFLATION_DEFAULT: 0.03,
+      CUSTOM_JOINERY: {
+        label: "Mobilier / rangements sur mesure",
+        perMlHt: { min: 900, avg: 1050, max: 1250 },
+        note: "Finition Premium, menuiserie sur mesure, ajustements décoratifs"
+      },
+      DURATION_BASE: {
+        REN_L: { minWeeks: 4, maxWeeks: 8, label: "Rafraîchissement" },
+        REN_M: { minWeeks: 12, maxWeeks: 20, label: "Standard" },
+        REN_H: { minWeeks: 24, maxWeeks: 40, label: "Lourde" },
+        EXT: { minWeeks: 32, maxWeeks: 56, label: "Extension" },
+        SUREL: { minWeeks: 32, maxWeeks: 56, label: "Surélévation" }
+      },
+      STRUCTURE_MATERIALS: {
+        BOIS: "Structure bois / ossature légère (rapidité, préfabrication possible)",
+        ACIER: "Structure acier / mixte (portées longues, renforts ciblés)",
+        MACONNERIE: "Structure maçonnerie / béton (inertie, reprises lourdes)"
       },
       FINITIONS: {
         STANDARD: { label: "Standard", desc: "Prix classiques marché IDF 2025+ avec prestations cohérentes." },
@@ -2573,7 +2808,23 @@
         STOCK: { label: "Local technique / Stock", icon: "📦" }
       },
       NOBLE_CODES: ["ENTREE", "SAM", "SALON", "CHAMBRE", "OPEN_SPACE", "SALLE_REUNION", "BUREAU_PRIVE", "ACCUEIL"],
-      TECH_CODES: ["CUISINE", "SDB", "WC", "CELLIER", "COMBLES", "SOUS_SOL", "SANITAIRES", "STOCK"]
+      TECH_CODES: ["CUISINE", "SDB", "WC", "CELLIER", "COMBLES", "SOUS_SOL", "SANITAIRES", "STOCK"],
+      LOT_TASKS: {
+        "Gros œuvre": ["Ouvertures structurelles sécurisées", "Reprises porteurs/fondations si nécessaires"],
+        "Second œuvre": ["Cloisonnement et doublages", "Isolation acoustique/thermique ciblée"],
+        "Techniques": ["Remise aux normes électriques", "Reprises plomberie/ventilation", "Mise au point chauffage/PAC"],
+        "Menuiseries intérieures": ["Rangements intégrés", "Habillages et portes intérieures ajustées"],
+        "Menuiseries extérieures": ["Remplacement menuiseries extérieures", "Gestion occultations et étanchéités"],
+        "Toiture": ["Étanchéité et isolation toiture", "Raccords avec existant / protections"],
+        "Exploitation toiture": ["Terrasse sur plots / garde-corps", "Accès sécurisé"],
+        "Finitions": ["Préparation supports", "Peintures/sols et habillages déco"],
+        "Honoraires": ["Pilotage MOE/BET", "Synthèse technique et sécurité"],
+        "Cloisonnement": ["Space-planning", "Création de salles / bureaux"],
+        "Courant fort": ["Distribution CFO/CFA", "Baie de brassage / wifi"],
+        "CVC": ["Réglage CTA / gaînes", "Confort thermique régulé"],
+        "Sécurité incendie": ["SSI / sprinklage", "Signalétique sécurité"],
+        "Mobilier / rangements sur mesure": ["Conception et fabrication sur mesure", "Pose, ajustements et finitions décoratives"]
+      }
     };
 
     const ROOM_CODES = Object.keys(CONFIG.ROOM_LIBRARY);
@@ -2583,6 +2834,12 @@
       habitat: "MAISON",
       finition: "STANDARD",
       menuiserieType: "STD",
+      siteAccessibility: "FACILE",
+      inflationRate: CONFIG.INFLATION_DEFAULT,
+      contingencyRate: 0.08,
+      archFeesRate: 0.12,
+      customJoineryMl: 0,
+      structureMaterial: "BOIS",
       levels: 1,
       globalArea: 0,
       rooms: {},
@@ -2636,12 +2893,14 @@
       return (lotsDef || []).filter(l => !l.habitats || l.habitats.includes(state.habitat));
     }
 
-    function getPriceRange() {
-      const baseTtc = CONFIG.BASE_PRICE[state.nature]?.[state.finition];
+    function getPriceRange(finition = state.finition) {
+      const baseTtc = CONFIG.BASE_PRICE[state.nature]?.[finition];
       if (!baseTtc) return { minPerM2: 0, maxPerM2: 0, avg: 0, minPerM2Ht: 0, maxPerM2Ht: 0, avgHt: 0 };
 
       const coeff = (1 + CONFIG.COMMISSION_RATE) * CONFIG.MENUISERIE_FACTORS[state.menuiserieType];
-      const adjustedHt = tax.toHt(baseTtc) * coeff;
+      const accessCoeff = CONFIG.ACCESSIBILITY[state.siteAccessibility]?.coeff || 1;
+      const inflationCoeff = 1 + (state.inflationRate || 0);
+      const adjustedHt = tax.toHt(baseTtc * inflationCoeff) * coeff * accessCoeff;
 
       const minPerM2Ht = Math.round(adjustedHt * (1 - CONFIG.PRICE_SPREAD));
       const maxPerM2Ht = Math.round(adjustedHt * (1 + CONFIG.PRICE_SPREAD));
@@ -2693,6 +2952,50 @@
       };
     }
 
+    function computeCustomJoinery(refArea, finition = state.finition) {
+      const ml = parseFloat(state.customJoineryMl || "0") || 0;
+      if (!refArea || finition !== "PREMIUM" || ml <= 0) {
+        return {
+          ml: 0,
+          perM2: { minHt: 0, avgHt: 0, maxHt: 0, min: 0, avg: 0, max: 0 },
+          amountMinHt: 0, amountAvgHt: 0, amountMaxHt: 0,
+          amountMin: 0, amountAvg: 0, amountMax: 0,
+          label: CONFIG.CUSTOM_JOINERY.label,
+          note: CONFIG.CUSTOM_JOINERY.note,
+          active: false
+        };
+      }
+
+      const unit = CONFIG.CUSTOM_JOINERY.perMlHt;
+      const amountMinHt = ml * unit.min;
+      const amountAvgHt = ml * unit.avg;
+      const amountMaxHt = ml * unit.max;
+      const perM2MinHt = amountMinHt / refArea;
+      const perM2AvgHt = amountAvgHt / refArea;
+      const perM2MaxHt = amountMaxHt / refArea;
+
+      return {
+        ml,
+        label: CONFIG.CUSTOM_JOINERY.label,
+        note: CONFIG.CUSTOM_JOINERY.note,
+        active: true,
+        perM2: {
+          minHt: perM2MinHt,
+          avgHt: perM2AvgHt,
+          maxHt: perM2MaxHt,
+          min: tax.toTtc(perM2MinHt),
+          avg: tax.toTtc(perM2AvgHt),
+          max: tax.toTtc(perM2MaxHt)
+        },
+        amountMinHt,
+        amountAvgHt,
+        amountMaxHt,
+        amountMin: tax.toTtc(amountMinHt),
+        amountAvg: tax.toTtc(amountAvgHt),
+        amountMax: tax.toTtc(amountMaxHt)
+      };
+    }
+
     function getActiveRoomCodes() {
       return CONFIG.HABITATS[state.habitat]?.rooms || ROOM_CODES;
     }
@@ -2707,6 +3010,11 @@
 
     function getTotalCount() {
       return getActiveRoomCodes().reduce((sum, code) => sum + (state.rooms[code]?.count || 0), 0);
+    }
+
+    function getRefArea() {
+      const totalArea = getTotalArea();
+      return totalArea > 0 ? totalArea : (state.globalArea || 0);
     }
 
     // ===== TOGGLES =====
@@ -2729,6 +3037,11 @@
     function setHabitat(val) {
       state.habitat = val;
       syncHabitatBadges();
+      updateAll();
+    }
+
+    function setStructureMaterial(val) {
+      state.structureMaterial = val;
       updateAll();
     }
 
@@ -2783,13 +3096,23 @@
     // ===== ESTIMATION =====
     function computeEstimate() {
       const totalArea = getTotalArea();
+      const refArea = getRefArea();
       const { minPerM2, maxPerM2, avg, minPerM2Ht, maxPerM2Ht, avgHt } = getPriceRange();
 
-      const refArea = totalArea > 0 ? totalArea : (state.globalArea || 0);
       const extras = computeExtras(refArea);
-      const amountMinHt = refArea * minPerM2Ht + extras.amountMinHt;
-      const amountAvgHt = refArea * avgHt + extras.amountAvgHt;
-      const amountMaxHt = refArea * maxPerM2Ht + extras.amountMaxHt;
+      const customJoinery = computeCustomJoinery(refArea);
+
+      const baseMinHt = refArea * minPerM2Ht;
+      const baseAvgHt = refArea * avgHt;
+      const baseMaxHt = refArea * maxPerM2Ht;
+
+      const distributedMinHt = baseMinHt + extras.amountMinHt;
+      const distributedAvgHt = baseAvgHt + extras.amountAvgHt;
+      const distributedMaxHt = baseMaxHt + extras.amountMaxHt;
+
+      const amountMinHt = distributedMinHt + customJoinery.amountMinHt;
+      const amountAvgHt = distributedAvgHt + customJoinery.amountAvgHt;
+      const amountMaxHt = distributedMaxHt + customJoinery.amountMaxHt;
       const amountMin = tax.toTtc(amountMinHt);
       const amountAvg = tax.toTtc(amountAvgHt);
       const amountMax = tax.toTtc(amountMaxHt);
@@ -2800,12 +3123,9 @@
       const activeLots = lotsDef.filter(l => state.lotToggles[l.lot] !== false);
       const totalPct = activeLots.reduce((sum, l) => sum + l.pct, 0) || 1;
 
-      const scaledMinHt = amountMinHt * (activeLots.length ? totalPct : 1);
-      const scaledAvgHt = amountAvgHt * (activeLots.length ? totalPct : 1);
-      const scaledMaxHt = amountMaxHt * (activeLots.length ? totalPct : 1);
-      const scaledMin = tax.toTtc(scaledMinHt);
-      const scaledAvg = tax.toTtc(scaledAvgHt);
-      const scaledMax = tax.toTtc(scaledMaxHt);
+      const scaledMinHt = distributedMinHt * (activeLots.length ? totalPct : 1);
+      const scaledAvgHt = distributedAvgHt * (activeLots.length ? totalPct : 1);
+      const scaledMaxHt = distributedMaxHt * (activeLots.length ? totalPct : 1);
 
       const lots = lotsDef.map(l => {
         const enabled = state.lotToggles[l.lot] !== false;
@@ -2823,14 +3143,29 @@
         };
       });
 
+      if (customJoinery?.amountAvgHt > 0) {
+        const pct = amountAvgHt ? customJoinery.amountAvgHt / amountAvgHt : 0;
+        lots.push({
+          lot: "Mobilier / rangements sur mesure",
+          emoji: "🧰",
+          pct,
+          desc: customJoinery.note,
+          enabled: true,
+          minHt: customJoinery.amountMinHt,
+          maxHt: customJoinery.amountMaxHt,
+          min: customJoinery.amountMin,
+          max: customJoinery.amountMax
+        });
+      }
+
       return {
         refArea,
-        amountMinHt: scaledMinHt,
-        amountAvgHt: scaledAvgHt,
-        amountMaxHt: scaledMaxHt,
-        amountMin: scaledMin,
-        amountAvg: scaledAvg,
-        amountMax: scaledMax,
+        amountMinHt: amountMinHt,
+        amountAvgHt: amountAvgHt,
+        amountMaxHt: amountMaxHt,
+        amountMin: amountMin,
+        amountAvg: amountAvg,
+        amountMax: amountMax,
         avgPerM2Ht: avgHt,
         avgPerM2: avg,
         lots,
@@ -2839,8 +3174,21 @@
         minPerM2Ht,
         maxPerM2Ht,
         areaPieces: totalArea,
-        extras
+        extras,
+        customJoinery,
+        distributed: { minHt: distributedMinHt, avgHt: distributedAvgHt, maxHt: distributedMaxHt }
       };
+    }
+
+    function estimateDuration(area = getRefArea()) {
+      const base = CONFIG.DURATION_BASE[state.nature];
+      if (!base || !area) return null;
+      const multiplier = area > 150 ? 1.2 : 1;
+      const minWeeks = Math.round(base.minWeeks * multiplier);
+      const maxWeeks = Math.round(base.maxWeeks * multiplier);
+      const minMonths = (minWeeks / 4.345).toFixed(1);
+      const maxMonths = (maxWeeks / 4.345).toFixed(1);
+      return { ...base, minWeeks, maxWeeks, minMonths, maxMonths, multiplier };
     }
 
     // ===== SUMMARY CLIENT =====
@@ -2870,12 +3218,36 @@
       el.style.display = "block";
     }
 
+    function renderDurationBadge(est = lastEstimate) {
+      const badge = document.getElementById("durationBadge");
+      if (!badge) return;
+      const area = est?.refArea || getRefArea();
+      const dur = estimateDuration(area);
+      if (!dur || !area) {
+        badge.textContent = "Délai de réalisation estimé — renseignez une surface.";
+        return;
+      }
+      const surfaceNote = area > 150 ? "Surface >150 m² : coefficient +20%" : "Base nature projet";
+      badge.innerHTML = `Délai de réalisation : ${dur.minWeeks} à ${dur.maxWeeks} semaines · ${dur.minMonths} – ${dur.maxMonths} mois <small>${surfaceNote}</small>`;
+    }
+
+    function renderAccessibilityBadge() {
+      const badge = document.getElementById("accessibilityBadge");
+      if (!badge) return;
+      const access = CONFIG.ACCESSIBILITY[state.siteAccessibility] || CONFIG.ACCESSIBILITY.FACILE;
+      const coeff = access?.coeff || 1;
+      const inflationPct = ((state.inflationRate || 0) * 100).toFixed(1);
+      badge.textContent = `Contrainte d'accès : ${access?.label || "standard"} · coeff ${coeff.toFixed(2)} · index +${inflationPct}%`;
+    }
+
     // ===== RÉSULTATS =====
     function renderResults() {
       const est = computeEstimate();
       lastEstimate = est;
 
       const { refArea, amountMin, amountAvg, amountMax, amountMinHt, amountAvgHt, amountMaxHt, avgPerM2, avgPerM2Ht, lots, minPerM2, maxPerM2, minPerM2Ht, maxPerM2Ht } = est;
+      renderDurationBadge(est);
+      renderAccessibilityBadge();
 
       const mainBlock = document.getElementById("mainResults");
       const warnBlock = document.getElementById("warningsBlock");
@@ -2900,6 +3272,7 @@
         renderGauge(0, 0, 0, 0, 0, 0);
         renderLotsChart([]);
         renderNoblesTech({ refArea: 0 });
+        renderFinitionComparison({ refArea: 0 });
         return;
       }
 
@@ -2955,6 +3328,22 @@
         mainBlock.appendChild(r4);
       }
 
+      if (est.customJoinery?.active) {
+        const cj = est.customJoinery;
+        const r5 = document.createElement("div");
+        r5.className = "result-box";
+        r5.style.borderLeftColor = "#c084fc";
+        r5.innerHTML = `
+          <div class="result-label" style="color:#c084fc;">Mobilier / rangements sur mesure</div>
+          <div class="price-stack">
+            <div class="result-value price-ttc" style="background:linear-gradient(135deg,#c084fc,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">+${fmt.currency(cj.amountAvg)} TTC</div>
+            <div class="price-ht">Base HT : +${fmt.currency(cj.amountAvgHt)}</div>
+          </div>
+          <div class="result-sub">${cj.ml} ml renseignés · Impact moyen ${cj.perM2.avg.toFixed(0)} €/m² TTC</div>
+        `;
+        mainBlock.appendChild(r5);
+      }
+
       const tvaInfo = document.createElement("div");
       tvaInfo.className = "alert alert-info";
       tvaInfo.innerHTML = `TVA par défaut 10 % (logement > 2 ans, fourniture + pose). Si le client fournit le matériel ou pour certains équipements, bascule possible à 20 %. Option 5,5 % uniquement pour amélioration énergétique (sur demande, non appliquée par défaut).`;
@@ -2964,6 +3353,13 @@
       geoInfo.className = "alert alert-info";
       geoInfo.innerHTML = `Base prix IDF 2025+ : variations possibles selon le département et l'offre locale d'entreprises.`;
       warnBlock.appendChild(geoInfo);
+
+      const contingencyRatePct = ((state.contingencyRate || 0) * 100).toFixed(1);
+      const honorairesPct = ((state.archFeesRate || 0) * 100).toFixed(1);
+      const contingencyInfo = document.createElement("div");
+      contingencyInfo.className = "alert alert-info";
+      contingencyInfo.innerHTML = `Provision imprévus ${contingencyRatePct}% : ${fmt.currency(amountAvg * (state.contingencyRate || 0))} · Honoraires ${honorairesPct}% (base budget médian) : ${fmt.currency(amountAvg * (state.archFeesRate || 0))}.`;
+      warnBlock.appendChild(contingencyInfo);
 
       if (state.globalArea > 0 && est.areaPieces > 0) {
         const diff = Math.abs(state.globalArea - est.areaPieces);
@@ -3035,6 +3431,7 @@
       renderGauge(avgPerM2, minPerM2, maxPerM2, avgPerM2Ht, minPerM2Ht, maxPerM2Ht);
       renderLotsChart(lots);
       renderNoblesTech(est);
+      renderFinitionComparison(est);
       updateSummary();
       renderSpecialLots(est);
     }
@@ -3042,15 +3439,20 @@
     function renderSpecialLots(est) {
       const card = document.getElementById("specialLotsCard");
       const container = document.getElementById("specialLots");
+      const structRow = document.getElementById("structureMaterialRow");
+      const structSelect = document.getElementById("structureMaterial");
       if (!card || !container) return;
 
       const items = CONFIG.SPECIAL_LOTS[state.nature] || [];
       if (!items.length) {
         card.style.display = "none";
+        if (structRow) structRow.style.display = "none";
         return;
       }
 
       card.style.display = "block";
+      if (structRow) structRow.style.display = "grid";
+      if (structSelect) structSelect.value = state.structureMaterial;
       container.innerHTML = items.map(item => `
         <div class="lot-focus-card">
           <div class="title">${item.emoji} ${item.title}</div>
@@ -3062,7 +3464,8 @@
       const desc = card.querySelector('.card-desc');
       if (desc) {
         const focus = CONFIG.HABITATS[state.habitat]?.focus || "";
-        desc.textContent = `Focus ${state.nature === 'EXT' ? 'extension' : 'surélévation'} · ${focus}`;
+        const mat = CONFIG.STRUCTURE_MATERIALS[state.structureMaterial] || "";
+        desc.textContent = `Focus ${state.nature === 'EXT' ? 'extension' : 'surélévation'} · ${focus}. ${mat}`;
       }
     }
 
@@ -3132,9 +3535,15 @@
       const pills = [];
       pills.push(`<div class="kpi-pill"><span>Prix moyen/m²</span><strong>${fmt.currency(estimate.avgPerM2Ht)} HT · ${fmt.currency(estimate.avgPerM2)} TTC</strong></div>`);
       pills.push(`<div class="kpi-pill"><span>TVA</span><strong>${(TVA_RATE * 100).toFixed(1)} % (modifiable globalement)</strong></div>`);
+      const access = CONFIG.ACCESSIBILITY[state.siteAccessibility] || CONFIG.ACCESSIBILITY.FACILE;
+      pills.push(`<div class="kpi-pill"><span>Accès / logistique</span><strong>${access.label} · coeff ${access.coeff.toFixed(2)}</strong></div>`);
+      pills.push(`<div class="kpi-pill"><span>Index inflation</span><strong>+${((state.inflationRate || 0) * 100).toFixed(1)} %</strong></div>`);
 
       if (estimate.extras?.active?.length) {
         pills.push(`<div class="kpi-pill"><span>Lots spé.</span><strong>+${estimate.extras.perM2.avg.toFixed(0)} €/m²</strong></div>`);
+      }
+      if (estimate.customJoinery?.active) {
+        pills.push(`<div class="kpi-pill"><span>Sur-mesure</span><strong>${estimate.customJoinery.ml} ml</strong></div>`);
       }
 
       const budgetInput = parseFloat(document.getElementById("clientBudget")?.value || "0");
@@ -3239,6 +3648,61 @@
       `;
     }
 
+    function computeFinitionScenario(finition, refArea, extrasCache) {
+      const prices = getPriceRange(finition);
+      const extras = extrasCache || computeExtras(refArea);
+      const custom = computeCustomJoinery(refArea, finition);
+      const baseMinHt = refArea * prices.minPerM2Ht;
+      const baseAvgHt = refArea * prices.avgHt;
+      const baseMaxHt = refArea * prices.maxPerM2Ht;
+      const totalMinHt = baseMinHt + extras.amountMinHt + custom.amountMinHt;
+      const totalAvgHt = baseAvgHt + extras.amountAvgHt + custom.amountAvgHt;
+      const totalMaxHt = baseMaxHt + extras.amountMaxHt + custom.amountMaxHt;
+
+      return {
+        finition,
+        label: CONFIG.FINITIONS[finition]?.label || finition,
+        perM2: prices.avg,
+        perM2Ht: prices.avgHt,
+        amountMin: tax.toTtc(totalMinHt),
+        amountAvg: tax.toTtc(totalAvgHt),
+        amountMax: tax.toTtc(totalMaxHt),
+        custom
+      };
+    }
+
+    function renderFinitionComparison(est = lastEstimate) {
+      const container = document.getElementById("finitionComparison");
+      if (!container) return;
+      const refArea = est?.refArea || getRefArea();
+      if (!refArea) {
+        container.innerHTML = `<div class="alert alert-info">Renseignez une surface pour comparer Standard / Confort / Premium.</div>`;
+        return;
+      }
+
+      const extras = est?.extras || computeExtras(refArea);
+      const scenarios = ["STANDARD", "CONFORT", "PREMIUM"].map(f => computeFinitionScenario(f, refArea, extras));
+      const rows = scenarios.map(s => `
+        <tr>
+          <td>${s.label}</td>
+          <td>${fmt.currency(s.amountMin)} – ${fmt.currency(s.amountMax)}</td>
+          <td><strong>${fmt.currency(s.amountAvg)}</strong></td>
+          <td>${fmt.currency(s.perM2)} /m² TTC</td>
+          <td>${s.custom?.active ? `${s.custom.ml} ml sur-mesure` : "—"}</td>
+        </tr>
+      `).join("");
+
+      container.innerHTML = `
+        <table class="compare-table">
+          <thead>
+            <tr><th>Finition</th><th>Fourchette TTC</th><th>Médiane TTC</th><th>M² TTC</th><th>Sur-mesure</th></tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+        <div class="micro-chip">Comparaison sur ${fmt.area(refArea)} avec accessibilité et indexation appliquées.</div>
+      `;
+    }
+
     function renderSpecialOptionsSummary(est = lastEstimate) {
       const summary = document.getElementById("specialOptionsSummary");
       const grid = document.getElementById("specialOptionsGrid");
@@ -3258,13 +3722,21 @@
         return;
       }
 
-      if (!active.length) {
-        summary.innerHTML = "Aucun lot spécifique sélectionné. Ajoutez fenêtres, thermique ou réseaux si besoin client.";
-        return;
+      const extras = estimate.extras || computeExtras(estimate.refArea);
+      const custom = estimate.customJoinery || computeCustomJoinery(estimate.refArea);
+      const parts = [];
+
+      if (active.length) {
+        parts.push(`<strong>${active.length} option(s)</strong> actives · +${extras.perM2.avg.toFixed(0)} €/m² (≈ ${fmt.currency(extras.amountAvg)})`);
+      } else {
+        parts.push("Aucune option ciblée activée. Ajoutez fenêtres, thermique ou réseaux si besoin client.");
       }
 
-      const extras = estimate.extras || computeExtras(estimate.refArea);
-      summary.innerHTML = `<strong>${active.length} option(s)</strong> actives · +${extras.perM2.avg.toFixed(0)} €/m² (≈ ${fmt.currency(extras.amountAvg)})`;
+      if (custom?.active) {
+        parts.push(`Mobilier / rangements : ${custom.ml} ml saisis · +${fmt.currency(custom.amountAvg)} TTC (~${custom.perM2.avg.toFixed(0)} €/m² TTC).`);
+      }
+
+      summary.innerHTML = parts.join("<br>");
     }
 
     function toggleSpecialOption(key, enabled) {
@@ -3278,6 +3750,23 @@
     function toggleLot(lotName, enabled) {
       state.lotToggles[lotName] = enabled;
       updateAll();
+    }
+
+    function findLotTasks(lotName) {
+      const entries = Object.entries(CONFIG.LOT_TASKS || {});
+      for (const [key, tasks] of entries) {
+        if (lotName.toLowerCase().includes(key.toLowerCase())) return tasks;
+      }
+      return null;
+    }
+
+    function formatLotTasks(lots) {
+      const lines = [];
+      (lots || []).filter(l => l.enabled !== false && l.min > 0).forEach(l => {
+        const tasks = findLotTasks(l.lot) || ["Actions à préciser après relevé"];
+        lines.push(`• ${l.lot} : ${tasks.join(" ; ")}`);
+      });
+      return lines.join("\n");
     }
 
     function updateBudgetKpi() {
@@ -3414,8 +3903,24 @@
 
       const activeLots = (est.lots || []).filter(l => l.enabled !== false && l.min > 0).sort((a, b) => b.min - a.min);
       const focus = activeLots.slice(0, 5).map(l => `<li><strong>${l.emoji} ${l.lot}</strong> : ${fmt.currency((l.min + l.max) / 2)} – ${l.desc || ""}</li>`).join("");
+      const honoraires = est.amountAvg * (state.archFeesRate || 0);
+      const contingency = est.amountAvg * (state.contingencyRate || 0);
+      const access = CONFIG.ACCESSIBILITY[state.siteAccessibility] || CONFIG.ACCESSIBILITY.FACILE;
+      const duration = estimateDuration(est.refArea);
+      const structureNote = CONFIG.STRUCTURE_MATERIALS[state.structureMaterial] || "";
+
       container.innerHTML = `
         <p style="margin-bottom:8px;">Projet de ${fmt.area(est.refArea)} · enveloppe médiane ${fmt.currency(est.amountAvg)}.</p>
+        <div class="architect-breakdown">
+          <div class="alert alert-info">Honoraires (${((state.archFeesRate||0)*100).toFixed(1)}%) : ${fmt.currency(honoraires)}.</div>
+          <div class="alert alert-info">Provision imprévus (${((state.contingencyRate||0)*100).toFixed(1)}%) : ${fmt.currency(contingency)}.</div>
+          <div class="alert alert-info">Accès : ${access.label} (coeff ${access.coeff.toFixed(2)}) · Index +${((state.inflationRate||0)*100).toFixed(1)}%.</div>
+        </div>
+        <div class="architect-breakdown">
+          <div class="alert alert-info">Délai estimatif : ${duration ? `${duration.minMonths} – ${duration.maxMonths} mois` : "—"} (indicatif, non contractuel).</div>
+          <div class="alert alert-info">Structure : ${structureNote || "—"}</div>
+          ${est.customJoinery?.active ? `<div class="alert alert-info">Sur-mesure : ${est.customJoinery.ml} ml (${fmt.currency(est.customJoinery.amountAvg)} TTC)</div>` : ""}
+        </div>
         <p style="font-weight:600;">Priorités par lots :</p>
         <ol style="margin-left:16px;">${focus || '<li>Activer des lots pour générer des priorités.</li>'}</ol>
         <p style="margin-top:10px;">Actions rapides :</p>
@@ -3467,6 +3972,31 @@
     function updateAll() {
       const natureSelect = document.getElementById("nature");
       if (natureSelect) state.nature = natureSelect.value;
+      const accessSelect = document.getElementById("siteAccessibility");
+      if (accessSelect) state.siteAccessibility = accessSelect.value;
+      const inflationInput = document.getElementById("inflationRate");
+      if (inflationInput) {
+        const pct = parseFloat(inflationInput.value) || (CONFIG.INFLATION_DEFAULT * 100);
+        state.inflationRate = Math.max(0, pct / 100);
+        const reminder = document.getElementById("inflationReminder");
+        if (reminder) reminder.textContent = `Index inflation appliqué : +${pct.toFixed(1)} %.`;
+      }
+      const contingencyInput = document.getElementById("contingencyRate");
+      const recommendedCont = ["REN_H", "EXT", "SUREL"].includes(state.nature) ? 0.10 : 0.05;
+      if (contingencyInput) {
+        const pct = parseFloat(contingencyInput.value) || (recommendedCont * 100);
+        state.contingencyRate = Math.min(0.12, Math.max(recommendedCont, pct / 100));
+        contingencyInput.value = (state.contingencyRate * 100).toFixed(1);
+      }
+      const archFeesInput = document.getElementById("archFeesRate");
+      if (archFeesInput) {
+        const pct = parseFloat(archFeesInput.value) || 12;
+        state.archFeesRate = Math.max(0, pct / 100);
+      }
+      const customInput = document.getElementById("customJoineryMl");
+      if (customInput) state.customJoineryMl = parseFloat(customInput.value) || 0;
+      const structSelect = document.getElementById("structureMaterial");
+      if (structSelect) state.structureMaterial = structSelect.value;
       syncHabitatBadges();
       renderRoomsTable();
       renderResults();
@@ -3474,6 +4004,8 @@
       updateBudgetKpi();
       renderAttachments();
       renderKpiStrip();
+      const contingencyDisplay = document.getElementById("contingencyDisplay");
+      if (contingencyDisplay) contingencyDisplay.textContent = `Provision ${ (state.contingencyRate * 100).toFixed(1) }% appliquée (auto ≥${recommendedCont*100}%).`;
       const panel = document.getElementById("architectPanel");
       if (panel?.classList.contains("open")) renderArchitectRoadmap();
     }
@@ -3500,6 +4032,14 @@
       const finitionLabel = CONFIG.FINITIONS[state.finition]?.label || "finition";
       const finitionDesc = CONFIG.FINITIONS[state.finition]?.desc || "finition adaptée";
       const habitat = (CONFIG.HABITATS[state.habitat]?.label || "logement").toLowerCase();
+      const access = CONFIG.ACCESSIBILITY[state.siteAccessibility] || CONFIG.ACCESSIBILITY.FACILE;
+      const duration = estimateDuration(refArea);
+      const structureNote = CONFIG.STRUCTURE_MATERIALS[state.structureMaterial] || "";
+      const contingencyPct = ((state.contingencyRate || 0) * 100).toFixed(1);
+      const honorairesPct = ((state.archFeesRate || 0) * 100).toFixed(1);
+      const contingencyVal = fmt.currency(amountAvg * (state.contingencyRate || 0));
+      const honorairesVal = fmt.currency(amountAvg * (state.archFeesRate || 0));
+      const lotTasks = formatLotTasks(lots);
 
       let lotsPart = "";
       if (lots && lots.length > 0) {
@@ -3512,6 +4052,16 @@
         const perOption = lastEstimate.extras.active.map(opt => `• ${opt.label} (+${tax.toHt(opt.impact.avg)} €/m² HT ≈ +${opt.impact.avg} €/m² TTC)`);
         extrasPart = "\nOptions spécifiques intégrées :\n" + perOption.join("\n") + `\nImpact cumulé : +${lastEstimate.extras.perM2.avgHt.toFixed(0)} €/m² HT (~${fmt.currency(lastEstimate.extras.amountAvgHt)} HT / ${fmt.currency(lastEstimate.extras.amountAvg)} TTC).`;
       }
+      if (lastEstimate?.customJoinery?.active) {
+        if (!extrasPart) extrasPart = "\nOptions spécifiques intégrées :";
+        extrasPart += `\n• Sur-mesure : ${lastEstimate.customJoinery.ml} ml de mobilier/rangements (+${fmt.currency(lastEstimate.customJoinery.amountAvg)} TTC).`;
+      }
+
+      const tasksBlock = lotTasks ? `\nDESCRIPTIF SOMMAIRE DES LOTS\n${lotTasks}\n` : "";
+      const durationBlock = `\nDÉLAI INDICATIF (non contractuel)\n• ${duration ? `${duration.minWeeks} à ${duration.maxWeeks} semaines (~${duration.minMonths} – ${duration.maxMonths} mois${duration.multiplier > 1 ? ", +20% car >150 m²" : ""})` : "Renseigner les surfaces"}\n• Soumis aux études techniques des entreprises et aux délais d'approvisionnement.\n`;
+      const contextBlock = `\nCONTEXTES / COEFFICIENTS\n• Accès chantier : ${access.label} (coeff ${access.coeff.toFixed(2)}).\n• Index inflation appliqué : +${((state.inflationRate || 0) * 100).toFixed(1)} % sur le prix m² IDF 2025+.\n• Structure / matériau : ${structureNote || "à préciser"}.\n• Habitat : ${habitat}.\n`;
+      const gestionBlock = `\nGESTION AGENCE (honoraires & imprévus)\n• Honoraires ${honorairesPct}% (budget médian) : ${honorairesVal}.\n• Provision imprévus ${contingencyPct}% : ${contingencyVal} (particulièrement en lourde / extension / surélévation).\n• Base médiane TTC : ${fmt.currency(amountAvg)}.\n`;
+      const clauseBlock = `\nCLAUSE DE NON-ENGAGEMENT\n• Les budgets et délais ci-dessus sont indicatifs et non contractuels.\n• Validation après études techniques, consultations des entreprises et confirmation des disponibilités matériaux.\n• Les durées peuvent évoluer selon l'accès chantier et les plannings des artisans.\n`;
 
       const text = `ESTIMATION AVANT-PROJET · IDF 2025+
 
@@ -3519,6 +4069,9 @@ ${civ}
 
 ${rdv}${proj}, je vous confirme une première estimation sommaire des travaux envisagés sur ${fmt.area(refArea)}, pour un projet de ${nature} sur ${habitat} avec une finition ${finitionLabel.toLowerCase()} (${finitionDesc}).
 
+${contextBlock}
+${durationBlock}
+${gestionBlock}
 ENVELOPPE BUDGÉTAIRE (HT → TTC)
 - Fourchette : ${fmt.currency(amountMinHt)} à ${fmt.currency(amountMaxHt)} HT (≈ ${fmt.currency(amountMin)} à ${fmt.currency(amountMax)} TTC avec TVA ${(TVA_RATE * 100).toFixed(1)} % par défaut logement > 2 ans).
 - Enveloppe médiane : ${fmt.currency(amountAvgHt)} HT (≈ ${fmt.currency(amountAvg)} TTC).
@@ -3565,6 +4118,7 @@ BUREAUX D’ÉTUDES UTILES (SELON PROJET)
 
 ${lotsPart}
 ${extrasPart}
+${tasksBlock}
 
 INCLUS DANS CETTE ESTIMATION
 ✓ Travaux courants de préparation et d’installation de chantier (protections, bases simples, nettoyages standards)
@@ -3582,6 +4136,7 @@ RAPPEL COHÉRENCE ENTRE MODULES
 Les tableaux, jauges et exports utilisent les mêmes bases de prix HT/TTC : les écarts éventuels proviennent des options activées.
 
 Cette estimation a pour but de vous donner une vision réaliste du budget à mobiliser pour valider la faisabilité de votre projet (ou ajuster son périmètre si besoin).
+${clauseBlock}
 
 Bien cordialement,
 
@@ -3657,7 +4212,7 @@ Bien cordialement,
     async function saveHtmlSnapshot() {
       const html = document.documentElement.outerHTML;
       const blob = new Blob([html], { type: "text/html" });
-      const name = `${state.client.name || "projet"}-V40.html`;
+      const name = `${state.client.name || "projet"}-V41.html`;
       await saveWithPicker({
         suggestedName: name,
         blob,
@@ -3681,12 +4236,25 @@ Bien cordialement,
       state.specialOptions = Object.assign({ fenetres: false, thermique: false, reseaux: false, acoustique: false }, state.specialOptions || {});
       state.clientBudget = state.clientBudget || 0;
       state.client = Object.assign({ name: "", project: "", type: "VISITE", date: "" }, state.client || {});
+      state.siteAccessibility = state.siteAccessibility || "FACILE";
+      state.inflationRate = typeof state.inflationRate === "number" ? state.inflationRate : CONFIG.INFLATION_DEFAULT;
+      state.contingencyRate = typeof state.contingencyRate === "number" ? state.contingencyRate : 0.08;
+      state.archFeesRate = typeof state.archFeesRate === "number" ? state.archFeesRate : 0.12;
+      state.customJoineryMl = state.customJoineryMl || 0;
+      state.structureMaterial = state.structureMaterial || "BOIS";
 
       document.getElementById("clientName").value = state.client?.name || "";
       document.getElementById("clientProject").value = state.client?.project || "";
       document.getElementById("clientType").value = state.client?.type || "VISITE";
       document.getElementById("clientDate").value = state.client?.date || "";
       document.getElementById("nature").value = state.nature;
+      document.getElementById("siteAccessibility").value = state.siteAccessibility;
+      document.getElementById("inflationRate").value = (state.inflationRate * 100).toFixed(1);
+      document.getElementById("contingencyRate").value = (state.contingencyRate * 100).toFixed(1);
+      document.getElementById("archFeesRate").value = (state.archFeesRate * 100).toFixed(1);
+      document.getElementById("customJoineryMl").value = state.customJoineryMl || 0;
+      const structSelect = document.getElementById("structureMaterial");
+      if (structSelect) structSelect.value = state.structureMaterial;
       syncHabitatBadges();
       const finBtn = document.querySelector(`button[onclick*="setFinition('${state.finition}')"]`);
       if (finBtn) setFinition(state.finition, finBtn);
@@ -3797,6 +4365,12 @@ Bien cordialement,
         habitat: "MAISON",
         finition: "STANDARD",
         menuiserieType: "STD",
+        siteAccessibility: "FACILE",
+        inflationRate: CONFIG.INFLATION_DEFAULT,
+        contingencyRate: 0.08,
+        archFeesRate: 0.12,
+        customJoineryMl: 0,
+        structureMaterial: "BOIS",
         levels: 1,
         globalArea: 0,
         rooms: {},
@@ -3813,6 +4387,13 @@ Bien cordialement,
       document.getElementById("clientDate").value = "";
       document.getElementById("nature").value = "REN_M";
       setHabitat("MAISON");
+      document.getElementById("siteAccessibility").value = "FACILE";
+      document.getElementById("inflationRate").value = (CONFIG.INFLATION_DEFAULT * 100).toFixed(1);
+      document.getElementById("contingencyRate").value = "8";
+      document.getElementById("archFeesRate").value = "12";
+      document.getElementById("customJoineryMl").value = "0";
+      const structSelect = document.getElementById("structureMaterial");
+      if (structSelect) structSelect.value = "BOIS";
       const finBtn = document.querySelector("button[onclick*=setFinition][onclick*='STANDARD']");
       if (finBtn) setFinition("STANDARD", finBtn);
       const menuBtn = document.querySelector("button[onclick*=setMenu][onclick*='STD']");
