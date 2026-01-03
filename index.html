@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#0f172a">
-  <title>Estimatif Avant-Projet Premium · V42</title>
+  <title>Estimatif Avant-Projet Premium · V43</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -36,6 +36,9 @@
       --text-muted-2: #94a3b8;
       --chip-bg: rgba(255,255,255,0.05);
       --chip-hover: rgba(99,102,241,0.16);
+      --surface-accent-1: #4ade80;
+      --surface-accent-2: #22c55e;
+      --surface-accent-text: #c9fdd7;
     }
 
     body.theme-light {
@@ -63,6 +66,9 @@
       --text-muted-2: #475569;
       --chip-bg: rgba(15,23,42,0.04);
       --chip-hover: rgba(79,70,229,0.14);
+      --surface-accent-1: #15803d;
+      --surface-accent-2: #0f766e;
+      --surface-accent-text: #0f172a;
     }
 
     * {
@@ -1110,6 +1116,24 @@
       margin-bottom: 9px;
     }
 
+    .result-box.surface {
+      border-color: rgba(34, 197, 94, 0.45);
+      border-left-color: var(--surface-accent-1);
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.16), rgba(16, 185, 129, 0.08));
+    }
+
+    .result-box.surface .result-label {
+      color: var(--surface-accent-text);
+    }
+
+    .result-box.surface .result-value {
+      background: linear-gradient(135deg, var(--surface-accent-1), var(--surface-accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: var(--surface-accent-text);
+    }
+
     .result-label {
       font-size: 10px;
       color: var(--text-strong);
@@ -2015,7 +2039,7 @@
             <div class="header-subtitle">
               Fourchette travaux réaliste pour visite conseil · IDF 2025+
             </div>
-            <div class="version-badge">Version V42</div>
+            <div class="version-badge">Version V43</div>
           </div>
           <div class="header-actions">
             <button id="sidebarToggleHeader" class="sidebar-toggle" type="button" aria-pressed="false" data-sidebar-toggle>
@@ -2695,9 +2719,9 @@
         SUREL: { STANDARD: 2700, CONFORT: 3050, PREMIUM: 3400 }
       },
       COMPLEXITY: {
-        STANDARD: { label: "Standard (bâti courant)", spread: 1, base: 1, note: "+0% marge d'erreur" },
-        ANCIEN: { label: "Structure ancienne / fragile", spread: 1.15, base: 1, note: "+15% marge d'erreur sur la médiane" },
-        AMIANTE: { label: "Suspicion amiante / accès technique complexe", spread: 1.25, base: 1, note: "+25% marge d'erreur et sécurités chantier" }
+        STANDARD: { label: "Standard (bâti courant)", spread: 1, base: 1, duration: 1, note: "+0% marge d'erreur" },
+        ANCIEN: { label: "Structure ancienne / fragile", spread: 1.15, base: 1, duration: 1.1, note: "+15% marge d'erreur sur la médiane" },
+        AMIANTE: { label: "Suspicion amiante / accès technique complexe", spread: 1.25, base: 1, duration: 1.18, note: "+25% marge d'erreur et sécurités chantier" }
       },
       ACCESSIBILITY: {
         FACILE: { label: "Accès facile", coeff: 1.00 },
@@ -2710,12 +2734,12 @@
         perMlHt: { min: 900, avg: 1050, max: 1250 },
         note: "Finition Premium, menuiserie sur mesure, ajustements décoratifs"
       },
-      DURATION_BASE: {
-        REN_L: { minWeeks: 4, maxWeeks: 8, label: "Rafraîchissement" },
-        REN_M: { minWeeks: 12, maxWeeks: 20, label: "Standard" },
-        REN_H: { minWeeks: 24, maxWeeks: 40, label: "Lourde" },
-        EXT: { minWeeks: 32, maxWeeks: 56, label: "Extension" },
-        SUREL: { minWeeks: 32, maxWeeks: 56, label: "Surélévation" }
+      DURATION_RULES: {
+        REN_L: { label: "Rafraîchissement", baseWeeks: 3, cadence: 28, spread: 0.25, minFloor: 4 },
+        REN_M: { label: "Standard", baseWeeks: 8, cadence: 18, spread: 0.30, minFloor: 10 },
+        REN_H: { label: "Lourde", baseWeeks: 14, cadence: 12, spread: 0.35, minFloor: 18 },
+        EXT: { label: "Extension", baseWeeks: 16, cadence: 10, spread: 0.40, minFloor: 22 },
+        SUREL: { label: "Surélévation", baseWeeks: 18, cadence: 9, spread: 0.45, minFloor: 24 }
       },
       STRUCTURE_MATERIALS: {
         BOIS: "Structure bois / ossature légère (rapidité, préfabrication possible)",
@@ -2785,7 +2809,7 @@
           { lot: "Menuiseries intérieures", pct: 0.10, emoji: "🚪", desc: "Portes, rangements simples, reprises d'ajustement." },
           { lot: "Menuiseries extérieures", pct: 0.05, emoji: "🪟", desc: "Remplacement ponctuel de fenêtres/volets, calfeutrements." },
           { lot: "Finitions (sols, peintures)", pct: 0.30, emoji: "🎨", desc: "Sols, peintures, faïences, petites réparations décoratives." },
-          { lot: "Honoraires & divers", pct: 0.10, emoji: "📁", desc: "Honoraires, protections, nettoyages, aléas courants." }
+          { lot: "Logistique chantier & aléas", pct: 0.10, emoji: "📁", desc: "Protections, nettoyages, assurances et aléas courants (hors honoraires MOE)." }
         ],
         REN_M: [
           { lot: "Gros œuvre / structure", pct: 0.10, emoji: "🧱", desc: "Ouvertures, reprises structurelles modérées, planchers locaux." },
@@ -2794,7 +2818,7 @@
           { lot: "Menuiseries intérieures", pct: 0.10, emoji: "🚪", desc: "Portes, agencements sur mesure légers, dressings simples." },
           { lot: "Menuiseries extérieures", pct: 0.05, emoji: "🪟", desc: "Fenêtres, baies, protections solaires, occultations." },
           { lot: "Finitions (sols, peintures)", pct: 0.15, emoji: "🎨", desc: "Revêtements, peinture de reprise, carrelages et faïences." },
-          { lot: "Honoraires & divers", pct: 0.10, emoji: "📁", desc: "Pilotage, études ponctuelles, protections, aléas." }
+          { lot: "Logistique chantier & aléas", pct: 0.10, emoji: "📁", desc: "Protections, nettoyages, études ponctuelles, aléas (hors honoraires MOE)." }
         ],
         REN_H: [
           { lot: "Gros œuvre / structure", pct: 0.20, emoji: "🧱", desc: "Restructuration lourde, reprises en sous-œuvre, renforts porteurs." },
@@ -2803,7 +2827,7 @@
           { lot: "Menuiseries intérieures", pct: 0.05, emoji: "🚪", desc: "Agencements sur mesure, menuiseries spéciales." },
           { lot: "Menuiseries extérieures", pct: 0.05, emoji: "🪟", desc: "Menuiseries performantes, reprises d'étanchéité, garde-corps." },
           { lot: "Finitions (sols, peintures)", pct: 0.10, emoji: "🎨", desc: "Finitions soignées, parements, matériaux nobles." },
-          { lot: "Honoraires & divers", pct: 0.10, emoji: "📁", desc: "MOE, BET, SPS, marges aléas lourds." }
+          { lot: "Logistique chantier & aléas", pct: 0.10, emoji: "📁", desc: "Protections renforcées, nettoyages, assurances, marges aléas (hors honoraires MOE)." }
         ],
         EXT: [
           { lot: "Gros œuvre / structure", pct: 0.24, emoji: "🧱", desc: "Fondations, dallage, murs porteurs, étanchéité liaisons." },
@@ -2814,7 +2838,7 @@
           { lot: "Toiture / étanchéité", pct: 0.09, emoji: "🛖", desc: "Étanchéité liaison existant, isolants, couvertures spécifiques." },
           { lot: "Exploitation toiture / terrasse", pct: 0.04, emoji: "🌿", desc: "Dalles sur plots, garde-corps, accès et protections." },
           { lot: "Finitions (sols, peintures)", pct: 0.08, emoji: "🎨", desc: "Revêtements, peintures, habillages intérieurs." },
-          { lot: "Honoraires & divers", pct: 0.04, emoji: "📁", desc: "Honoraires, études sols/structure, sécurité chantier." }
+          { lot: "Logistique chantier & aléas", pct: 0.04, emoji: "📁", desc: "Sécurités chantier, protections lourdes, aléas courants (hors honoraires MOE)." }
         ],
         SUREL: [
           { lot: "Gros œuvre / structure", pct: 0.30, emoji: "🧱", desc: "Renforts structurels, surélévation, étanchéité toiture/terrasse." },
@@ -2825,7 +2849,7 @@
           { lot: "Toiture / étanchéité", pct: 0.10, emoji: "🛖", desc: "Étanchéité, isolation performante, reprise complexes." },
           { lot: "Exploitation toiture / terrasse", pct: 0.04, emoji: "🌿", desc: "Accès, terrasses techniques, garde-corps, végétalisation légère." },
           { lot: "Finitions (sols, peintures)", pct: 0.08, emoji: "🎨", desc: "Finitions complètes du nouveau plateau." },
-          { lot: "Honoraires & divers", pct: 0.02, emoji: "📁", desc: "BET structure/toiture, études, assurances, aléas." }
+          { lot: "Logistique chantier & aléas", pct: 0.02, emoji: "📁", desc: "Protections, assurances, études complémentaires (hors honoraires MOE)." }
         ]
       },
       REPART_LOTS_BUREAU: {
@@ -2836,7 +2860,7 @@
           { lot: "Menuiseries & agencements", pct: 0.12, emoji: "🪑", desc: "Banques accueil, rangements, menuiseries intérieures." },
           { lot: "Finitions sols / peintures", pct: 0.12, emoji: "🎨", desc: "Dalles moquette, peintures, signalétique." },
           { lot: "Sécurité incendie / SSI", pct: 0.10, emoji: "🚨", desc: "Déclencheurs, blocs secours, alarme." },
-          { lot: "Honoraires & divers", pct: 0.06, emoji: "📁", desc: "Coordination, levées de réserves, aléas." }
+          { lot: "Logistique chantier & aléas", pct: 0.06, emoji: "📁", desc: "Protections, nettoyage, coordination courte (hors honoraires MOE)." }
         ],
         REN_M: [
           { lot: "Cloisonnement / space planning", pct: 0.24, emoji: "🧱", desc: "Recomposition des plateaux, salles de réunion." },
@@ -2846,7 +2870,7 @@
           { lot: "Menuiseries extérieures", pct: 0.06, emoji: "🪟", desc: "Occultations, protection solaire, confort thermique." },
           { lot: "Finitions sols / peintures", pct: 0.10, emoji: "🎨", desc: "Revêtements, peintures, habillages acoustiques." },
           { lot: "Sécurité incendie / SSI", pct: 0.05, emoji: "🚨", desc: "SSI, sprinklage léger, signalétique sécurité." },
-          { lot: "Honoraires & divers", pct: 0.05, emoji: "📁", desc: "AMO, MOE, contrôles techniques." }
+          { lot: "Logistique chantier & aléas", pct: 0.05, emoji: "📁", desc: "Protections, contrôles réglementaires, marges aléas (hors honoraires MOE)." }
         ],
         REN_H: [
           { lot: "Structure / renforts", pct: 0.20, emoji: "🏗️", desc: "Reprises structurelles, trémies, renforts planchers." },
@@ -2856,7 +2880,7 @@
           { lot: "Faux planchers / plafonds", pct: 0.08, emoji: "🪜", desc: "Dalles techniques, plafonds rayonnants, éclairage." },
           { lot: "Finitions sols / peintures", pct: 0.08, emoji: "🎨", desc: "Finitions premium, panneaux acoustiques." },
           { lot: "Sécurité incendie / SSI", pct: 0.05, emoji: "🚨", desc: "SSI complet, compartimentage, sprinklage." },
-          { lot: "Honoraires & divers", pct: 0.03, emoji: "📁", desc: "AMO, BET, contrôles réglementaires." }
+          { lot: "Logistique chantier & aléas", pct: 0.03, emoji: "📁", desc: "Sécurités, contrôles, aléas (hors honoraires MOE)." }
         ]
       },
       ROOM_LIBRARY: {
@@ -3142,9 +3166,9 @@
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${room.icon || ""} ${room.label}</td>
-          <td><input type="number" value="${count}" oninput="updateRoom('${code}', 'count', this.value)"></td>
-          <td><input type="number" step="0.5" value="${area}" oninput="updateRoom('${code}', 'area', this.value)"></td>
-          <td style="text-align: center; color: #a855f7; font-weight: 600;">${count > 0 && area > 0 ? (area / count).toFixed(1) : "—"}</td>
+          <td><input type="number" value="${count}" oninput="updateRoom('${code}', 'count', this.value, this)"></td>
+          <td><input type="number" step="0.5" value="${area}" oninput="updateRoom('${code}', 'area', this.value, this)"></td>
+          <td data-room-average style="text-align: center; color: #a855f7; font-weight: 600;">${count > 0 && area > 0 ? (area / count).toFixed(1) : "—"}</td>
         `;
         tbody.appendChild(tr);
       });
@@ -3164,9 +3188,26 @@
       }
     }
 
-    function updateRoom(code, field, value) {
+    function updateRoom(code, field, value, el) {
+      if (!state.rooms[code]) state.rooms[code] = { count: 0, area: 0 };
       state.rooms[code][field] = field === "count" ? parseInt(value) || 0 : parseFloat(value) || 0;
-      updateAll();
+
+      const row = el?.closest("tr");
+      if (row) {
+        const avgCell = row.querySelector("[data-room-average]");
+        const countVal = state.rooms[code].count;
+        const areaVal = state.rooms[code].area;
+        if (avgCell) avgCell.textContent = countVal > 0 && areaVal > 0 ? (areaVal / countVal).toFixed(1) : "—";
+      }
+
+      const totalArea = getTotalArea();
+      const totalCount = getTotalCount();
+      const totalRoomsEl = document.getElementById("totalRooms");
+      const totalAreaEl = document.getElementById("totalArea");
+      if (totalRoomsEl) totalRoomsEl.textContent = totalCount;
+      if (totalAreaEl) totalAreaEl.textContent = totalArea > 0 ? totalArea.toFixed(0) : "0";
+
+      updateAll({ skipRooms: true });
     }
 
     // ===== ESTIMATION =====
@@ -3257,14 +3298,23 @@
     }
 
     function estimateDuration(area = getRefArea()) {
-      const base = CONFIG.DURATION_BASE[state.nature];
-      if (!base || !area) return null;
-      const multiplier = area > 150 ? 1.2 : 1;
-      const minWeeks = Math.round(base.minWeeks * multiplier);
-      const maxWeeks = Math.round(base.maxWeeks * multiplier);
+      const rule = CONFIG.DURATION_RULES[state.nature];
+      if (!rule || !area) return null;
+
+      const complexity = CONFIG.COMPLEXITY[state.complexity] || CONFIG.COMPLEXITY.STANDARD;
+      const access = CONFIG.ACCESSIBILITY[state.siteAccessibility] || CONFIG.ACCESSIBILITY.FACILE;
+      const finitionFactor = state.finition === "PREMIUM" ? 1.12 : state.finition === "CONFORT" ? 1.06 : 1;
+      const optionsFactor = 1 + (getActiveSpecialOptions().length * 0.03);
+      const effectiveArea = area * finitionFactor;
+
+      const rawWeeks = (rule.baseWeeks || 4) + (effectiveArea / (rule.cadence || 20));
+      const complexityFactor = complexity.duration || 1;
+      const accessFactor = access.coeff || 1;
+      const minWeeks = Math.max(rule.minFloor || 0, Math.round(rawWeeks * complexityFactor * accessFactor * optionsFactor));
+      const maxWeeks = Math.round(minWeeks * (1 + (rule.spread || 0.35)));
       const minMonths = (minWeeks / 4.345).toFixed(1);
       const maxMonths = (maxWeeks / 4.345).toFixed(1);
-      return { ...base, minWeeks, maxWeeks, minMonths, maxMonths, multiplier };
+      return { label: rule.label, minWeeks, maxWeeks, minMonths, maxMonths, multiplier: complexityFactor * accessFactor * optionsFactor };
     }
 
     // ===== SUMMARY CLIENT =====
@@ -3303,8 +3353,10 @@
         badge.textContent = "Délai de réalisation estimé — renseignez une surface.";
         return;
       }
-      const surfaceNote = area > 150 ? "Surface >150 m² : coefficient +20%" : "Base nature projet";
-      badge.innerHTML = `Délai de réalisation : ${dur.minWeeks} à ${dur.maxWeeks} semaines · ${dur.minMonths} – ${dur.maxMonths} mois <small>${surfaceNote}</small>`;
+      const rule = CONFIG.DURATION_RULES[state.nature];
+      const hints = [`Cadence ${rule?.cadence || 0} m²/sem`, `Surface ${fmt.area(area)}`];
+      if (dur.multiplier && dur.multiplier !== 1) hints.push(`Coefficients cumulés ${dur.multiplier.toFixed(2)}`);
+      badge.innerHTML = `Délai de réalisation : ${dur.minWeeks} à ${dur.maxWeeks} semaines · ${dur.minMonths} – ${dur.maxMonths} mois <small>${hints.join(" · ")}</small>`;
     }
 
     function renderAccessibilityBadge() {
@@ -3366,11 +3418,10 @@
       `;
 
       const r2 = document.createElement("div");
-      r2.className = "result-box";
-      r2.style.borderLeftColor = "#10b981";
+      r2.className = "result-box surface";
       r2.innerHTML = `
-        <div class="result-label" style="color:#bbf7d0;">Surface de référence</div>
-        <div class="result-value" style="background:linear-gradient(135deg,#bbf7d0,#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">${fmt.area(refArea)}</div>
+        <div class="result-label">Surface de référence</div>
+        <div class="result-value">${fmt.area(refArea)}</div>
       `;
 
       const r3 = document.createElement("div");
@@ -3429,7 +3480,7 @@
       budgetAddons.innerHTML = `
         <div class="budget-line"><span>Base médiane TTC</span><strong>${fmt.currency(amountAvg)}</strong></div>
         <div class="budget-line"><span>Imprévus ${((state.contingencyRate||0)*100).toFixed(1)}%</span><strong>+${fmt.currency(contingencyVal)}</strong></div>
-        <div class="budget-line"><span>Honoraires ${((state.archFeesRate||0)*100).toFixed(1)}%</span><strong>+${fmt.currency(honorairesVal)}</strong></div>
+        <div class="budget-line"><span>Honoraires MOE ${((state.archFeesRate||0)*100).toFixed(1)}%</span><strong>+${fmt.currency(honorairesVal)}</strong></div>
         <div class="budget-total"><span>Total sécurisé proposé</span><span>${fmt.currency(securedTotal)}</span></div>
       `;
       mainBlock.appendChild(budgetAddons);
@@ -3448,7 +3499,7 @@
       const honorairesPct = ((state.archFeesRate || 0) * 100).toFixed(1);
       const contingencyInfo = document.createElement("div");
       contingencyInfo.className = "alert alert-info";
-      contingencyInfo.innerHTML = `Provision imprévus ${contingencyRatePct}% : ${fmt.currency(amountAvg * (state.contingencyRate || 0))} · Honoraires ${honorairesPct}% (base budget médian) : ${fmt.currency(amountAvg * (state.archFeesRate || 0))}.`;
+      contingencyInfo.innerHTML = `Provision imprévus ${contingencyRatePct}% : ${fmt.currency(amountAvg * (state.contingencyRate || 0))} · Honoraires MOE ${honorairesPct}% sur budget médian : ${fmt.currency(amountAvg * (state.archFeesRate || 0))} (les lots incluent uniquement la logistique/protections).`;
       warnBlock.appendChild(contingencyInfo);
 
       const complexityInfo = document.createElement("div");
@@ -4104,7 +4155,8 @@
       }
     }
 
-    function updateAll() {
+    function updateAll(options = {}) {
+      const { skipRooms = false } = options;
       const natureSelect = document.getElementById("nature");
       if (natureSelect) state.nature = natureSelect.value;
       const accessSelect = document.getElementById("siteAccessibility");
@@ -4135,7 +4187,7 @@
       const structSelect = document.getElementById("structureMaterial");
       if (structSelect) state.structureMaterial = structSelect.value;
       syncHabitatBadges();
-      renderRoomsTable();
+      if (!skipRooms) renderRoomsTable();
       renderResults();
       renderSpecialOptionsSummary();
       updateBudgetKpi();
@@ -4162,119 +4214,63 @@
         REN_L: "rénovation légère",
         REN_M: "rénovation standard (tous corps d'état)",
         REN_H: "rénovation lourde / restructuration",
-        EXT: "extension de maison",
+        EXT: "extension",
         SUREL: "surélévation"
       }[state.nature];
 
       const finitionLabel = CONFIG.FINITIONS[state.finition]?.label || "finition";
-      const finitionDesc = CONFIG.FINITIONS[state.finition]?.desc || "finition adaptée";
       const habitat = (CONFIG.HABITATS[state.habitat]?.label || "logement").toLowerCase();
       const access = CONFIG.ACCESSIBILITY[state.siteAccessibility] || CONFIG.ACCESSIBILITY.FACILE;
       const duration = estimateDuration(refArea);
-      const structureNote = CONFIG.STRUCTURE_MATERIALS[state.structureMaterial] || "";
+      const durationLine = duration ? `${duration.minWeeks}-${duration.maxWeeks} semaines (~${duration.minMonths}-${duration.maxMonths} mois)` : "à confirmer après saisie des surfaces";
+      const cadence = CONFIG.DURATION_RULES[state.nature]?.cadence || 0;
       const complexity = CONFIG.COMPLEXITY[state.complexity] || CONFIG.COMPLEXITY.STANDARD;
       const contingencyPct = ((state.contingencyRate || 0) * 100).toFixed(1);
       const honorairesPct = ((state.archFeesRate || 0) * 100).toFixed(1);
       const contingencyVal = fmt.currency(amountAvg * (state.contingencyRate || 0));
       const honorairesVal = fmt.currency(amountAvg * (state.archFeesRate || 0));
-      const lotTasks = formatLotTasks(lots);
 
-      let lotsPart = "";
-      if (lots && lots.length > 0) {
-        const top = [...lots].sort((a, b) => b.min - a.min).slice(0, 3);
-        lotsPart = "\nRépartition par grands lots (indicative) :\n" + top.map(l => `• ${l.lot} : ~${fmt.pct(l.pct)} du budget`).join("\n");
+      const topLots = (lots && lots.length)
+        ? [...lots].sort((a, b) => b.min - a.min).slice(0, 3).map(l => `• ${l.lot} ~${fmt.pct(l.pct)}`).join("\n")
+        : "• Lots à préciser après relevés.";
+
+      let optionsLines = "• Pas d'options spécifiques activées.";
+      if (lastEstimate?.extras?.active?.length || lastEstimate?.customJoinery?.active) {
+        const lines = [];
+        (lastEstimate.extras?.active || []).forEach(opt => lines.push(`• ${opt.label} (+${opt.impact.avg} €/m² TTC env.)`));
+        if (lastEstimate?.customJoinery?.active) lines.push(`• Sur-mesure : ${lastEstimate.customJoinery.ml} ml (+${fmt.currency(lastEstimate.customJoinery.amountAvg)} TTC).`);
+        optionsLines = lines.join("\n");
       }
 
-      let extrasPart = "";
-      if (lastEstimate?.extras?.active?.length) {
-        const perOption = lastEstimate.extras.active.map(opt => `• ${opt.label} (+${tax.toHt(opt.impact.avg)} €/m² HT ≈ +${opt.impact.avg} €/m² TTC)`);
-        extrasPart = "\nOptions spécifiques intégrées :\n" + perOption.join("\n") + `\nImpact cumulé : +${lastEstimate.extras.perM2.avgHt.toFixed(0)} €/m² HT (~${fmt.currency(lastEstimate.extras.amountAvgHt)} HT / ${fmt.currency(lastEstimate.extras.amountAvg)} TTC).`;
-      }
-      if (lastEstimate?.customJoinery?.active) {
-        if (!extrasPart) extrasPart = "\nOptions spécifiques intégrées :";
-        extrasPart += `\n• Sur-mesure : ${lastEstimate.customJoinery.ml} ml de mobilier/rangements (+${fmt.currency(lastEstimate.customJoinery.amountAvg)} TTC).`;
-      }
+      const introContext = `${rdv}${proj}`.trim();
 
-      const tasksBlock = lotTasks ? `\nDESCRIPTIF SOMMAIRE DES LOTS\n${lotTasks}\n` : "";
-      const durationBlock = `\nDÉLAI INDICATIF (non contractuel)\n• ${duration ? `${duration.minWeeks} à ${duration.maxWeeks} semaines (~${duration.minMonths} – ${duration.maxMonths} mois${duration.multiplier > 1 ? ", +20% car >150 m²" : ""})` : "Renseigner les surfaces"}\n• Soumis aux études techniques des entreprises et aux délais d'approvisionnement.\n`;
-      const contextBlock = `\nCONTEXTES / COEFFICIENTS\n• Accès chantier : ${access.label} (coeff ${access.coeff.toFixed(2)}).\n• Index inflation appliqué : +${((state.inflationRate || 0) * 100).toFixed(1)} % sur le prix m² IDF 2025+.\n• Structure / matériau : ${structureNote || "à préciser"}.\n• Complexité technique : ${complexity.label} (${complexity.note}).\n• Habitat : ${habitat}.\n`;
-      const gestionBlock = `\nGESTION AGENCE (honoraires & imprévus)\n• Honoraires ${honorairesPct}% (budget médian) : ${honorairesVal}.\n• Provision imprévus ${contingencyPct}% : ${contingencyVal} (particulièrement en lourde / extension / surélévation).\n• Base médiane TTC : ${fmt.currency(amountAvg)}.\n`;
-      const clauseBlock = `\nCLAUSE DE NON-ENGAGEMENT\n• Les budgets et délais ci-dessus sont indicatifs et non contractuels.\n• Validation après études techniques, consultations des entreprises et confirmation des disponibilités matériaux.\n• Les durées peuvent évoluer selon l'accès chantier et les plannings des artisans.\n`;
-
-      const text = `ESTIMATION AVANT-PROJET · IDF 2025+
+      const text = `ESTIMATION AVANT-PROJET · V43
 
 ${civ}
 
-${rdv}${proj}, je vous confirme une première estimation sommaire des travaux envisagés sur ${fmt.area(refArea)}, pour un projet de ${nature} sur ${habitat} avec une finition ${finitionLabel.toLowerCase()} (${finitionDesc}).
+${introContext ? `${introContext}.` : ""}
+Projet : ${nature} sur ${habitat} (${fmt.area(refArea)}), finition ${finitionLabel.toLowerCase()}.
 
-${contextBlock}
-${durationBlock}
-${gestionBlock}
-ENVELOPPE BUDGÉTAIRE (HT → TTC)
-- Fourchette : ${fmt.currency(amountMinHt)} à ${fmt.currency(amountMaxHt)} HT (≈ ${fmt.currency(amountMin)} à ${fmt.currency(amountMax)} TTC avec TVA ${(TVA_RATE * 100).toFixed(1)} % par défaut logement > 2 ans).
-- Enveloppe médiane : ${fmt.currency(amountAvgHt)} HT (≈ ${fmt.currency(amountAvg)} TTC).
-- Calcul HT → TTC automatique ; TVA modifiable dans la variable globale TVA_RATE (20 % si fourniture client/équipements spécifiques, 5,5 % sur travaux d’amélioration énergétique – non appliquée par défaut).
+ENVELOPPE SYNTHÉTIQUE
+• Budget médian : ${fmt.currency(amountAvg)} TTC (~${fmt.currency(amountAvgHt)} HT).
+• Fourchette indicative : ${fmt.currency(amountMin)} à ${fmt.currency(amountMax)} TTC (TVA ${(TVA_RATE * 100).toFixed(1)} % par défaut).
+• Honoraires MOE ${honorairesPct}% : ${honorairesVal} · Imprévus ${contingencyPct}% : ${contingencyVal} (logistique/protections déjà ventilées dans les lots).
 
-HYPOTHÈSES & LIMITES
-• Estimation basée sur l’existant non encore ouvert, relevés à affiner.
-• Certains postes peuvent augmenter après investigations (structure, réseaux, contraintes immeuble/copro).
-• Prix basés sur configurations standards IDF 2025+.
+POSTES CLÉS
+${topLots}
 
-ÉLÉMENTS POUVANT FAIRE AUGMENTER UN BUDGET
-• Murs porteurs ou planchers fragiles.
-• Réseaux obsolètes ou inaccessibles.
-• Pièces d’eau complexes et rapproché technique.
-• Accès difficile, protections lourdes.
-• Contraintes d’immeuble / copropriété.
-• Matériaux ou équipements haut de gamme.
-• Contraintes ABF / PLU.
+OPTIONS
+${optionsLines}
 
-CONDITIONS POUR BÉNÉFICIER DE LA TVA 10 %
-• Logement existant depuis +2 ans.
-• Travaux confiés à une entreprise.
-• Fournitures et pose par la même entreprise.
-• Hors construction neuve.
-• Hors surélévation complète créant un nouveau volume habitable (à confirmer selon cas).
+DÉLAI INDICATIF
+• ${durationLine}.
+• Cadence estimée ${cadence} m²/sem · Accès ${access.label.toLowerCase()} (coeff ${access.coeff.toFixed(2)}) · Complexité ${complexity.label.toLowerCase()}.
 
-NIVEAU DE FINITION
-• Standard : prix classiques, prestations cohérentes marché IDF 2025+.
-• Confort : matériaux/équipements supérieurs, confort renforcé.
-• Premium : matériaux haut de gamme, sur-mesure, design.
-
-TOLÉRANCES & PÉDAGOGIE BUDGET
-• Estimation / fourchette indicative basée sur prix moyens : seul le devis signé engage l’entreprise.
-• Marge d’incertitude : +15 à +25 % avant plans ; 5–10 % après plans techniques ; 0–5 % après devis entreprises.
-• L’enveloppe budgétaire devra être confirmée après réalisation des plans techniques et consultations entreprises.
-
-ÉVOLUTION GÉO & TVA
-• Prix indicatifs IDF 2025+, pouvant varier selon le département et l’offre locale d’entreprises.
-• Matériel fourni par le client / équipements spécifiques : prévoir TVA 20 %.
-• Travaux d’amélioration énergétique : option TVA 5,5 % (sur demande, non appliquée par défaut).
-
-BUREAUX D’ÉTUDES UTILES (SELON PROJET)
-• BE Structure · BE Thermique · Géotechnicien · Économiste · Coordonnateur SPS · Contrôleur technique.
-
-${lotsPart}
-${extrasPart}
-${tasksBlock}
-
-INCLUS DANS CETTE ESTIMATION
-✓ Travaux courants de préparation et d’installation de chantier (protections, bases simples, nettoyages standards)
-✓ Fournitures et main-d’œuvre selon un niveau de prestation cohérent avec le marché IDF 2025+
-
-NON INCLUS
-✗ Honoraires d’architecte ou de maîtrise d’œuvre
-✗ Honoraires des bureaux d’études (structure, thermique, acoustique, géotechnique, etc.)
-✗ Taxes et frais administratifs éventuels
-✗ Raccordements extérieurs spécifiques (VRD, concessions) et aménagements paysagers
-✗ Mobilier et éléments décoratifs non fixés
-✗ Travaux hors périmètre défini ensemble
-
-RAPPEL COHÉRENCE ENTRE MODULES
-Les tableaux, jauges et exports utilisent les mêmes bases de prix HT/TTC : les écarts éventuels proviennent des options activées.
-
-Cette estimation a pour but de vous donner une vision réaliste du budget à mobiliser pour valider la faisabilité de votre projet (ou ajuster son périmètre si besoin).
-${clauseBlock}
+HYPOTHÈSES / RAPPELS
+• Prix IDF 2025+, indexés +${((state.inflationRate || 0) * 100).toFixed(1)} %.
+• TVA ajustable : 20 % si fourniture client, 5,5 % sur rénovation énergétique (sur demande).
+• Estimation indicative avant plans et devis entreprises (non contractuelle).
+• À confirmer après relevés, études techniques et disponibilités fournisseurs.
 
 Bien cordialement,
 
@@ -4355,7 +4351,7 @@ Bien cordialement,
     async function saveHtmlSnapshot() {
       const html = document.documentElement.outerHTML;
       const blob = new Blob([html], { type: "text/html" });
-      const name = `${state.client.name || "projet"}-V42.html`;
+      const name = `${state.client.name || "projet"}-V43.html`;
       await saveWithPicker({
         suggestedName: name,
         blob,
