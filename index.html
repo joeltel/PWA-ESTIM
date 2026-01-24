@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#0f172a">
-  <title>Estimatif Avant-Projet Premium · V43</title>
+  <title>Estimatif Avant-Projet Premium · V50</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -680,6 +680,14 @@
       color: var(--text-strong);
     }
 
+    .card-title.clickable {
+      cursor: pointer;
+    }
+
+    .card.collapsed > :not(.card-title) {
+      display: none;
+    }
+
     .card-icon {
       font-size: 18px;
     }
@@ -825,10 +833,8 @@
     /* PRINT */
     @media print {
       .print-isolated {
-        break-before: page;
-        break-after: page;
-        page-break-before: always;
-        page-break-after: always;
+        break-inside: avoid;
+        page-break-inside: avoid;
       }
     }
 
@@ -1598,6 +1604,100 @@
     .budget-line:last-child { border-bottom: none; }
     .budget-total { display: flex; justify-content: space-between; align-items: center; font-weight: 800; margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); color: #22c55e; }
 
+    .purchase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .purchase-average {
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      background: var(--surface-light);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      min-height: 64px;
+    }
+
+    .purchase-average .label {
+      font-size: 11px;
+      color: var(--text-sec);
+    }
+
+    .purchase-average .value {
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text-strong);
+    }
+
+    .print-header {
+      display: none;
+      margin-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+
+    .print-header .print-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-strong);
+    }
+
+    .print-header .print-subtitle {
+      color: var(--text-sec);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .print-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 8px 14px;
+      margin-top: 10px;
+    }
+
+    .print-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 11px;
+      color: var(--text-sec);
+    }
+
+    .print-meta-item strong {
+      color: var(--text-strong);
+      font-size: 13px;
+    }
+
+    .print-toggle {
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-sec);
+      font-size: 11px;
+      border-radius: 999px;
+      padding: 4px 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .print-toggle:hover {
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+    }
+
+    .print-toggle.off {
+      opacity: 0.6;
+      color: var(--text-muted-2);
+      border-style: dashed;
+    }
+
     .attachments {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -1955,19 +2055,46 @@
 
     @page {
       size: A4 portrait;
-      margin: 14mm;
+      margin: 12mm;
     }
 
     @media print {
-      body { background: #ffffff !important; color: #0f172a !important; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      body { background: #ffffff !important; color: #0f172a !important; font-size: 11px; }
       body::before { display: none; }
-      .sidebar, .sidebar-toggle, .theme-toggle, .print-controls, .print-menu { display: none !important; }
+      .sidebar, .sidebar-toggle, .theme-toggle, .print-controls, .print-menu, .status { display: none !important; }
       .main { padding: 0; }
       .main-inner { margin-top: 0; }
+      .header { margin-bottom: 6px; }
+      .header-title { font-size: 18px; }
+      .header-subtitle { font-size: 11px; color: #64748b; }
+      .version-badge { border-color: #cbd5f5; color: #4f46e5; background: #eef2ff; }
+      .print-header, .print-header * { color: #0f172a !important; }
+      .print-header { display: block; }
+      .card { background: #ffffff !important; border: 1px solid #e2e8f0; box-shadow: none; }
+      .card, .card * { color: #0f172a !important; }
+      .card-title { color: #0f172a; }
+      .card-desc { color: #334155; }
+      .print-toggle { display: none !important; }
+      .alert { background: #f8fafc; border-color: #e2e8f0; color: #334155; }
+      .table-wrapper { background: #ffffff; border-color: #e2e8f0; box-shadow: none; }
+      thead { background: #f1f5f9; }
+      th, td { color: #0f172a; }
+      .price-ttc { color: #0f172a; }
+      .price-ht { color: #475569; }
+      .result-value { color: #0f172a; }
+      .budget-track, .budget-pointer::after { box-shadow: none; }
+      .budget-pointer { box-shadow: none; }
+      .print-page-label, .no-print { display: none !important; }
+      .kpi-grid, .grid, .content-grid, .grid-2, .context-grid, .purchase-grid { gap: 8px; }
+      .lot-tooltip:hover::after { display: none; }
+      .option-card, .pack-card { border-color: #e2e8f0; box-shadow: none; }
+      .switch-slider { background: #e2e8f0; }
+      .switch input:checked + .switch-slider { background: #94a3b8; }
+      .card[data-print-card="false"] { display: none !important; }
       [data-print-index] { page-break-after: always; page-break-inside: avoid; position: relative; }
       [data-print-index]:not([data-print-index="1"]) { page-break-before: always; }
       [data-print-index]:last-of-type { page-break-after: auto; }
-      .print-page-label, .no-print { display: none !important; }
     }
 
   </style>
@@ -2039,7 +2166,7 @@
             <div class="header-subtitle">
               Fourchette travaux réaliste pour visite conseil · IDF 2025+
             </div>
-            <div class="version-badge">Version V43</div>
+            <div class="version-badge">Version V50</div>
           </div>
           <div class="header-actions">
             <button id="sidebarToggleHeader" class="sidebar-toggle" type="button" aria-pressed="false" data-sidebar-toggle>
@@ -2054,6 +2181,39 @@
             </div>
           </div>
         </header>
+
+        <div class="print-header">
+          <div>
+            <div class="print-title">Estimatif avant-projet</div>
+            <div class="print-subtitle">Synthèse professionnelle · Version V50</div>
+          </div>
+          <div class="print-meta">
+            <div class="print-meta-item">
+              <span>Client</span>
+              <strong id="printClientName">—</strong>
+            </div>
+            <div class="print-meta-item">
+              <span>Projet</span>
+              <strong id="printClientProject">—</strong>
+            </div>
+            <div class="print-meta-item">
+              <span>Date</span>
+              <strong id="printClientDate">—</strong>
+            </div>
+            <div class="print-meta-item">
+              <span>Nature</span>
+              <strong id="printNature">—</strong>
+            </div>
+            <div class="print-meta-item">
+              <span>Surface de référence</span>
+              <strong id="printSurface">—</strong>
+            </div>
+            <div class="print-meta-item">
+              <span>Budget médian</span>
+              <strong id="printBudget">—</strong>
+            </div>
+          </div>
+        </div>
 
         <div class="print-controls">
           <div class="control-title">
@@ -2107,8 +2267,10 @@
           </div>
 
           <div class="content-grid">
-            <div class="card">
-              <div class="card-title"><span class="card-icon">👤</span> Client & Projet</div>
+            <div class="card" data-print-card="true" data-collapsible="true">
+              <div class="card-title"><span class="card-icon">👤</span> Client & Projet
+                <button class="print-toggle" type="button" data-print-toggle aria-pressed="true" title="Inclure/retirer à l'impression">🖨️</button>
+              </div>
               <div class="card-desc">Informations de base reprises dans le texte et les exports.</div>
 
               <div class="section">
@@ -2323,8 +2485,10 @@
             </div>
 
             <!-- STATS SUMMARY -->
-            <div class="card print-isolated">
-              <div class="card-title"><span class="card-icon">📊</span> Résumé projet</div>
+            <div class="card print-isolated" data-print-card="true" data-collapsible="true">
+              <div class="card-title"><span class="card-icon">📊</span> Résumé projet
+                <button class="print-toggle" type="button" data-print-toggle aria-pressed="true" title="Inclure/retirer à l'impression">🖨️</button>
+              </div>
               <div class="card-desc">Vue synthétique pour vérifier rapidement les données saisies.</div>
 
               <div id="clientSummary" class="alert alert-info" style="margin-bottom: 12px; display:none;"></div>
@@ -2363,8 +2527,33 @@
               <div class="kpi-strip" id="kpiStrip"></div>
             </div>
 
-            <div class="card print-isolated">
-              <div class="card-title"><span class="card-icon">💼</span> Budget & pièces jointes</div>
+            <div class="card print-isolated" data-print-card="true" data-collapsible="true">
+              <div class="card-title"><span class="card-icon">🏷️</span> Prix d'achat au m²
+                <button class="print-toggle" type="button" data-print-toggle aria-pressed="true" title="Inclure/retirer à l'impression">🖨️</button>
+              </div>
+              <div class="card-desc">Saisissez la fourchette d'achat observée pour contextualiser la valeur du bien.</div>
+              <div class="section">
+                <div class="purchase-grid">
+                  <div>
+                    <label>Fourchette basse (€/m²)</label>
+                    <input type="number" id="purchasePriceMin" min="0" step="50" placeholder="Ex. 4200" onchange="updatePurchasePrices()" oninput="updatePurchasePrices()">
+                  </div>
+                  <div>
+                    <label>Fourchette haute (€/m²)</label>
+                    <input type="number" id="purchasePriceMax" min="0" step="50" placeholder="Ex. 5200" onchange="updatePurchasePrices()" oninput="updatePurchasePrices()">
+                  </div>
+                  <div class="purchase-average">
+                    <span class="label">Prix moyen observé</span>
+                    <span class="value" id="purchasePriceAvg">—</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card print-isolated" data-print-card="true" data-collapsible="true">
+              <div class="card-title"><span class="card-icon">💼</span> Budget & pièces jointes
+                <button class="print-toggle" type="button" data-print-toggle aria-pressed="true" title="Inclure/retirer à l'impression">🖨️</button>
+              </div>
               <div class="card-desc">Comparez immédiatement avec le budget client et collectez ses visuels.</div>
 
               <div class="section">
@@ -2396,8 +2585,10 @@
           </div>
 
           <!-- PIÈCES TABLE -->
-          <div class="card print-isolated">
-            <div class="card-title"><span class="card-icon">🏠</span> Pièces principales</div>
+          <div class="card print-isolated" data-print-card="true" data-collapsible="true">
+            <div class="card-title"><span class="card-icon">🏠</span> Pièces principales
+              <button class="print-toggle" type="button" data-print-toggle aria-pressed="true" title="Inclure/retirer à l'impression">🖨️</button>
+            </div>
             <div class="card-desc">Saisir le nombre et la surface des pièces pour affiner le calcul.</div>
 
             <div class="table-wrapper">
@@ -2425,8 +2616,10 @@
           </div>
 
           <div class="grid col-2">
-            <div class="card print-isolated">
-              <div class="card-title"><span class="card-icon">💰</span> Budget estimé</div>
+            <div class="card print-isolated" data-print-card="true" data-collapsible="true">
+              <div class="card-title"><span class="card-icon">💰</span> Budget estimé
+                <button class="print-toggle" type="button" data-print-toggle aria-pressed="true" title="Inclure/retirer à l'impression">🖨️</button>
+              </div>
               <div class="card-desc">Enveloppe globale pour ce projet, à expliquer au client comme un ordre de grandeur.</div>
 
               <div class="duration-badge" id="durationBadge">Délai de réalisation estimé — renseignez une surface.</div>
@@ -2439,8 +2632,10 @@
             <!-- KPI -->
             <section id="section-kpi" style="width: 100%;" data-print-label="Indicateurs clés" data-print-index="3">
               <div class="print-page-label" data-print-label-display>Menu 3 · Indicateurs clés — Page 3</div>
-              <div class="card print-isolated">
-                <div class="card-title"><span class="card-icon">📈</span> Indicateurs graphiques</div>
+              <div class="card print-isolated" data-print-card="true" data-collapsible="true">
+                <div class="card-title"><span class="card-icon">📈</span> Indicateurs graphiques
+                  <button class="print-toggle" type="button" data-print-toggle aria-pressed="true" title="Inclure/retirer à l'impression">🖨️</button>
+                </div>
                 <div class="card-desc">Lecture visuelle pour situer le projet (prix au m², poids des lots, pièces nobles/techniques).</div>
 
                 <div class="section">
@@ -2487,8 +2682,10 @@
             </section>
           </div>
 
-          <div class="card print-isolated">
-            <div class="card-title"><span class="card-icon">⚖️</span> Tableau comparatif des finitions</div>
+          <div class="card print-isolated" data-print-card="true" data-collapsible="true">
+            <div class="card-title"><span class="card-icon">⚖️</span> Tableau comparatif des finitions
+              <button class="print-toggle" type="button" data-print-toggle aria-pressed="true" title="Inclure/retirer à l'impression">🖨️</button>
+            </div>
             <div class="card-desc">Visualise Standard / Confort / Premium sur la même surface, avec accessibilité et inflation appliquées.</div>
             <div id="finitionComparison"></div>
           </div>
@@ -2496,8 +2693,10 @@
 
         <!-- LOTS DETAIL -->
         <section id="section-special-lots">
-          <div class="card" id="specialLotsCard" style="display:none;">
-            <div class="card-title"><span class="card-icon">🏗️</span> Lots critiques par nature</div>
+          <div class="card" id="specialLotsCard" style="display:none;" data-print-card="true" data-collapsible="true">
+            <div class="card-title"><span class="card-icon">🏗️</span> Lots critiques par nature
+              <button class="print-toggle" type="button" data-print-toggle aria-pressed="true" title="Inclure/retirer à l'impression">🖨️</button>
+            </div>
             <div class="card-desc">Pour les extensions et surélévations, focus sur toiture, exploitation et enveloppe.</div>
             <div class="context-grid" id="structureMaterialRow" style="display:none;">
               <div>
@@ -2515,8 +2714,10 @@
         </section>
 
         <section>
-          <div class="card print-isolated">
-            <div class="card-title"><span class="card-icon">🧱</span> Ventilation par lots</div>
+          <div class="card print-isolated" data-print-card="true" data-collapsible="true">
+            <div class="card-title"><span class="card-icon">🧱</span> Ventilation par lots
+              <button class="print-toggle" type="button" data-print-toggle aria-pressed="true" title="Inclure/retirer à l'impression">🖨️</button>
+            </div>
             <div class="card-desc">Répartition indicative par grands postes sur l’enveloppe globale.</div>
 
             <div class="table-wrapper">
@@ -2538,9 +2739,11 @@
           </div>
         </section>
 
-        <section class="no-print">
-          <div class="card">
-            <div class="card-title"><span class="card-icon">🧭</span> Menu architecte</div>
+        <section>
+          <div class="card" data-print-card="true" data-collapsible="true">
+            <div class="card-title"><span class="card-icon">🧭</span> Menu architecte
+              <button class="print-toggle" type="button" data-print-toggle aria-pressed="true" title="Inclure/retirer à l'impression">🖨️</button>
+            </div>
             <div class="card-desc">Roadmap interne basée sur les lots actifs. Non transmise au client.</div>
 
             <div class="section">
@@ -2580,8 +2783,10 @@
         <!-- EXPORT TEXT -->
         <section id="section-export" data-print-label="Export & texte" data-print-index="4">
           <div class="print-page-label" data-print-label-display>Menu 4 · Export & texte — Page 4</div>
-          <div class="card no-print">
-            <div class="card-title"><span class="card-icon">📝</span> Texte client</div>
+          <div class="card" data-print-card="true" data-collapsible="true">
+            <div class="card-title"><span class="card-icon">📝</span> Texte client
+              <button class="print-toggle" type="button" data-print-toggle aria-pressed="true" title="Inclure/retirer à l'impression">🖨️</button>
+            </div>
             <div class="card-desc">Texte prêt à coller dans un mail d’estimation sommaire.</div>
 
             <div class="btn-group">
@@ -2600,8 +2805,10 @@
             </div>
           </div>
 
-          <div class="card no-print">
-            <div class="card-title"><span class="card-icon">📷</span> Capture rapide</div>
+          <div class="card" data-print-card="true" data-collapsible="true">
+            <div class="card-title"><span class="card-icon">📷</span> Capture rapide
+              <button class="print-toggle" type="button" data-print-toggle aria-pressed="true" title="Inclure/retirer à l'impression">🖨️</button>
+            </div>
             <div class="card-desc">Préparez un aperçu centré à partager sans afficher le menu gauche.</div>
 
             <div class="btn-group">
@@ -2944,6 +3151,8 @@
       optionPack: "",
       attachments: [],
       clientBudget: 0,
+      purchasePriceMin: 0,
+      purchasePriceMax: 0,
       client: {
         name: "",
         project: "",
@@ -3175,7 +3384,8 @@
 
       const totalArea = getTotalArea();
       const totalCount = getTotalCount();
-      const { minPerM2, maxPerM2, minPerM2Ht, maxPerM2Ht } = getPriceRange();
+      const estimate = computeEstimate();
+      const { minPerM2, maxPerM2, minPerM2Ht, maxPerM2Ht } = estimate;
 
       document.getElementById("totalRooms").textContent = totalCount;
       document.getElementById("totalArea").textContent = totalArea > 0 ? totalArea.toFixed(0) : "0";
@@ -3211,6 +3421,16 @@
     }
 
     // ===== ESTIMATION =====
+    function getActiveLotsMeta() {
+      const sourceLots = (state.habitat === "BUREAU" && CONFIG.REPART_LOTS_BUREAU[state.nature]) ? CONFIG.REPART_LOTS_BUREAU[state.nature] : CONFIG.REPART_LOTS[state.nature];
+      const lotsDef = filterLotsForHabitat(sourceLots) || [];
+      ensureLotToggles(lotsDef);
+      const activeLots = lotsDef.filter(l => state.lotToggles[l.lot] !== false);
+      const totalPct = activeLots.reduce((sum, l) => sum + l.pct, 0) || 1;
+      const toggleFactor = activeLots.length ? totalPct : 1;
+      return { lotsDef, activeLots, totalPct, toggleFactor };
+    }
+
     function computeEstimate() {
       const totalArea = getTotalArea();
       const refArea = getRefArea();
@@ -3227,22 +3447,17 @@
       const distributedAvgHt = baseAvgHt + extras.amountAvgHt;
       const distributedMaxHt = baseMaxHt + extras.amountMaxHt;
 
-      const amountMinHt = distributedMinHt + customJoinery.amountMinHt;
-      const amountAvgHt = distributedAvgHt + customJoinery.amountAvgHt;
-      const amountMaxHt = distributedMaxHt + customJoinery.amountMaxHt;
+      const { lotsDef, totalPct, toggleFactor } = getActiveLotsMeta();
+      const scaledMinHt = distributedMinHt * toggleFactor;
+      const scaledAvgHt = distributedAvgHt * toggleFactor;
+      const scaledMaxHt = distributedMaxHt * toggleFactor;
+
+      const amountMinHt = scaledMinHt + customJoinery.amountMinHt;
+      const amountAvgHt = scaledAvgHt + customJoinery.amountAvgHt;
+      const amountMaxHt = scaledMaxHt + customJoinery.amountMaxHt;
       const amountMin = tax.toTtc(amountMinHt);
       const amountAvg = tax.toTtc(amountAvgHt);
       const amountMax = tax.toTtc(amountMaxHt);
-
-      const sourceLots = (state.habitat === "BUREAU" && CONFIG.REPART_LOTS_BUREAU[state.nature]) ? CONFIG.REPART_LOTS_BUREAU[state.nature] : CONFIG.REPART_LOTS[state.nature];
-      const lotsDef = filterLotsForHabitat(sourceLots) || [];
-      ensureLotToggles(lotsDef);
-      const activeLots = lotsDef.filter(l => state.lotToggles[l.lot] !== false);
-      const totalPct = activeLots.reduce((sum, l) => sum + l.pct, 0) || 1;
-
-      const scaledMinHt = distributedMinHt * (activeLots.length ? totalPct : 1);
-      const scaledAvgHt = distributedAvgHt * (activeLots.length ? totalPct : 1);
-      const scaledMaxHt = distributedMaxHt * (activeLots.length ? totalPct : 1);
 
       const lots = lotsDef.map(l => {
         const enabled = state.lotToggles[l.lot] !== false;
@@ -3275,6 +3490,13 @@
         });
       }
 
+      const minPerM2Adj = refArea ? amountMin / refArea : 0;
+      const maxPerM2Adj = refArea ? amountMax / refArea : 0;
+      const avgPerM2Adj = refArea ? amountAvg / refArea : 0;
+      const minPerM2AdjHt = refArea ? amountMinHt / refArea : 0;
+      const maxPerM2AdjHt = refArea ? amountMaxHt / refArea : 0;
+      const avgPerM2AdjHt = refArea ? amountAvgHt / refArea : 0;
+
       return {
         refArea,
         amountMinHt: amountMinHt,
@@ -3283,13 +3505,13 @@
         amountMin: amountMin,
         amountAvg: amountAvg,
         amountMax: amountMax,
-        avgPerM2Ht: avgHt,
-        avgPerM2: avg,
+        avgPerM2Ht: avgPerM2AdjHt,
+        avgPerM2: avgPerM2Adj,
         lots,
-        minPerM2,
-        maxPerM2,
-        minPerM2Ht,
-        maxPerM2Ht,
+        minPerM2: minPerM2Adj,
+        maxPerM2: maxPerM2Adj,
+        minPerM2Ht: minPerM2AdjHt,
+        maxPerM2Ht: maxPerM2AdjHt,
         areaPieces: totalArea,
         extras,
         customJoinery,
@@ -3305,12 +3527,15 @@
       const access = CONFIG.ACCESSIBILITY[state.siteAccessibility] || CONFIG.ACCESSIBILITY.FACILE;
       const finitionFactor = state.finition === "PREMIUM" ? 1.12 : state.finition === "CONFORT" ? 1.06 : 1;
       const optionsFactor = 1 + (getActiveSpecialOptions().length * 0.03);
-      const effectiveArea = area * finitionFactor;
-
-      const rawWeeks = (rule.baseWeeks || 4) + (effectiveArea / (rule.cadence || 20));
       const complexityFactor = complexity.duration || 1;
       const accessFactor = access.coeff || 1;
-      const minWeeks = Math.max(rule.minFloor || 0, Math.round(rawWeeks * complexityFactor * accessFactor * optionsFactor));
+      const baseWeeks = rule.baseWeeks || 4;
+      const cadence = rule.cadence || 20;
+
+      const effectiveArea = area * finitionFactor;
+      const areaWeeks = effectiveArea / cadence;
+      const adjustedWeeks = (baseWeeks + areaWeeks) * complexityFactor * accessFactor * optionsFactor;
+      const minWeeks = Math.max(rule.minFloor || 0, Math.round(adjustedWeeks));
       const maxWeeks = Math.round(minWeeks * (1 + (rule.spread || 0.35)));
       const minMonths = (minWeeks / 4.345).toFixed(1);
       const maxMonths = (maxWeeks / 4.345).toFixed(1);
@@ -3342,6 +3567,31 @@
 
       el.innerHTML = parts.join(" • ");
       el.style.display = "block";
+      updatePrintHeader();
+    }
+
+    function updatePrintHeader(est = lastEstimate) {
+      const nameEl = document.getElementById("printClientName");
+      const projectEl = document.getElementById("printClientProject");
+      const dateEl = document.getElementById("printClientDate");
+      const natureEl = document.getElementById("printNature");
+      const surfaceEl = document.getElementById("printSurface");
+      const budgetEl = document.getElementById("printBudget");
+      if (!nameEl || !projectEl || !dateEl || !natureEl || !surfaceEl || !budgetEl) return;
+
+      const { name, project, date, type } = state.client || {};
+      const typeLabel = type === "VISIO" ? "Visio" : type === "TEL" ? "Tél." : "Visite";
+      const natureNames = { REN_L: "Rénovation légère", REN_M: "Rénovation standard", REN_H: "Rénovation lourde", EXT: "Extension", SUREL: "Surélévation" };
+      const habitatLabel = CONFIG.HABITATS[state.habitat]?.label || "";
+      const refArea = est?.refArea || getRefArea();
+      const budget = est?.amountAvg || 0;
+
+      nameEl.textContent = name || "—";
+      projectEl.textContent = project || "—";
+      dateEl.textContent = date ? `${typeLabel} · ${date}` : "—";
+      natureEl.textContent = `${natureNames[state.nature] || "—"}${habitatLabel ? ` · ${habitatLabel}` : ""}`;
+      surfaceEl.textContent = refArea ? fmt.area(refArea) : "—";
+      budgetEl.textContent = budget ? fmt.currency(budget) : "—";
     }
 
     function renderDurationBadge(est = lastEstimate) {
@@ -3408,13 +3658,13 @@
       const r1 = document.createElement("div");
       r1.className = "result-box";
       r1.innerHTML = `
-        <div class="result-label">Enveloppe budget moyen</div>
+        <div class="result-label">Enveloppe TTC (lots actifs)</div>
         <div class="price-stack">
           <div class="result-value price-ttc">${fmt.currency(amountAvg)} TTC</div>
           <div class="price-ht">Base HT : ${fmt.currency(amountAvgHt)} (TVA ${(TVA_RATE * 100).toFixed(1)} %)</div>
         </div>
-        <div class="result-sub">Fourchette TTC : ${fmt.currency(amountMin)} à ${fmt.currency(amountMax)}</div>
-        <div class="price-note">Fourchette HT : ${fmt.currency(amountMinHt)} à ${fmt.currency(amountMaxHt)}</div>
+        <div class="result-sub">Fourchette TTC : ${fmt.currency(amountMin)} → ${fmt.currency(amountMax)}</div>
+        <div class="price-note">Fourchette HT : ${fmt.currency(amountMinHt)} → ${fmt.currency(amountMaxHt)}</div>
       `;
 
       const r2 = document.createElement("div");
@@ -3521,7 +3771,7 @@
         lotsEmpty.style.display = "none";
         let html = `<thead><tr><th>Lot</th><th>%</th><th style="text-align:right;">Min. TTC / HT</th><th style="text-align:right;">Max. TTC / HT</th><th style="text-align:center;">€/m² TTC</th><th style="text-align:center;">Toggle</th></tr></thead><tbody>`;
         let hasLot = false;
-          lots.forEach(l => {
+        lots.forEach(l => {
           const safeLot = l.lot.replace(/"/g, '&quot;').replace(/'/g, "\\'");
           const perM2 = refArea ? ((l.min + l.max) / 2 / refArea) : 0;
           const perM2Ht = refArea ? ((l.minHt + l.maxHt) / 2 / refArea) : 0;
@@ -3549,19 +3799,29 @@
           hasLot = true;
         });
         if (hasLot) {
+          const totals = lots.reduce((acc, lot) => {
+            if (lot.enabled) {
+              acc.min += lot.min;
+              acc.max += lot.max;
+              acc.minHt += lot.minHt;
+              acc.maxHt += lot.maxHt;
+            }
+            return acc;
+          }, { min: 0, max: 0, minHt: 0, maxHt: 0 });
+
           html += `<tr class="total-row">
             <td>TOTAL ENVELOPPE</td>
             <td></td>
             <td style="text-align:right;">
               <div class="price-stack" style="align-items:flex-end;">
-                <div class="price-ttc">${fmt.currency(amountMin)} TTC</div>
-                <div class="price-ht">${fmt.currency(amountMinHt)} HT</div>
+                <div class="price-ttc">${fmt.currency(totals.min)} TTC</div>
+                <div class="price-ht">${fmt.currency(totals.minHt)} HT</div>
               </div>
             </td>
             <td style="text-align:right;">
               <div class="price-stack" style="align-items:flex-end;">
-                <div class="price-ttc">${fmt.currency(amountMax)} TTC</div>
-                <div class="price-ht">${fmt.currency(amountMaxHt)} HT</div>
+                <div class="price-ttc">${fmt.currency(totals.max)} TTC</div>
+                <div class="price-ht">${fmt.currency(totals.maxHt)} HT</div>
               </div>
             </td>
             <td></td><td></td>
@@ -3580,6 +3840,7 @@
       renderFinitionComparison(est);
       updateSummary();
       renderSpecialLots(est);
+      updatePrintHeader(est);
     }
 
     function renderSpecialLots(est) {
@@ -3798,18 +4059,22 @@
       const prices = getPriceRange(finition);
       const extras = extrasCache || computeExtras(refArea);
       const custom = computeCustomJoinery(refArea, finition);
+      const { toggleFactor } = getActiveLotsMeta();
       const baseMinHt = refArea * prices.minPerM2Ht;
       const baseAvgHt = refArea * prices.avgHt;
       const baseMaxHt = refArea * prices.maxPerM2Ht;
-      const totalMinHt = baseMinHt + extras.amountMinHt + custom.amountMinHt;
-      const totalAvgHt = baseAvgHt + extras.amountAvgHt + custom.amountAvgHt;
-      const totalMaxHt = baseMaxHt + extras.amountMaxHt + custom.amountMaxHt;
+      const distributedMinHt = (baseMinHt + extras.amountMinHt) * toggleFactor;
+      const distributedAvgHt = (baseAvgHt + extras.amountAvgHt) * toggleFactor;
+      const distributedMaxHt = (baseMaxHt + extras.amountMaxHt) * toggleFactor;
+      const totalMinHt = distributedMinHt + custom.amountMinHt;
+      const totalAvgHt = distributedAvgHt + custom.amountAvgHt;
+      const totalMaxHt = distributedMaxHt + custom.amountMaxHt;
 
       return {
         finition,
         label: CONFIG.FINITIONS[finition]?.label || finition,
-        perM2: prices.avg,
-        perM2Ht: prices.avgHt,
+        perM2: refArea ? tax.toTtc(totalAvgHt / refArea) : 0,
+        perM2Ht: refArea ? (totalAvgHt / refArea) : 0,
         amountMin: tax.toTtc(totalMinHt),
         amountAvg: tax.toTtc(totalAvgHt),
         amountMax: tax.toTtc(totalMaxHt),
@@ -3923,6 +4188,27 @@
     function toggleLot(lotName, enabled) {
       state.lotToggles[lotName] = enabled;
       updateAll();
+    }
+
+    function updatePurchasePrices() {
+      const minInput = document.getElementById("purchasePriceMin");
+      const maxInput = document.getElementById("purchasePriceMax");
+      const avgEl = document.getElementById("purchasePriceAvg");
+      if (!minInput || !maxInput || !avgEl) return;
+
+      const minVal = parseFloat(minInput.value) || 0;
+      const maxVal = parseFloat(maxInput.value) || 0;
+      state.purchasePriceMin = minVal;
+      state.purchasePriceMax = maxVal;
+
+      let avg = 0;
+      if (minVal > 0 && maxVal > 0) {
+        avg = (minVal + maxVal) / 2;
+      } else {
+        avg = minVal || maxVal || 0;
+      }
+
+      avgEl.textContent = avg ? `${Math.round(avg).toLocaleString("fr-FR")} €/m²` : "—";
     }
 
     function findLotTasks(lotName) {
@@ -4191,6 +4477,7 @@
       renderResults();
       renderSpecialOptionsSummary();
       updateBudgetKpi();
+      updatePurchasePrices();
       renderAttachments();
       renderKpiStrip();
       const contingencyDisplay = document.getElementById("contingencyDisplay");
@@ -4244,7 +4531,7 @@
 
       const introContext = `${rdv}${proj}`.trim();
 
-      const text = `ESTIMATION AVANT-PROJET · V43
+      const text = `ESTIMATION AVANT-PROJET · V50
 
 ${civ}
 
@@ -4351,7 +4638,7 @@ Bien cordialement,
     async function saveHtmlSnapshot() {
       const html = document.documentElement.outerHTML;
       const blob = new Blob([html], { type: "text/html" });
-      const name = `${state.client.name || "projet"}-V43.html`;
+      const name = `${state.client.name || "projet"}-V50.html`;
       await saveWithPicker({
         suggestedName: name,
         blob,
@@ -4375,6 +4662,8 @@ Bien cordialement,
       state.specialOptions = Object.assign({ fenetres: false, thermique: false, reseaux: false, acoustique: false }, state.specialOptions || {});
       state.optionPack = state.optionPack || "";
       state.clientBudget = state.clientBudget || 0;
+      state.purchasePriceMin = state.purchasePriceMin || 0;
+      state.purchasePriceMax = state.purchasePriceMax || 0;
       state.client = Object.assign({ name: "", project: "", type: "VISITE", date: "" }, state.client || {});
       state.siteAccessibility = state.siteAccessibility || "FACILE";
       state.complexity = state.complexity || "STANDARD";
@@ -4404,8 +4693,13 @@ Bien cordialement,
       document.getElementById("levels").value = state.levels;
       document.getElementById("globalArea").value = state.globalArea;
       document.getElementById("clientBudget").value = state.clientBudget || 0;
+      const purchaseMin = document.getElementById("purchasePriceMin");
+      const purchaseMax = document.getElementById("purchasePriceMax");
+      if (purchaseMin) purchaseMin.value = state.purchasePriceMin || 0;
+      if (purchaseMax) purchaseMax.value = state.purchasePriceMax || 0;
       renderAttachments();
       updateBudgetKpi();
+      updatePurchasePrices();
       updateAll();
     }
 
@@ -4523,6 +4817,8 @@ Bien cordialement,
         optionPack: "",
         attachments: [],
         clientBudget: 0,
+        purchasePriceMin: 0,
+        purchasePriceMax: 0,
         client: { name: "", project: "", type: "VISITE", date: "" }
       };
       ROOM_CODES.forEach(code => state.rooms[code] = { count: 0, area: 0 });
@@ -4548,7 +4844,12 @@ Bien cordialement,
       document.getElementById("levels").value = "1";
       document.getElementById("globalArea").value = "0";
       document.getElementById("clientBudget").value = "0";
+      const purchaseMin = document.getElementById("purchasePriceMin");
+      const purchaseMax = document.getElementById("purchasePriceMax");
+      if (purchaseMin) purchaseMin.value = "0";
+      if (purchaseMax) purchaseMax.value = "0";
       renderAttachments();
+      updatePurchasePrices();
       updateAll();
       closeArchitectPanel();
     }
@@ -4587,6 +4888,49 @@ Bien cordialement,
         const page = getPrintIndex(section);
         printMenuActive.textContent = page ? `${menuText} (Page ${page})` : menuText;
       }
+    }
+
+    function initPrintToggles() {
+      document.querySelectorAll("[data-print-toggle]").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const card = btn.closest(".card");
+          if (!card) return;
+          const isOff = card.dataset.printCard === "false";
+          card.dataset.printCard = isOff ? "true" : "false";
+          btn.classList.toggle("off", !isOff);
+          btn.setAttribute("aria-pressed", isOff ? "true" : "false");
+        });
+      });
+    }
+
+    function initCardCollapsibles() {
+      document.querySelectorAll(".card[data-collapsible='true'] .card-title").forEach(title => {
+        const card = title.closest(".card");
+        if (!card) return;
+        title.classList.add("clickable");
+        title.setAttribute("role", "button");
+        title.setAttribute("tabindex", "0");
+        title.setAttribute("aria-expanded", "true");
+
+        const toggle = () => {
+          const collapsed = card.classList.toggle("collapsed");
+          title.setAttribute("aria-expanded", collapsed ? "false" : "true");
+        };
+
+        title.addEventListener("click", (e) => {
+          if (e.target.closest("[data-print-toggle]")) return;
+          toggle();
+        });
+
+        title.addEventListener("keydown", (e) => {
+          if (e.target.closest("[data-print-toggle]")) return;
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            toggle();
+          }
+        });
+      });
     }
 
     // ===== NAVIGATION LATÉRALE =====
@@ -4730,6 +5074,8 @@ Bien cordialement,
       closeAllModals();
       initTheme();
       initPrintLabels();
+      initPrintToggles();
+      initCardCollapsibles();
 
       document.getElementById("clientName").addEventListener("input", updateSummary);
       document.getElementById("clientProject").addEventListener("input", updateSummary);
