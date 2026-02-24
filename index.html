@@ -6,7 +6,12 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#0f172a">
-  <title>Estimatif Avant-Projet Premium · V56</title>
+  <meta name="apple-mobile-web-app-title" content="ESTIM AVP V69">
+  <link rel="manifest" href="manifest-v69.webmanifest">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Estimatif Avant-Projet Premium · V69</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -508,6 +513,35 @@
 
     .print-btn:focus-visible { outline: 2px solid rgba(14,165,233,0.65); outline-offset: 2px; }
 
+    .pdf-btn {
+      background: linear-gradient(135deg, #0f766e, #0891b2);
+      box-shadow: 0 10px 24px rgba(8,145,178,0.32);
+    }
+
+    .print-single-btn {
+      margin-left: auto;
+      border: 1px solid rgba(14,165,233,0.45);
+      background: rgba(14,165,233,0.12);
+      color: var(--text-strong);
+      border-radius: 8px;
+      padding: 5px 9px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .print-single-btn:hover {
+      background: rgba(14,165,233,0.22);
+      border-color: rgba(14,165,233,0.62);
+    }
+
+    .print-single-btn:focus-visible {
+      outline: 2px solid rgba(14,165,233,0.65);
+      outline-offset: 2px;
+    }
+
     .print-control-row { display: flex; flex-direction: column; gap: 6px; }
     .print-control-inputs { display: flex; align-items: center; gap: 8px; }
 
@@ -549,7 +583,7 @@
     }
 
     .print-page-label {
-      display: inline-flex;
+      display: none;
       align-items: center;
       gap: 6px;
       background: rgba(14,165,233,0.12);
@@ -618,6 +652,13 @@
       text-transform: uppercase;
       color: var(--text-strong);
       width: fit-content;
+    }
+
+    .cache-note {
+      font-size: 11px;
+      color: var(--text-sec);
+      margin-top: 4px;
+      opacity: 0.9;
     }
 
     @keyframes pulse {
@@ -833,8 +874,8 @@
     /* PRINT */
     @media print {
       .print-isolated {
-        break-inside: avoid;
-        page-break-inside: avoid;
+        break-inside: auto !important;
+        page-break-inside: auto !important;
       }
     }
 
@@ -2169,7 +2210,11 @@
       line-height: 1.55;
     }
 
-    .print-menu { display: none; }
+    .print-menu { display: none !important; }
+
+    .print-stage { display: none; }
+    .print-sheet { page-break-after: auto; break-after: auto; }
+    .print-sheet:last-child { page-break-after: auto; break-after: auto; }
 
     @page {
       size: A4 portrait;
@@ -2180,57 +2225,73 @@
       * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       html, body { width: 100% !important; height: auto !important; overflow: visible !important; }
       body { background: #ffffff !important; color: #0f172a !important; font-size: 11px; }
-      body::before { display: none; }
-      .app { display: block !important; min-height: auto !important; padding-left: 0 !important; }
-      .main { padding: 0 !important; width: 100% !important; }
-      .main-inner { margin-top: 0; width: 100% !important; max-width: none !important; overflow: visible !important; }
-      .sidebar, .sidebar-toggle, .theme-toggle, .print-controls, .print-menu, .status { display: none !important; }
-      .header { margin-bottom: 6px; }
-      .header-title { font-size: 18px; }
-      .header-subtitle { font-size: 11px; color: #64748b; }
-      .version-badge { border-color: #cbd5f5; color: #4f46e5; background: #eef2ff; }
-      .print-header, .print-header * { color: #0f172a !important; }
-      .print-header { display: block; }
-      .card { background: #ffffff !important; border: 1px solid #e2e8f0; box-shadow: none; overflow: visible !important; break-inside: auto; page-break-inside: auto; }
-      .card, .card * { color: #0f172a !important; }
-      .card-title { color: #0f172a; }
-      .card-desc { color: #334155; }
-      .print-toggle { display: none !important; }
-      .section-toggle, .alert-dismiss, .info-toggle { display: none !important; }
-      .section.is-hidden { display: none !important; }
-      .alert { background: #f8fafc; border-color: #e2e8f0; color: #334155; }
-      .table-wrapper { background: #ffffff; border-color: #e2e8f0; box-shadow: none; overflow: visible !important; }
-      table { width: 100% !important; }
-      thead { background: #f1f5f9; }
-      th, td { color: #0f172a; }
-      .price-ttc { color: #0f172a; }
-      .price-ht { color: #475569; }
-      .result-value { color: #0f172a; }
-      .budget-track, .budget-pointer::after { box-shadow: none; }
-      .budget-pointer { box-shadow: none; }
-      .print-page-label, .no-print { display: none !important; }
-      .kpi-grid, .grid, .content-grid, .grid-2, .context-grid, .purchase-grid { gap: 8px; }
-      .lot-tooltip:hover::after { display: none; }
-      .option-card, .pack-card { border-color: #e2e8f0; box-shadow: none; }
-      .switch-slider { background: #e2e8f0; }
-      .switch input:checked + .switch-slider { background: #94a3b8; }
-      .card[data-print-card="false"] { display: none !important; }
-      [data-print-index] { page-break-after: auto; page-break-before: auto; page-break-inside: auto; break-inside: auto; position: relative; }
-      [data-print-index]:last-of-type { page-break-after: auto; }
+      body::before { display: none !important; }
+      .app, .print-menu { display: none !important; }
+      .print-stage { display: block !important; width: 100% !important; }
+      .print-sheet { page-break-after: auto !important; break-after: auto !important; }
+      .print-sheet:last-child { page-break-after: auto !important; break-after: auto !important; }
+      .print-stage .print-header, .print-stage .print-header * { color: #0f172a !important; }
+      .print-stage .print-header { display: block !important; margin-bottom: 10px; }
+      .print-stage *, .print-stage *::before, .print-stage *::after {
+        color: #0f172a !important;
+        -webkit-text-fill-color: #0f172a !important;
+        text-shadow: none !important;
+        background-image: none !important;
+      }
+      .print-stage input, .print-stage select, .print-stage textarea {
+        color: #0f172a !important;
+        border: 1px solid #cbd5e1 !important;
+        background: #ffffff !important;
+      }
+      .print-stage .header-title {
+        -webkit-text-fill-color: #0f172a !important;
+        background: none !important;
+      }
+
+      .print-stage .card { background: #ffffff !important; border: 1px solid #e2e8f0 !important; box-shadow: none !important; overflow: visible !important; }
+      .print-stage .card, .print-stage .card * { color: #0f172a !important; -webkit-text-fill-color: #0f172a !important; text-shadow: none !important; background-image: none !important; }
+      .print-stage .section, .print-stage .grid, .print-stage .grid-2, .print-stage .content-grid, .print-stage .context-grid, .print-stage .kpi-grid { break-inside: auto !important; page-break-inside: auto !important; }
+      .print-stage .section-toggle, .print-stage .print-toggle, .print-stage .print-single-btn, .print-stage .alert-dismiss, .print-stage .info-toggle, .print-stage .print-page-label, .print-stage .no-print { display: none !important; }
+      .print-stage .table-wrapper { background: #ffffff !important; border-color: #e2e8f0 !important; box-shadow: none !important; overflow: visible !important; }
+      .print-stage table { width: 100% !important; }
+      .print-stage canvas { max-width: 100% !important; height: auto !important; }
+      .print-stage thead { background: #f1f5f9 !important; }
+      .print-stage .card[data-print-card="false"] { display: none !important; }
+      .print-stage section, .print-stage .section, .print-stage .card { break-inside: auto !important; page-break-inside: auto !important; }
+      .print-stage .content-grid,
+      .print-stage .context-grid,
+      .print-stage .kpi-grid,
+      .print-stage .kpi-strip,
+      .print-stage .finish-compare,
+      .print-stage .pack-grid,
+      .print-stage .planning-grid,
+      .print-stage .grid,
+      .print-stage .grid-2 {
+        display: block !important;
+      }
+      .print-stage .content-grid > *,
+      .print-stage .context-grid > *,
+      .print-stage .kpi-grid > *,
+      .print-stage .kpi-strip > *,
+      .print-stage .finish-compare > *,
+      .print-stage .pack-grid > *,
+      .print-stage .planning-grid > *,
+      .print-stage .grid > *,
+      .print-stage .grid-2 > * {
+        width: 100% !important;
+        margin-bottom: 10px !important;
+      }
+      .print-stage [style*="max-height"], .print-stage [style*="overflow"] {
+        max-height: none !important;
+        overflow: visible !important;
+      }
+
     }
 
   </style>
 </head>
 <body>
-  <div class="print-menu">
-    <div class="print-menu-title">Menus impression <span class="current-label" id="printMenuActive">Menu 1 · Saisie & configuration (Page 1)</span></div>
-    <div class="print-menu-links" id="printMenuLinks">
-      <a data-target="section-saisie" href="#section-saisie">Menu 1 · Saisie & configuration</a>
-      <a data-target="section-resultats" href="#section-resultats">Menu 2 · Résultats</a>
-      <a data-target="section-kpi" href="#section-kpi">Menu 3 · KPI</a>
-      <a data-target="section-export" href="#section-export">Menu 4 · Export texte</a>
-    </div>
-  </div>
+  <div id="printStage" class="print-stage" aria-hidden="true"></div>
   <div class="app">
     <!-- SIDEBAR -->
     <aside class="sidebar">
@@ -2288,7 +2349,8 @@
             <div class="header-subtitle">
               Fourchette travaux réaliste pour visite conseil · IDF 2026+
             </div>
-            <div class="version-badge">Version V56</div>
+            <div class="version-badge">Version V69</div>
+            <div class="cache-note">Si Chrome affiche une ancienne vue, recharge forcée automatique de la version.</div>
           </div>
           <div class="header-actions">
             <button id="sidebarToggleHeader" class="sidebar-toggle" type="button" aria-pressed="false" data-sidebar-toggle>
@@ -2297,7 +2359,10 @@
             <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false">
               🌙 Mode clair
             </button>
-            <div class="status">
+            <button id="installPwaBtn" class="theme-toggle" type="button" hidden>
+              ⬇️ Installer l'app
+            </button>
+            <div class="status" id="networkStatus">
               <div class="dot"></div>
               <span>Prêt pour une nouvelle estimation</span>
             </div>
@@ -2307,7 +2372,7 @@
         <div class="print-header">
           <div>
             <div class="print-title">Estimatif avant-projet</div>
-            <div class="print-subtitle">Synthèse professionnelle · Version V56</div>
+            <div class="print-subtitle">Synthèse professionnelle · Version V69</div>
           </div>
           <div class="print-meta">
             <div class="print-meta-item">
@@ -2337,47 +2402,15 @@
           </div>
         </div>
 
-        <div class="print-controls">
+        <div class="print-controls print-controls-simple">
           <div class="control-title">
-            Menus impression (A4 portrait)
+            Impression globale (sans menu par page)
             <div class="print-actions">
               <button class="print-btn" type="button" id="printNow">🖨️ Imprimer</button>
+              <button class="print-btn pdf-btn" type="button" id="printPdfNow">📄 PDF direct</button>
             </div>
           </div>
-
-          <div class="print-control-row">
-            <label for="printLabelSaisie">Menu 1 · Page 1</label>
-            <div class="print-control-inputs">
-              <input id="printNumberSaisie" class="print-number-input" data-target="section-saisie" type="number" min="1" max="20" value="1" aria-label="Numéro du menu Saisie">
-              <input id="printLabelSaisie" class="print-label-input" data-target="section-saisie" value="Saisie & configuration" placeholder="Libellé du menu" />
-            </div>
-          </div>
-
-          <div class="print-control-row">
-            <label for="printLabelResultats">Menu 2 · Page 2</label>
-            <div class="print-control-inputs">
-              <input id="printNumberResultats" class="print-number-input" data-target="section-resultats" type="number" min="1" max="20" value="2" aria-label="Numéro du menu Résultats">
-              <input id="printLabelResultats" class="print-label-input" data-target="section-resultats" value="Résultats & synthèse" placeholder="Libellé du menu" />
-            </div>
-          </div>
-
-          <div class="print-control-row">
-            <label for="printLabelKpi">Menu 3 · Page 3</label>
-            <div class="print-control-inputs">
-              <input id="printNumberKpi" class="print-number-input" data-target="section-kpi" type="number" min="1" max="20" value="3" aria-label="Numéro du menu KPI">
-              <input id="printLabelKpi" class="print-label-input" data-target="section-kpi" value="Indicateurs clés" placeholder="Libellé du menu" />
-            </div>
-          </div>
-
-          <div class="print-control-row">
-            <label for="printLabelExport">Menu 4 · Page 4</label>
-            <div class="print-control-inputs">
-              <input id="printNumberExport" class="print-number-input" data-target="section-export" type="number" min="1" max="20" value="4" aria-label="Numéro du menu Export">
-              <input id="printLabelExport" class="print-label-input" data-target="section-export" value="Export & texte" placeholder="Libellé du menu" />
-            </div>
-          </div>
-
-          <div class="print-hint">🖨️ Une page A4 = un menu numéroté. Les numéros sont repris dans les badges des pages et dans la barre de menu impression.</div>
+          <div class="print-hint">📄 Le document s’imprime maintenant en continu, sans découpage “Menu 1 / Menu 2 / …”.</div>
         </div>
 
         <!-- CLIENT & CONFIG -->
@@ -2869,7 +2902,8 @@
         </section>
 
         <!-- LOTS DETAIL -->
-        <section id="section-special-lots">
+        <section id="section-special-lots" data-print-label="Lots critiques" data-print-index="4">
+          <div class="print-page-label" data-print-label-display>Menu 4 · Lots critiques — Page 4</div>
           <div class="card" id="specialLotsCard" style="display:none;" data-print-card="true" data-collapsible="true">
             <div class="card-title"><span class="card-icon">🏗️</span> Lots critiques par nature
               <button class="print-toggle" type="button" data-print-toggle aria-pressed="true" title="Inclure/retirer à l'impression">🖨️</button>
@@ -2890,7 +2924,8 @@
           </div>
         </section>
 
-        <section>
+        <section id="section-lots" data-print-label="Ventilation par lots" data-print-index="5">
+          <div class="print-page-label" data-print-label-display>Menu 5 · Ventilation par lots — Page 5</div>
           <div class="card print-isolated" data-print-card="true" data-collapsible="true">
             <div class="card-title"><span class="card-icon">🧱</span> Ventilation par lots
               <button class="print-toggle" type="button" data-print-toggle aria-pressed="true" title="Inclure/retirer à l'impression">🖨️</button>
@@ -2917,7 +2952,8 @@
           </div>
         </section>
 
-        <section>
+        <section id="section-planning" data-print-label="Planning & délais" data-print-index="6">
+          <div class="print-page-label" data-print-label-display>Menu 6 · Planning & délais — Page 6</div>
           <div class="card print-isolated" data-print-card="true" data-collapsible="true">
             <div class="card-title"><span class="card-icon">📆</span> Planning & délais
               <button class="print-toggle" type="button" data-print-toggle aria-pressed="true" title="Inclure/retirer à l'impression">🖨️</button>
@@ -2932,7 +2968,8 @@
           </div>
         </section>
 
-        <section>
+        <section id="section-architect" data-print-label="Menu architecte" data-print-index="7">
+          <div class="print-page-label" data-print-label-display>Menu 7 · Menu architecte — Page 7</div>
           <div class="card" data-print-card="true" data-collapsible="true">
             <div class="card-title"><span class="card-icon">🧭</span> Menu architecte
               <button class="print-toggle" type="button" data-print-toggle aria-pressed="true" title="Inclure/retirer à l'impression">🖨️</button>
@@ -2974,8 +3011,8 @@
         </section>
 
         <!-- EXPORT TEXT -->
-        <section id="section-export" data-print-label="Export & texte" data-print-index="4">
-          <div class="print-page-label" data-print-label-display>Menu 4 · Export & texte — Page 4</div>
+        <section id="section-export" data-print-label="Export & texte" data-print-index="8">
+          <div class="print-page-label" data-print-label-display>Menu 8 · Export & texte — Page 8</div>
           <div class="card" data-print-card="true" data-collapsible="true">
             <div class="card-title"><span class="card-icon">📝</span> Texte client
               <button class="print-toggle" type="button" data-print-toggle aria-pressed="true" title="Inclure/retirer à l'impression">🖨️</button>
@@ -5037,7 +5074,7 @@
 
       const introContext = `${rdv}${proj}`.trim();
 
-      const text = `ESTIMATION AVANT-PROJET · V56
+      const text = `ESTIMATION AVANT-PROJET · V69
 
 ${civ}
 
@@ -5087,8 +5124,7 @@ Bien cordialement,
     }
 
     function generateClientPdf() {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      setTimeout(() => window.print(), 200);
+      triggerPrintWorkflow();
     }
 
     async function saveWithPicker({ suggestedName, blob, description, accept }) {
@@ -5146,7 +5182,7 @@ Bien cordialement,
     async function saveHtmlSnapshot() {
       const html = document.documentElement.outerHTML;
       const blob = new Blob([html], { type: "text/html" });
-      const name = `${state.client.name || "projet"}-V56.html`;
+      const name = `${state.client.name || "projet"}-V59.html`;
       await saveWithPicker({
         suggestedName: name,
         blob,
@@ -5413,8 +5449,7 @@ Bien cordialement,
       const printMenuActive = document.getElementById('printMenuActive');
       if (printMenuActive && section) {
         const menuText = formatPrintMenu(section);
-        const page = getPrintIndex(section);
-        printMenuActive.textContent = page ? `${menuText} (Page ${page})` : menuText;
+        printMenuActive.textContent = menuText;
       }
     }
 
@@ -5483,7 +5518,8 @@ Bien cordialement,
         nav: i
       }));
 
-      window.addEventListener("scroll", () => {
+      let scrollTicking = false;
+      const syncActiveSection = () => {
         let current = null;
         const offset = 110;
         sections.forEach(s => {
@@ -5496,7 +5532,16 @@ Bien cordialement,
           current.nav.classList.add("active");
           updateCurrentPrintHeader();
         }
-      });
+      };
+
+      window.addEventListener("scroll", () => {
+        if (scrollTicking) return;
+        scrollTicking = true;
+        window.requestAnimationFrame(() => {
+          syncActiveSection();
+          scrollTicking = false;
+        });
+      }, { passive: true });
     }
 
     function setSidebarCollapsed(collapsed) {
@@ -5580,14 +5625,125 @@ Bien cordialement,
       });
     }
 
+    let printRestoreState = null;
+
+    function buildPrintStage(targetCardUid = null) {
+      const printStage = document.getElementById("printStage");
+      if (!printStage) return;
+      printStage.innerHTML = "";
+
+      const header = document.querySelector(".print-header");
+      const rootSheet = document.createElement("section");
+      rootSheet.className = "print-sheet";
+
+      if (header) rootSheet.appendChild(header.cloneNode(true));
+
+      const printableSections = Array.from(document.querySelectorAll(".main-inner > section"));
+      printableSections.forEach(section => {
+        const sectionClone = section.cloneNode(true);
+        sectionClone.querySelectorAll(".section.is-hidden").forEach(el => el.classList.remove("is-hidden"));
+        sectionClone.querySelectorAll(".card.collapsed").forEach(el => el.classList.remove("collapsed"));
+        sectionClone.querySelectorAll(".card[data-print-card='false']").forEach(el => el.remove());
+        sectionClone.querySelectorAll(".print-page-label").forEach(el => el.remove());
+
+        if (targetCardUid) {
+          sectionClone.querySelectorAll('.card').forEach(card => {
+            if (card.dataset.printCardUid !== targetCardUid) card.remove();
+          });
+          if (!sectionClone.querySelector('.card')) return;
+        }
+
+        rootSheet.appendChild(sectionClone);
+      });
+
+      printStage.appendChild(rootSheet);
+      printStage.setAttribute("aria-hidden", "false");
+    }
+
+    function triggerSingleCardPrint(cardUid) {
+      if (!cardUid) return;
+      prepareDocumentForPrint(cardUid);
+      window.print();
+      setTimeout(() => {
+        if (printRestoreState) restoreDocumentAfterPrint();
+      }, 300);
+    }
+
+    function initSingleCardPrintButtons() {
+      document.querySelectorAll('.card').forEach((card, index) => {
+        const uid = `card-${index + 1}`;
+        card.dataset.printCardUid = uid;
+
+        const title = card.querySelector('.card-title');
+        if (!title) return;
+        if (title.querySelector('.print-single-btn')) return;
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'print-single-btn no-print';
+        btn.textContent = '🖨️ Imprimer cette rubrique';
+        btn.setAttribute('aria-label', 'Imprimer uniquement cette rubrique');
+        btn.addEventListener('click', () => triggerSingleCardPrint(uid));
+        title.appendChild(btn);
+      });
+    }
+
+    function clearPrintStage() {
+      const printStage = document.getElementById("printStage");
+      if (!printStage) return;
+      printStage.innerHTML = "";
+      printStage.setAttribute("aria-hidden", "true");
+    }
+
+    function prepareDocumentForPrint(targetCardUid = null) {
+      if (printRestoreState) return;
+      const wasSidebarCollapsed = document.body.classList.contains("sidebar-collapsed");
+      setSidebarCollapsed(true);
+      updatePrintHeader();
+      buildPrintStage(targetCardUid);
+      printRestoreState = { wasSidebarCollapsed };
+    }
+
+    function restoreDocumentAfterPrint() {
+      if (!printRestoreState) return;
+      setSidebarCollapsed(printRestoreState.wasSidebarCollapsed);
+      clearPrintStage();
+      printRestoreState = null;
+    }
+
+    function triggerPrintWorkflow() {
+      prepareDocumentForPrint();
+      window.print();
+      setTimeout(() => {
+        if (printRestoreState) restoreDocumentAfterPrint();
+      }, 300);
+    }
+
+    function initPrintLifecycle() {
+      window.addEventListener("beforeprint", prepareDocumentForPrint);
+      window.addEventListener("afterprint", restoreDocumentAfterPrint);
+    }
+
+    function generatePdfDirect() {
+      const previousTitle = document.title;
+      const datePart = new Date().toISOString().slice(0, 10);
+      document.title = `Estimatif-Avant-Projet-V69-${datePart}`;
+      triggerPrintWorkflow();
+      setTimeout(() => {
+        document.title = previousTitle;
+      }, 700);
+    }
+
     function initPrintButton() {
-      document.getElementById("printNow")?.addEventListener("click", () => window.print());
+      document.getElementById("printNow")?.addEventListener("click", triggerPrintWorkflow);
+      document.getElementById("printPdfNow")?.addEventListener("click", generatePdfDirect);
     }
 
     function enhanceTouchInputs() {
       document.querySelectorAll('input[type="number"]').forEach(input => {
         input.setAttribute("inputmode", "decimal");
-        input.setAttribute("pattern", "[0-9]*");
+        input.setAttribute("pattern", "[0-9]+([.,][0-9]+)?");
+        input.setAttribute("step", "any");
         input.setAttribute("enterkeyhint", "done");
       });
 
@@ -5597,13 +5753,81 @@ Bien cordialement,
       });
     }
 
+    const APP_VERSION = "V69";
+    let deferredInstallPrompt = null;
+
+    function initPwaInstall() {
+      const installBtn = document.getElementById("installPwaBtn");
+      if (!installBtn) return;
+
+      window.addEventListener("beforeinstallprompt", (event) => {
+        event.preventDefault();
+        deferredInstallPrompt = event;
+        installBtn.hidden = false;
+      });
+
+      installBtn.addEventListener("click", async () => {
+        if (!deferredInstallPrompt) return;
+        deferredInstallPrompt.prompt();
+        await deferredInstallPrompt.userChoice;
+        deferredInstallPrompt = null;
+        installBtn.hidden = true;
+      });
+
+      window.addEventListener("appinstalled", () => {
+        deferredInstallPrompt = null;
+        installBtn.hidden = true;
+      });
+    }
+
+    function initNetworkIndicator() {
+      const indicator = document.getElementById("networkStatus");
+      if (!indicator) return;
+      const dot = indicator.querySelector(".dot");
+      const label = indicator.querySelector("span");
+      const refresh = () => {
+        const online = navigator.onLine;
+        indicator.setAttribute("data-online", online ? "true" : "false");
+        if (dot) dot.style.background = online ? "#34d399" : "#f97316";
+        if (label) label.textContent = online ? "Prêt pour une nouvelle estimation" : "Mode hors ligne actif (PWA)";
+      };
+      window.addEventListener("online", refresh);
+      window.addEventListener("offline", refresh);
+      refresh();
+    }
+
+    async function registerServiceWorker() {
+      if (!("serviceWorker" in navigator)) return;
+      const isLocal = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+      if (window.location.protocol !== "https:" && !isLocal) return;
+      try {
+        await navigator.serviceWorker.register("./sw-v69.js");
+      } catch (error) {
+        console.warn("SW registration failed", error);
+      }
+    }
+
+    function ensureLatestBuild() {
+      const key = "estim-app-version";
+      const previous = localStorage.getItem(key);
+      if (previous === APP_VERSION) return true;
+      localStorage.setItem(key, APP_VERSION);
+      if (previous) {
+        window.location.reload();
+        return false;
+      }
+      return true;
+    }
+
     // ===== INIT =====
     function init() {
+      if (!ensureLatestBuild()) return;
       closeAllModals();
       initTheme();
       initPrintLabels();
       initPrintToggles();
       initCardCollapsibles();
+      initSingleCardPrintButtons();
 
       document.getElementById("clientName").addEventListener("input", updateSummary);
       document.getElementById("clientProject").addEventListener("input", updateSummary);
@@ -5630,7 +5854,11 @@ Bien cordialement,
       initSidebarNav();
       syncHabitatBadges();
       initPrintButton();
+      initPrintLifecycle();
       enhanceTouchInputs();
+      initPwaInstall();
+      initNetworkIndicator();
+      registerServiceWorker();
       updateAll();
     }
 
