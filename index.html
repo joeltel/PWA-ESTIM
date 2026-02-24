@@ -6,12 +6,12 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#0f172a">
-  <meta name="apple-mobile-web-app-title" content="ESTIM AVP V69">
-  <link rel="manifest" href="manifest-v69.webmanifest">
+  <meta name="apple-mobile-web-app-title" content="ESTIM AVP V70">
+  <link rel="manifest" href="manifest-v70.webmanifest">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>Estimatif Avant-Projet Premium · V69</title>
+  <title>Estimatif Avant-Projet Premium · V70</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -2226,62 +2226,62 @@
       html, body { width: 100% !important; height: auto !important; overflow: visible !important; }
       body { background: #ffffff !important; color: #0f172a !important; font-size: 11px; }
       body::before { display: none !important; }
-      .app, .print-menu { display: none !important; }
-      .print-stage { display: block !important; width: 100% !important; }
+      body.printing .app, body.printing .print-menu { display: none !important; }
+      body.printing .print-stage { display: block !important; width: 100% !important; }
       .print-sheet { page-break-after: auto !important; break-after: auto !important; }
       .print-sheet:last-child { page-break-after: auto !important; break-after: auto !important; }
-      .print-stage .print-header, .print-stage .print-header * { color: #0f172a !important; }
-      .print-stage .print-header { display: block !important; margin-bottom: 10px; }
-      .print-stage *, .print-stage *::before, .print-stage *::after {
+      body.printing .print-stage .print-header, body.printing .print-stage .print-header * { color: #0f172a !important; }
+      body.printing .print-stage .print-header { display: block !important; margin-bottom: 10px; }
+      body.printing .print-stage *, body.printing .print-stage *::before, body.printing .print-stage *::after {
         color: #0f172a !important;
         -webkit-text-fill-color: #0f172a !important;
         text-shadow: none !important;
         background-image: none !important;
       }
-      .print-stage input, .print-stage select, .print-stage textarea {
+      body.printing .print-stage input, body.printing .print-stage select, body.printing .print-stage textarea {
         color: #0f172a !important;
         border: 1px solid #cbd5e1 !important;
         background: #ffffff !important;
       }
-      .print-stage .header-title {
+      body.printing .print-stage .header-title {
         -webkit-text-fill-color: #0f172a !important;
         background: none !important;
       }
 
-      .print-stage .card { background: #ffffff !important; border: 1px solid #e2e8f0 !important; box-shadow: none !important; overflow: visible !important; }
-      .print-stage .card, .print-stage .card * { color: #0f172a !important; -webkit-text-fill-color: #0f172a !important; text-shadow: none !important; background-image: none !important; }
-      .print-stage .section, .print-stage .grid, .print-stage .grid-2, .print-stage .content-grid, .print-stage .context-grid, .print-stage .kpi-grid { break-inside: auto !important; page-break-inside: auto !important; }
-      .print-stage .section-toggle, .print-stage .print-toggle, .print-stage .print-single-btn, .print-stage .alert-dismiss, .print-stage .info-toggle, .print-stage .print-page-label, .print-stage .no-print { display: none !important; }
-      .print-stage .table-wrapper { background: #ffffff !important; border-color: #e2e8f0 !important; box-shadow: none !important; overflow: visible !important; }
-      .print-stage table { width: 100% !important; }
-      .print-stage canvas { max-width: 100% !important; height: auto !important; }
-      .print-stage thead { background: #f1f5f9 !important; }
-      .print-stage .card[data-print-card="false"] { display: none !important; }
-      .print-stage section, .print-stage .section, .print-stage .card { break-inside: auto !important; page-break-inside: auto !important; }
-      .print-stage .content-grid,
-      .print-stage .context-grid,
-      .print-stage .kpi-grid,
-      .print-stage .kpi-strip,
-      .print-stage .finish-compare,
-      .print-stage .pack-grid,
-      .print-stage .planning-grid,
-      .print-stage .grid,
-      .print-stage .grid-2 {
+      body.printing .print-stage .card { background: #ffffff !important; border: 1px solid #e2e8f0 !important; box-shadow: none !important; overflow: visible !important; }
+      body.printing .print-stage .card, body.printing .print-stage .card * { color: #0f172a !important; -webkit-text-fill-color: #0f172a !important; text-shadow: none !important; background-image: none !important; }
+      body.printing .print-stage .section, body.printing .print-stage .grid, body.printing .print-stage .grid-2, body.printing .print-stage .content-grid, body.printing .print-stage .context-grid, body.printing .print-stage .kpi-grid { break-inside: auto !important; page-break-inside: auto !important; }
+      body.printing .print-stage .section-toggle, body.printing .print-stage .print-toggle, body.printing .print-stage .print-single-btn, body.printing .print-stage .alert-dismiss, body.printing .print-stage .info-toggle, body.printing .print-stage .print-page-label, body.printing .print-stage .no-print { display: none !important; }
+      body.printing .print-stage .table-wrapper { background: #ffffff !important; border-color: #e2e8f0 !important; box-shadow: none !important; overflow: visible !important; }
+      body.printing .print-stage table { width: 100% !important; }
+      body.printing .print-stage canvas { max-width: 100% !important; height: auto !important; }
+      body.printing .print-stage thead { background: #f1f5f9 !important; }
+      body.printing .print-stage [data-print="0"] { display: none !important; }
+      body.printing .print-stage section, body.printing .print-stage .section, body.printing .print-stage .card { break-inside: auto !important; page-break-inside: auto !important; }
+      body.printing .print-stage .content-grid,
+      body.printing .print-stage .context-grid,
+      body.printing .print-stage .kpi-grid,
+      body.printing .print-stage .kpi-strip,
+      body.printing .print-stage .finish-compare,
+      body.printing .print-stage .pack-grid,
+      body.printing .print-stage .planning-grid,
+      body.printing .print-stage .grid,
+      body.printing .print-stage .grid-2 {
         display: block !important;
       }
-      .print-stage .content-grid > *,
-      .print-stage .context-grid > *,
-      .print-stage .kpi-grid > *,
-      .print-stage .kpi-strip > *,
-      .print-stage .finish-compare > *,
-      .print-stage .pack-grid > *,
-      .print-stage .planning-grid > *,
-      .print-stage .grid > *,
-      .print-stage .grid-2 > * {
+      body.printing .print-stage .content-grid > *,
+      body.printing .print-stage .context-grid > *,
+      body.printing .print-stage .kpi-grid > *,
+      body.printing .print-stage .kpi-strip > *,
+      body.printing .print-stage .finish-compare > *,
+      body.printing .print-stage .pack-grid > *,
+      body.printing .print-stage .planning-grid > *,
+      body.printing .print-stage .grid > *,
+      body.printing .print-stage .grid-2 > * {
         width: 100% !important;
         margin-bottom: 10px !important;
       }
-      .print-stage [style*="max-height"], .print-stage [style*="overflow"] {
+      body.printing .print-stage [style*="max-height"], body.printing .print-stage [style*="overflow"] {
         max-height: none !important;
         overflow: visible !important;
       }
@@ -2349,7 +2349,7 @@
             <div class="header-subtitle">
               Fourchette travaux réaliste pour visite conseil · IDF 2026+
             </div>
-            <div class="version-badge">Version V69</div>
+            <div class="version-badge">Version V70</div>
             <div class="cache-note">Si Chrome affiche une ancienne vue, recharge forcée automatique de la version.</div>
           </div>
           <div class="header-actions">
@@ -2372,7 +2372,7 @@
         <div class="print-header">
           <div>
             <div class="print-title">Estimatif avant-projet</div>
-            <div class="print-subtitle">Synthèse professionnelle · Version V69</div>
+            <div class="print-subtitle">Synthèse professionnelle · Version V70</div>
           </div>
           <div class="print-meta">
             <div class="print-meta-item">
@@ -5074,7 +5074,7 @@
 
       const introContext = `${rdv}${proj}`.trim();
 
-      const text = `ESTIMATION AVANT-PROJET · V69
+      const text = `ESTIMATION AVANT-PROJET · V70
 
 ${civ}
 
@@ -5124,7 +5124,7 @@ Bien cordialement,
     }
 
     function generateClientPdf() {
-      triggerPrintWorkflow();
+      printAllSelected();
     }
 
     async function saveWithPicker({ suggestedName, blob, description, accept }) {
@@ -5453,16 +5453,27 @@ Bien cordialement,
       }
     }
 
+    function syncCardPrintState(card) {
+      if (!card) return;
+      const enabled = card.dataset.printCard !== "false";
+      card.dataset.printCard = enabled ? "true" : "false";
+      card.dataset.print = enabled ? "1" : "0";
+      const toggle = card.querySelector("[data-print-toggle]");
+      if (!toggle) return;
+      toggle.classList.toggle("off", !enabled);
+      toggle.setAttribute("aria-pressed", enabled ? "true" : "false");
+    }
+
     function initPrintToggles() {
+      document.querySelectorAll(".card").forEach(syncCardPrintState);
       document.querySelectorAll("[data-print-toggle]").forEach(btn => {
         btn.addEventListener("click", (e) => {
           e.stopPropagation();
           const card = btn.closest(".card");
           if (!card) return;
-          const isOff = card.dataset.printCard === "false";
-          card.dataset.printCard = isOff ? "true" : "false";
-          btn.classList.toggle("off", !isOff);
-          btn.setAttribute("aria-pressed", isOff ? "true" : "false");
+          const enabled = card.dataset.printCard !== "false";
+          card.dataset.printCard = enabled ? "false" : "true";
+          syncCardPrintState(card);
         });
       });
     }
@@ -5627,7 +5638,7 @@ Bien cordialement,
 
     let printRestoreState = null;
 
-    function buildPrintStage(targetCardUid = null) {
+    function buildPrintStage(mode = "all", targetSectionId = null) {
       const printStage = document.getElementById("printStage");
       if (!printStage) return;
       printStage.innerHTML = "";
@@ -5640,52 +5651,25 @@ Bien cordialement,
 
       const printableSections = Array.from(document.querySelectorAll(".main-inner > section"));
       printableSections.forEach(section => {
+        if (mode === "single" && section.id !== targetSectionId) return;
+
         const sectionClone = section.cloneNode(true);
         sectionClone.querySelectorAll(".section.is-hidden").forEach(el => el.classList.remove("is-hidden"));
         sectionClone.querySelectorAll(".card.collapsed").forEach(el => el.classList.remove("collapsed"));
-        sectionClone.querySelectorAll(".card[data-print-card='false']").forEach(el => el.remove());
         sectionClone.querySelectorAll(".print-page-label").forEach(el => el.remove());
 
-        if (targetCardUid) {
-          sectionClone.querySelectorAll('.card').forEach(card => {
-            if (card.dataset.printCardUid !== targetCardUid) card.remove();
-          });
-          if (!sectionClone.querySelector('.card')) return;
-        }
+        sectionClone.querySelectorAll('.card').forEach(card => {
+          const isEnabled = card.dataset.print === "1" || card.dataset.printCard !== "false";
+          card.dataset.print = isEnabled ? "1" : "0";
+          if (mode === "all" && !isEnabled) card.remove();
+        });
 
+        if (!sectionClone.querySelector('.card')) return;
         rootSheet.appendChild(sectionClone);
       });
 
       printStage.appendChild(rootSheet);
       printStage.setAttribute("aria-hidden", "false");
-    }
-
-    function triggerSingleCardPrint(cardUid) {
-      if (!cardUid) return;
-      prepareDocumentForPrint(cardUid);
-      window.print();
-      setTimeout(() => {
-        if (printRestoreState) restoreDocumentAfterPrint();
-      }, 300);
-    }
-
-    function initSingleCardPrintButtons() {
-      document.querySelectorAll('.card').forEach((card, index) => {
-        const uid = `card-${index + 1}`;
-        card.dataset.printCardUid = uid;
-
-        const title = card.querySelector('.card-title');
-        if (!title) return;
-        if (title.querySelector('.print-single-btn')) return;
-
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'print-single-btn no-print';
-        btn.textContent = '🖨️ Imprimer cette rubrique';
-        btn.setAttribute('aria-label', 'Imprimer uniquement cette rubrique');
-        btn.addEventListener('click', () => triggerSingleCardPrint(uid));
-        title.appendChild(btn);
-      });
     }
 
     function clearPrintStage() {
@@ -5695,47 +5679,77 @@ Bien cordialement,
       printStage.setAttribute("aria-hidden", "true");
     }
 
-    function prepareDocumentForPrint(targetCardUid = null) {
+    function prepareDocumentForPrint(mode = "all", targetSectionId = null) {
       if (printRestoreState) return;
       const wasSidebarCollapsed = document.body.classList.contains("sidebar-collapsed");
       setSidebarCollapsed(true);
       updatePrintHeader();
-      buildPrintStage(targetCardUid);
+      document.body.classList.add("printing");
+      buildPrintStage(mode, targetSectionId);
       printRestoreState = { wasSidebarCollapsed };
     }
 
     function restoreDocumentAfterPrint() {
       if (!printRestoreState) return;
       setSidebarCollapsed(printRestoreState.wasSidebarCollapsed);
+      document.body.classList.remove("printing");
       clearPrintStage();
       printRestoreState = null;
     }
 
-    function triggerPrintWorkflow() {
-      prepareDocumentForPrint();
-      window.print();
+    function cleanupPrintAfterDelay() {
       setTimeout(() => {
         if (printRestoreState) restoreDocumentAfterPrint();
       }, 300);
     }
 
+    function printAllSelected() {
+      prepareDocumentForPrint("all");
+      window.print();
+      cleanupPrintAfterDelay();
+    }
+
+    function printSingleSection(sectionId) {
+      if (!sectionId) return;
+      prepareDocumentForPrint("single", sectionId);
+      window.print();
+      cleanupPrintAfterDelay();
+    }
+
+    function initSingleCardPrintButtons() {
+      const sections = Array.from(document.querySelectorAll('.main-inner > section[id]'));
+      sections.forEach(section => {
+        const targetCard = section.querySelector('.card');
+        const title = targetCard?.querySelector('.card-title');
+        if (!title) return;
+        if (title.querySelector('.print-single-btn')) return;
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'print-single-btn no-print';
+        btn.textContent = '🖨️ Imprimer cette rubrique';
+        btn.setAttribute('aria-label', 'Imprimer uniquement cette rubrique');
+        btn.addEventListener('click', () => printSingleSection(section.id));
+        title.appendChild(btn);
+      });
+    }
+
     function initPrintLifecycle() {
-      window.addEventListener("beforeprint", prepareDocumentForPrint);
       window.addEventListener("afterprint", restoreDocumentAfterPrint);
     }
 
     function generatePdfDirect() {
       const previousTitle = document.title;
       const datePart = new Date().toISOString().slice(0, 10);
-      document.title = `Estimatif-Avant-Projet-V69-${datePart}`;
-      triggerPrintWorkflow();
+      document.title = `Estimatif-Avant-Projet-V70-${datePart}`;
+      printAllSelected();
       setTimeout(() => {
         document.title = previousTitle;
       }, 700);
     }
 
     function initPrintButton() {
-      document.getElementById("printNow")?.addEventListener("click", triggerPrintWorkflow);
+      document.getElementById("printNow")?.addEventListener("click", printAllSelected);
       document.getElementById("printPdfNow")?.addEventListener("click", generatePdfDirect);
     }
 
@@ -5753,7 +5767,7 @@ Bien cordialement,
       });
     }
 
-    const APP_VERSION = "V69";
+    const APP_VERSION = "V70";
     let deferredInstallPrompt = null;
 
     function initPwaInstall() {
@@ -5801,7 +5815,7 @@ Bien cordialement,
       const isLocal = ["localhost", "127.0.0.1"].includes(window.location.hostname);
       if (window.location.protocol !== "https:" && !isLocal) return;
       try {
-        await navigator.serviceWorker.register("./sw-v69.js");
+        await navigator.serviceWorker.register("./sw-v70.js");
       } catch (error) {
         console.warn("SW registration failed", error);
       }
