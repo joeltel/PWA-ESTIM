@@ -6,12 +6,12 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#0f172a">
-  <meta name="apple-mobile-web-app-title" content="ESTIM AVP V70">
-  <link rel="manifest" href="manifest-v70.webmanifest">
+  <meta name="apple-mobile-web-app-title" content="ESTIM AVP V71">
+  <link rel="manifest" href="manifest-v71.webmanifest">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>Estimatif Avant-Projet Premium · V70</title>
+  <title>Estimatif Avant-Projet Premium · V71</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -2349,7 +2349,7 @@
             <div class="header-subtitle">
               Fourchette travaux réaliste pour visite conseil · IDF 2026+
             </div>
-            <div class="version-badge">Version V70</div>
+            <div class="version-badge">Version V71</div>
             <div class="cache-note">Si Chrome affiche une ancienne vue, recharge forcée automatique de la version.</div>
           </div>
           <div class="header-actions">
@@ -2372,7 +2372,7 @@
         <div class="print-header">
           <div>
             <div class="print-title">Estimatif avant-projet</div>
-            <div class="print-subtitle">Synthèse professionnelle · Version V70</div>
+            <div class="print-subtitle">Synthèse professionnelle · Version V71</div>
           </div>
           <div class="print-meta">
             <div class="print-meta-item">
@@ -5074,7 +5074,7 @@
 
       const introContext = `${rdv}${proj}`.trim();
 
-      const text = `ESTIMATION AVANT-PROJET · V70
+      const text = `ESTIMATION AVANT-PROJET · V71
 
 ${civ}
 
@@ -5649,7 +5649,7 @@ Bien cordialement,
 
       if (header) rootSheet.appendChild(header.cloneNode(true));
 
-      const printableSections = Array.from(document.querySelectorAll(".main-inner > section"));
+      const printableSections = Array.from(document.querySelectorAll("section[data-print-label][id]"));
       printableSections.forEach(section => {
         if (mode === "single" && section.id !== targetSectionId) return;
 
@@ -5717,20 +5717,19 @@ Bien cordialement,
     }
 
     function initSingleCardPrintButtons() {
-      const sections = Array.from(document.querySelectorAll('.main-inner > section[id]'));
+      const sections = Array.from(document.querySelectorAll('section[data-print-label][id]'));
       sections.forEach(section => {
-        const targetCard = section.querySelector('.card');
-        const title = targetCard?.querySelector('.card-title');
-        if (!title) return;
-        if (title.querySelector('.print-single-btn')) return;
-
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'print-single-btn no-print';
-        btn.textContent = '🖨️ Imprimer cette rubrique';
-        btn.setAttribute('aria-label', 'Imprimer uniquement cette rubrique');
-        btn.addEventListener('click', () => printSingleSection(section.id));
-        title.appendChild(btn);
+        const sectionId = section.id;
+        section.querySelectorAll('.card .card-title').forEach(title => {
+          if (title.querySelector('.print-single-btn')) return;
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'print-single-btn no-print';
+          btn.textContent = '🖨️ Imprimer cette rubrique';
+          btn.setAttribute('aria-label', `Imprimer uniquement la rubrique ${section.dataset.printLabel || sectionId}`);
+          btn.addEventListener('click', () => printSingleSection(sectionId));
+          title.appendChild(btn);
+        });
       });
     }
 
@@ -5741,7 +5740,7 @@ Bien cordialement,
     function generatePdfDirect() {
       const previousTitle = document.title;
       const datePart = new Date().toISOString().slice(0, 10);
-      document.title = `Estimatif-Avant-Projet-V70-${datePart}`;
+      document.title = `Estimatif-Avant-Projet-V71-${datePart}`;
       printAllSelected();
       setTimeout(() => {
         document.title = previousTitle;
@@ -5767,7 +5766,7 @@ Bien cordialement,
       });
     }
 
-    const APP_VERSION = "V70";
+    const APP_VERSION = "V71";
     let deferredInstallPrompt = null;
 
     function initPwaInstall() {
@@ -5815,7 +5814,7 @@ Bien cordialement,
       const isLocal = ["localhost", "127.0.0.1"].includes(window.location.hostname);
       if (window.location.protocol !== "https:" && !isLocal) return;
       try {
-        await navigator.serviceWorker.register("./sw-v70.js");
+        await navigator.serviceWorker.register("./sw-v71.js");
       } catch (error) {
         console.warn("SW registration failed", error);
       }
